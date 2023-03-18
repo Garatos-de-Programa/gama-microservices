@@ -30,6 +30,6 @@ public class AuthController : ControllerBase
 
         var token = await _tokenService.Generate(tokenCreationCommand);
 
-        return Ok(token);
+        return token.ToOk();
     }
 }
