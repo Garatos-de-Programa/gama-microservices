@@ -5,5 +5,5 @@ namespace Gama.Application.Contracts.Repositories;
 
 public interface IUserRepository : IRepository<User>
 {
-    Task<User> GetByLogin(TokenCreationCommand tokenCreationCommand);
+    Task<User?> GetByLogin(string email, string username);
 }
