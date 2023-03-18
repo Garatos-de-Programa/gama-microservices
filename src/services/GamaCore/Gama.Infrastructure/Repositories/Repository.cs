@@ -5,9 +5,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Gama.Infrastructure.Repositories;
 
-internal abstract class Repository<T> : DbContext, IRepository<T> where T : class
+internal abstract class Repository<T> : IRepository<T> where T : class
 {
-    protected DbContext _context;
+    private readonly DbContext _context;
 
     public Repository(GamaCoreDbContext dbContext)
     {
@@ -16,7 +16,7 @@ internal abstract class Repository<T> : DbContext, IRepository<T> where T : clas
 
     public async Task CommitAsync()
     {
-        await SaveChangesAsync();
+        await _context.SaveChangesAsync();
     }
 
     public async Task<T> DeleteAsync<TId>(TId id)
@@ -40,7 +40,7 @@ internal abstract class Repository<T> : DbContext, IRepository<T> where T : clas
 
     public async Task InsertAsync(T tObject)
     {
-        await _context.Set<T>().AddAsync(tObject).AsTask();
+        await _context.Set<T>().AddAsync(tObject);
     }
 
     public void Patch(T tObject)

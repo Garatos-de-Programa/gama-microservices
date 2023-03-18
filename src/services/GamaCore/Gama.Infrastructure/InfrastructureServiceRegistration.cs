@@ -12,8 +12,10 @@ public static class InfrastructureServiceRegistration
     public static IServiceCollection AddInfrastructureServices(this IServiceCollection services,
         IConfiguration configuration)
     {
+        var connectionString = configuration.GetConnectionString("GamaCoreDbConnectionString");
+        
         services.AddDbContext<GamaCoreDbContext>(options =>
-            options.UseNpgsql(configuration.GetConnectionString("GamaCoreDbConnectionString")));
+            options.UseNpgsql(connectionString));
 
         services.AddTransient<IUserRepository, UserRepository>();
 

@@ -9,14 +9,14 @@ public struct Result<T>
     
     public Result(T value)
     {
-        IsFaulted = true;
+        IsFaulted = false;
         _value = value;
         _error = null;
     }
 
     public Result(Exception error)
     {
-        IsFaulted = false;
+        IsFaulted = true;
         _error = error;
     }
 
@@ -24,5 +24,5 @@ public struct Result<T>
         new(value);
 
     public TR Match<TR>(Func<T, TR> success, Func<Exception, TR> fail) =>
-        IsFaulted ? success(_value) : fail(_error);
+        IsFaulted ? fail(_error) : success(_value);
 }

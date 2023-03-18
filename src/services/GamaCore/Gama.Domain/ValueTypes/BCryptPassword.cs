@@ -12,10 +12,17 @@ public struct BCryptPassword
 
     public bool IsValid(string password)
     {
-        return _bCryptValue.Equals(password);
+        return BCrypt.Verify(password, _bCryptValue);
+    }
+
+    public static bool IsValid(string password, string encryptedPassword)
+    {
+        return BCrypt.Verify(password, encryptedPassword);
     }
 
     public static BCryptPassword Parse(string password) => new(password);
 
     public static implicit operator BCryptPassword(string password) => Parse(password);
+
+    public static implicit operator string(BCryptPassword encryptedPassword) => encryptedPassword._bCryptValue;
 }

@@ -6,6 +6,6 @@ namespace Gama.Infrastructure.Persistence;
 public class GamaCoreDbContext : DbContext
 {
     public GamaCoreDbContext(DbContextOptions<GamaCoreDbContext> options) : base(options) { }
-
-    public DbSet<User> Users { get; set; }
+    
+    public DbSet<User> User { get; set; }
 }

@@ -5,7 +5,7 @@ namespace Gama.Domain.Entities;
 
 public class User
 {
-    public int Id { get; set; }
+    public int Id { get; protected set; }
     
     public string FirstName { get; protected set; }
 
@@ -19,12 +19,27 @@ public class User
 
     public string DocumentNumber { get; protected set; }
 
-    public Role Role { get; protected set; }
+    public string Role { get; protected set; }
+
+    public User(
+        string firstName,
+        string lastName,
+        string username,
+        string email,
+        string password,
+        string documentNumber
+    )
+    {
+        FirstName = firstName;
+        LastName = lastName;
+        Username = username;
+        Email = email;
+        Password = BCryptPassword.Parse(password);
+        DocumentNumber = documentNumber;
+    }
 
     public bool IsValidPassword(string password)
     {
-        var encryptedPassword = BCryptPassword.Parse(password);
-
-        return encryptedPassword.IsValid(Password);
+        return BCryptPassword.IsValid(password, Password);
     }
 }
