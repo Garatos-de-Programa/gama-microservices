@@ -40,10 +40,10 @@ public class JwtTokenService : ITokenService
                 { PropertyName = "user", ErrorMessage = "Usuário ou senha inválidos" }));
         }
         
-        var issuer = _configuration["Jwt:Issuer"];
-        var audience = _configuration["Jwt:Audience"];
+        var issuer = _configuration["AuthSettings:Issuer"];
+        var audience = _configuration["AuthSettings:Audience"];
         var key = Encoding.ASCII.GetBytes
-            (_configuration["Jwt:Key"]);
+            (_configuration["AuthSettings:Key"]);
         var tokenDescriptor = new SecurityTokenDescriptor
         {
             Subject = new ClaimsIdentity(new[]
