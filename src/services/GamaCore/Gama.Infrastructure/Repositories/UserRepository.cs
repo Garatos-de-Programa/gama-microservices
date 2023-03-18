@@ -10,7 +10,7 @@ internal class UserRepository : Repository<User>, IUserRepository
     {
     }
 
-    public Task<User?> GetByLogin(string email, string username)
+    public Task<User?> GetByLoginAsync(string email, string username)
     {
         return FindOneAsync(f => f.Email == email || f.Username == username);
     }

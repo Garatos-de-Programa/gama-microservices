@@ -14,4 +14,19 @@
       <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="2.2.0" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Reference Include="Microsoft.Extensions.Configuration.Abstractions">
+        <HintPath>..\..\..\..\..\..\..\.nuget\packages\microsoft.extensions.configuration.abstractions\8.0.0-preview.1.23110.8\lib\net7.0\Microsoft.Extensions.Configuration.Abstractions.dll</HintPath>
+      </Reference>
+      <Reference Include="Microsoft.IdentityModel.JsonWebTokens">
+        <HintPath>..\..\..\..\..\..\..\.nuget\packages\microsoft.identitymodel.jsonwebtokens\6.15.1\lib\netstandard2.0\Microsoft.IdentityModel.JsonWebTokens.dll</HintPath>
+      </Reference>
+      <Reference Include="Microsoft.IdentityModel.Tokens">
+        <HintPath>..\..\..\..\..\..\..\.nuget\packages\microsoft.identitymodel.tokens\6.15.1\lib\netstandard2.0\Microsoft.IdentityModel.Tokens.dll</HintPath>
+      </Reference>
+      <Reference Include="System.IdentityModel.Tokens.Jwt">
+        <HintPath>..\..\..\..\..\..\..\.nuget\packages\system.identitymodel.tokens.jwt\6.15.1\lib\netstandard2.0\System.IdentityModel.Tokens.Jwt.dll</HintPath>
+      </Reference>
+    </ItemGroup>
+
 </Project>

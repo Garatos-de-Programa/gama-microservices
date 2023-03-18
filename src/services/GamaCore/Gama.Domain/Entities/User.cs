@@ -5,6 +5,8 @@ namespace Gama.Domain.Entities;
 
 public class User
 {
+    public int Id { get; set; }
+    
     public string FirstName { get; protected set; }
 
     public string LastName { get; protected set; }
@@ -12,6 +14,7 @@ public class User
     public string Username { get; protected set; }
 
     public string Email { get; protected set; }
+    
     public string Password { get; protected set; }
 
     public string DocumentNumber { get; protected set; }
