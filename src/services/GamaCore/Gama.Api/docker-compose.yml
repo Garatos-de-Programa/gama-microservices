@@ -1,0 +1,12 @@
+version: '3.4'
+
+services:
+  pgadmin:
+    image: dpage/pgadmin4
+
+  gamacoredb:
+    image: postgres
+  
+volumes:
+  pgadmin_data:
+  postgres_data:
