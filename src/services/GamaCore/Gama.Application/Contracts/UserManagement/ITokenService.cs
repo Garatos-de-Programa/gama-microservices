@@ -1,9 +1,8 @@
-using Gama.Application.DataContracts.Commands;
-using Gama.Domain.ValueTypes;
+using Gama.Domain.Entities;
 
 namespace Gama.Application.Contracts.UserManagement;
 
 public interface ITokenService
 {
-    Task<Result<string>> Generate(TokenCreationCommand tokenCreationCommand);
+    string Generate(User user);
 }

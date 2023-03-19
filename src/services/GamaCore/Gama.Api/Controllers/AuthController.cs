@@ -1,5 +1,5 @@
 using Gama.Application.Contracts.UserManagement;
-using Gama.Application.DataContracts.Commands;
+using Gama.Application.DataContracts.Commands.UserManagement;
 using Gama.Shared.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -10,25 +10,25 @@ namespace Gama.Api.Controllers;
 [ApiController]
 public class AuthController : ControllerBase
 {
-    private readonly ITokenService _tokenService;
-    
-    public AuthController(ITokenService tokenService)
+    private readonly IUserAuthenticationService _userAuthenticationService;
+
+    public AuthController(IUserAuthenticationService userAuthenticationService)
     {
-        _tokenService = tokenService;
+        _userAuthenticationService = userAuthenticationService;
     }
-    
+
     [HttpPost("/token")]
     [AllowAnonymous]
-    public async Task<IActionResult> Create([FromBody] TokenCreationCommand tokenCreationCommand)
+    public async Task<IActionResult> Create([FromBody] AuthenticateCommand authenticateCommand)
     {
-        var validationResult = tokenCreationCommand.IsValid();
-        
+        var validationResult = authenticateCommand.IsValid();
+
         if (validationResult.IsFaulted)
         {
             return validationResult.ToBadRequest();
         }
 
-        var token = await _tokenService.Generate(tokenCreationCommand);
+        var token = await _userAuthenticationService.Authenticate(authenticateCommand);
 
         return token.ToOk();
     }

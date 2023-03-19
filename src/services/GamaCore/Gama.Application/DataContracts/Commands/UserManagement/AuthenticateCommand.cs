@@ -1,15 +1,15 @@
 using Gama.Domain.Exceptions;
 using Gama.Domain.ValueTypes;
 
-namespace Gama.Application.DataContracts.Commands;
+namespace Gama.Application.DataContracts.Commands.UserManagement;
 
-public class TokenCreationCommand
+public class AuthenticateCommand
 {
-    public string Email { get; init; }
+    public string? Email { get; init; }
 
     public string Password { get; init; }
 
-    public string Username { get; init; }
+    public string? Username { get; init; }
 
     public Result<bool> IsValid()
     {
@@ -48,6 +48,6 @@ public class TokenCreationCommand
 
     internal bool HasEmailOrUsername()
     {
-        return !string.IsNullOrWhiteSpace(Email) || !string.IsNullOrWhiteSpace(Username);
+        return !string.IsNullOrWhiteSpace(Email) ^ !string.IsNullOrWhiteSpace(Username);
     }
 }
