@@ -1,4 +1,4 @@
-using Gama.Domain.Enums;
+using Gama.Domain.Constants;
 
 namespace Gama.Domain.Entities;
 
@@ -18,7 +18,7 @@ public class Admin : User
         email,
         password,
         documentNumber,
-        Roles.Admin.ToString()
+        Roles.Admin
         )
     {
         Encrypt();

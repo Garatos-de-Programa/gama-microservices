@@ -1,4 +1,3 @@
-using Gama.Domain.Enums;
 using Gama.Domain.ValueTypes;
 
 namespace Gama.Domain.Entities;
@@ -51,7 +50,7 @@ public class User : AuditableEntity
         return BCryptPassword.IsValid(password, Password);
     }
 
-    public void Encrypt()
+    internal void Encrypt()
     {
         Password= BCryptPassword.Parse(Password);
     }

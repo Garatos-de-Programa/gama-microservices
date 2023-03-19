@@ -12,6 +12,16 @@
 
     <ItemGroup>
       <Compile Remove="Entities\Entity.cs" />
+      <Compile Remove="Enums\Roles.cs" />
+      <Compile Remove="Enums\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <EmbeddedResource Remove="Enums\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="Enums\**" />
     </ItemGroup>
 
 </Project>
