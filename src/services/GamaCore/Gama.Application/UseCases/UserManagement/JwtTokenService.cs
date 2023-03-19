@@ -26,15 +26,9 @@ public class JwtTokenService : ITokenService
     public async Task<Result<string>> Generate(TokenCreationCommand tokenCreationCommand)
     {
         var user = await _userRepository.GetByLoginAsync(tokenCreationCommand.Email, tokenCreationCommand.Username);
-        
-        if (user is null)
-        {
-            return new Result<string>(new ValidationException(new ValidationError()
-                { PropertyName = "user", ErrorMessage = "Usuário ou senha inválidos" }));
-        }
+        var validPassword = user?.IsValidPassword(tokenCreationCommand.Password) ?? false;
 
-        var validPassword = user.IsValidPassword(tokenCreationCommand.Password);
-        if (!validPassword)
+        if (user is null || !validPassword)
         {
             return new Result<string>(new ValidationException(new ValidationError()
                 { PropertyName = "user", ErrorMessage = "Usuário ou senha inválidos" }));

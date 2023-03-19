@@ -3,7 +3,7 @@ using Gama.Domain.ValueTypes;
 
 namespace Gama.Domain.Entities;
 
-public class User
+public class User : AuditableEntity
 {
     public int Id { get; protected set; }
     
@@ -27,19 +27,32 @@ public class User
         string username,
         string email,
         string password,
-        string documentNumber
+        string documentNumber,
+        string role,
+        DateTime? createdAt = null,
+        DateTime? updatedAt = null,
+        DateTime? deletedAt = null
     )
     {
         FirstName = firstName;
         LastName = lastName;
         Username = username;
         Email = email;
-        Password = BCryptPassword.Parse(password);
+        Password = password;
         DocumentNumber = documentNumber;
+        Role = role;
+        CreatedAt = createdAt ?? DateTime.UtcNow;
+        UpdatedAt = updatedAt;
+        DeletedAt = deletedAt;
     }
 
     public bool IsValidPassword(string password)
     {
         return BCryptPassword.IsValid(password, Password);
+    }
+
+    public void Encrypt()
+    {
+        Password= BCryptPassword.Parse(Password);
     }
 }

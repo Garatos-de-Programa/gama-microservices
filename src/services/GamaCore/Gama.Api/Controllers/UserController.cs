@@ -10,7 +10,7 @@ namespace Gama.Api.Controllers;
 public class UserController : ControllerBase
 {
     private readonly IUserRepository _userRepository;
-    
+
     public UserController(IUserRepository userRepository)
     {
         _userRepository = userRepository;
@@ -20,18 +20,18 @@ public class UserController : ControllerBase
     [AllowAnonymous]
     public async Task<IActionResult> Create()
     {
-        var user = new User(
+        var user = new Cop(
             "Dedao",
             "Jodao",
-            "Dedaozinho",
-            "Dedaozinho@gmail.com",
-            "Deds",
+            "dedaocop",
+            "dedaozinho_cop@gmail.com",
+            "deds",
             "21233"
         );
 
         await _userRepository.InsertAsync(user);
         await _userRepository.CommitAsync();
-        
-        return Ok();
+
+        return Ok(user);
     }
 }

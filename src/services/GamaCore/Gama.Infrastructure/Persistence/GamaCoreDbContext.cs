@@ -7,5 +7,5 @@ public class GamaCoreDbContext : DbContext
 {
     public GamaCoreDbContext(DbContextOptions<GamaCoreDbContext> options) : base(options) { }
     
-    public DbSet<User> User { get; set; }
+    public DbSet<User> Users { get; set; }
 }
