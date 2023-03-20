@@ -18,7 +18,7 @@ public class UserAuthenticationService : IUserAuthenticationService
         _tokenService = tokenService;
     }
 
-    public async Task<Result<AuthenticationResponse>> Authenticate(AuthenticateCommand command)
+    public async Task<Result<AuthenticationResponse>> AuthenticateAsync(AuthenticateCommand command)
     {
         var user = await _userRepository.GetByLoginAsync(command.Email, command.Username);
         var validPassword = user?.IsValidPassword(command.Password) ?? false;

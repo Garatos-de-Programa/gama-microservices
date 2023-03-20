@@ -28,7 +28,7 @@ public class AuthController : ControllerBase
             return validationResult.ToBadRequest();
         }
 
-        var token = await _userAuthenticationService.Authenticate(authenticateCommand);
+        var token = await _userAuthenticationService.AuthenticateAsync(authenticateCommand);
 
         return token.ToOk();
     }

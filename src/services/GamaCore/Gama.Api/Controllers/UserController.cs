@@ -1,5 +1,10 @@
+using System.Net;
 using Gama.Application.Contracts.Repositories;
+using Gama.Application.Contracts.UserManagement;
+using Gama.Application.DataContracts.Commands.UserManagement;
+using Gama.Application.DataContracts.Responses.UserManagement;
 using Gama.Domain.Entities;
+using Gama.Shared.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,29 +14,27 @@ namespace Gama.Api.Controllers;
 [ApiController]
 public class UserController : ControllerBase
 {
-    private readonly IUserRepository _userRepository;
+    private readonly IUserService _userService;
 
-    public UserController(IUserRepository userRepository)
+    public UserController(IUserService userService)
     {
-        _userRepository = userRepository;
+        _userService = userService;
     }
 
-    [HttpPost("/")]
+    [HttpPost]
     [AllowAnonymous]
-    public async Task<IActionResult> Create()
+    [ProducesResponseType(typeof(UserCreatedResponse), (int)HttpStatusCode.OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<IActionResult> Create([FromBody] CreateUserCommand command)
     {
-        var user = new Cop(
-            "Dedao",
-            "Jodao",
-            "dedaocop",
-            "dedaozinho_cop@gmail.com",
-            "deds",
-            "21233"
-        );
+        if (!ModelState.IsValid)
+        {
+            return BadRequest(ModelState);
+        }
+            
+        var user = await _userService.CreateAsync(command);
 
-        await _userRepository.InsertAsync(user);
-        await _userRepository.CommitAsync();
-
-        return Ok(user);
+        return user.ToOk(m => new UserCreatedResponse(m));
     }
 }

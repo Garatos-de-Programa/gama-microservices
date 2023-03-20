@@ -6,5 +6,5 @@ namespace Gama.Application.Contracts.UserManagement;
 
 public interface IUserAuthenticationService
 {
-    Task<Result<AuthenticationResponse>> Authenticate(AuthenticateCommand command);
+    Task<Result<AuthenticationResponse>> AuthenticateAsync(AuthenticateCommand command);
 }
