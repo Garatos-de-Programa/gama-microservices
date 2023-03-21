@@ -65,7 +65,7 @@ public class UserController : ControllerBase
             return BadRequest(ModelState);
         }
             
-        var user = await _userService.UpdateAsync(command);
+        var user = await _userService.UpdateAsync(userId, command);
 
         return user.ToOk(m => new UserUpdatedResponse(m));
     }
