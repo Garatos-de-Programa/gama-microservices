@@ -10,6 +10,7 @@ public static class ApplicationServiceRegistration
     {
         services.AddScoped<ITokenService, JwtTokenService>();
         services.AddScoped<IUserAuthenticationService, UserAuthenticationService>();
+        services.AddScoped<IUserService, UserService>();
 
         return services;
     }
