@@ -1,16 +1,14 @@
 using System.Net;
-using Gama.Application.Contracts.Repositories;
 using Gama.Application.Contracts.UserManagement;
 using Gama.Application.DataContracts.Commands.UserManagement;
 using Gama.Application.DataContracts.Responses.UserManagement;
-using Gama.Domain.Entities;
 using Gama.Shared.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Gama.Api.Controllers;
 
-[Route("api/v1/[controller]")]
+[Route("api/v1/users")]
 [ApiController]
 public class UserController : ControllerBase
 {
@@ -19,6 +17,23 @@ public class UserController : ControllerBase
     public UserController(IUserService userService)
     {
         _userService = userService;
+    }
+
+    [Authorize]
+    [HttpGet("{userId:int}")]
+    [ProducesResponseType(typeof(UserCreatedResponse), (int)HttpStatusCode.OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<IActionResult> Get([FromRoute] int useId)
+    {
+        if (!ModelState.IsValid)
+        {
+            return BadRequest(ModelState);
+        }
+            
+        var user = await _userService.GetAsync(useId);
+
+        return user.ToOk(m => new UserCreatedResponse(m));
     }
 
     [HttpPost]
@@ -36,5 +51,39 @@ public class UserController : ControllerBase
         var user = await _userService.CreateAsync(command);
 
         return user.ToOk(m => new UserCreatedResponse(m));
+    }
+    
+    [Authorize]
+    [HttpPut("{id:int}")]
+    [ProducesResponseType(typeof(UserCreatedResponse), (int)HttpStatusCode.OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<IActionResult> Update([FromRoute] int userId, [FromBody] UpdateUserCommand command)
+    {
+        if (!ModelState.IsValid)
+        {
+            return BadRequest(ModelState);
+        }
+            
+        var user = await _userService.UpdateAsync(command);
+
+        return user.ToOk(m => new UserUpdatedResponse(m));
+    }
+    
+    [Authorize]
+    [HttpDelete("{userId:int}")]
+    [ProducesResponseType(typeof(UserCreatedResponse), (int)HttpStatusCode.OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<IActionResult> Delete([FromQuery] int userId)
+    {
+        if (!ModelState.IsValid)
+        {
+            return BadRequest(ModelState);
+        }
+            
+        var user = await _userService.DeleteAsync(userId);
+
+        return user.ToNoContent();
     }
 }

@@ -31,6 +31,14 @@ public static class ResponseHandlerExtensions
         );
     }
 
+    public static IActionResult ToNoContent<TResult>(this Result<TResult> result)
+    {
+        return result.Match<IActionResult>(
+            success => new NoContentResult(),
+            FailHandler
+        );
+    }
+
 
     internal static IActionResult FailHandler(Exception exception)
     {

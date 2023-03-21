@@ -54,4 +54,12 @@ public class User : AuditableEntity
     {
         Password= BCryptPassword.Parse(Password);
     }
+
+    public void Update(string firstName, string lastName, string documentNumber)
+    {
+        FirstName = firstName;
+        LastName = lastName;
+        DocumentNumber = documentNumber;
+        UpdatedAt = DateTime.UtcNow;
+    }
 }
