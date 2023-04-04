@@ -20,7 +20,17 @@ public class UserAuthenticationService : IUserAuthenticationService
 
     public async Task<Result<AuthenticationResponse>> AuthenticateAsync(AuthenticateCommand command)
     {
-        var user = await _userRepository.GetByLoginAsync(command.Email, command.Username);
+        var invalidEmail = !Email.TryParse(command.Login, out var _);
+        var invalidUsername = string.IsNullOrWhiteSpace(command.Login); 
+        if (invalidEmail && invalidUsername)
+        {
+            return new Result<AuthenticationResponse>(new ValidationException(new ValidationError()
+            {
+                PropertyName = "Login", ErrorMessage = "Você deve informar um usuário ou um e-mail válido"
+            }));
+        }
+        
+        var user = await _userRepository.GetByLoginAsync(command.Login);
         var validPassword = user?.IsValidPassword(command.Password) ?? false;
 
         if (user is null || !validPassword)

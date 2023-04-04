@@ -1,4 +1,5 @@
 using System.Security.Claims;
+using Gama.Application.Options;
 using Gama.Domain.Entities;
 using Microsoft.IdentityModel.JsonWebTokens;
 using Microsoft.IdentityModel.Tokens;
@@ -7,7 +8,7 @@ namespace Gama.Application.DataContracts;
 
 public class UserSecurityTokenDescriptor : SecurityTokenDescriptor
 {
-    public UserSecurityTokenDescriptor(string issuer, string audience, byte[] key, User user)
+    public UserSecurityTokenDescriptor(JwtOptions jwtOptions, User user)
     {
         Subject = new ClaimsIdentity(new[]
         {
@@ -18,11 +19,11 @@ public class UserSecurityTokenDescriptor : SecurityTokenDescriptor
                 Guid.NewGuid().ToString()),
             new Claim("Role", user.Role.ToString())
         });
-        Expires = DateTime.UtcNow.AddMinutes(5);
-        Issuer = issuer;
-        Audience = audience;
+        Expires = DateTime.UtcNow.AddMinutes(1);
+        Issuer = jwtOptions.Issuer;
+        Audience = jwtOptions.Audience;
         SigningCredentials = new SigningCredentials
-        (new SymmetricSecurityKey(key),
-            SecurityAlgorithms.HmacSha512Signature);
+        (new SymmetricSecurityKey(jwtOptions.GetSecretKeyBytes()),
+            SecurityAlgorithms.HmacSha256);
     }
 }

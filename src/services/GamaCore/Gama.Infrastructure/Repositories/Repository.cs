@@ -33,9 +33,9 @@ internal abstract class Repository<T> : IRepository<T> where T : class
         return query;
     }
 
-    public async Task<T?> FindOneAsync(Expression<Func<T, bool>> filter)
+    public async Task<T?> FindOneAsync<TId>(TId id) where TId : struct
     {
-        return await _context.Set<T>().FindAsync(filter).AsTask();
+        return await _context.Set<T>().FindAsync(id).AsTask();
     }
 
     public async Task InsertAsync(T tObject)

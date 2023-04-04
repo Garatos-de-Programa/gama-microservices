@@ -1,4 +1,6 @@
 using Gama.Application.Contracts.Repositories;
+using Gama.Application.Contracts.UserManagement;
+using Gama.Infrastructure.Authentication;
 using Gama.Infrastructure.Persistence;
 using Gama.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
@@ -14,6 +16,8 @@ public static class InfrastructureServiceRegistration
     {
         var connectionString = configuration.GetConnectionString("GamaCoreDbConnectionString");
         
+        services.AddScoped<ITokenService, JwtTokenProvider>();
+
         services.AddDbContext<GamaCoreDbContext>(options =>
             options.UseNpgsql(connectionString));
 

@@ -4,17 +4,17 @@ namespace Gama.Application.DataContracts.Commands.UserManagement;
 
 public class CreateUserCommand
 {
-    public string FirstName { get; }
+    public string FirstName { get; set; }
 
-    public string LastName { get; }
+    public string LastName { get; set;}
 
-    public string Username { get; }
+    public string Username { get; set;}
 
-    public string Email { get; }
+    public string Email { get; set;}
     
-    public string Password { get; }
+    public string Password { get; set;}
 
-    public string DocumentNumber { get; }
+    public string DocumentNumber { get; set;}
 
     public User ToUser()
     {

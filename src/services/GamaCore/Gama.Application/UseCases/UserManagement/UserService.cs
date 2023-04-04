@@ -39,7 +39,7 @@ public class UserService : IUserService
 
     public async Task<Result<User>> UpdateAsync(int userId, UpdateUserCommand updateUserCommand)
     {
-        var user = await _userRepository.FindOneAsync(u => u.Id == userId);
+        var user = await _userRepository.FindOneAsync(userId);
 
         if (user is null)
         {
@@ -80,7 +80,7 @@ public class UserService : IUserService
 
     public async Task<Result<User>> GetAsync(int userId)
     {
-        var user = await _userRepository.FindOneAsync(u => u.Id == userId);
+        var user = await _userRepository.FindOneAsync(userId);
         if (user is null)
         {
             return new Result<User>(new ValidationException(new ValidationError()

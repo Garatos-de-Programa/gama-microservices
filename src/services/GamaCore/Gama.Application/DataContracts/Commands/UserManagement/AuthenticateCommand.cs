@@ -1,40 +1,35 @@
+using Flunt.Notifications;
 using Gama.Domain.Exceptions;
 using Gama.Domain.ValueTypes;
+using ValidationException = Gama.Domain.Exceptions.ValidationException;
 
 namespace Gama.Application.DataContracts.Commands.UserManagement;
 
-public class AuthenticateCommand
+public class AuthenticateCommand : Notifiable<Notification>
 {
-    public string? Email { get; init; }
+    public string? Login { get; init; }
 
     public string Password { get; init; }
 
-    public string? Username { get; init; }
-
     public Result<bool> IsValid()
     {
-        var hasValidLogin = HasEmailOrUsername();
-        var hasValidPassword = !string.IsNullOrWhiteSpace(Password);
+        var invalidLogin = string.IsNullOrWhiteSpace(Login);
+        var invalidPassword = string.IsNullOrWhiteSpace(Password);
 
-        if (!hasValidLogin)
+        if (invalidLogin)
         {
             return new Result<bool>(new ValidationException(new ValidationError[]
                 {
                     new ValidationError()
                     {
-                        PropertyName = nameof(Username),
+                        PropertyName = nameof(Login),
                         ErrorMessage = "Você deve informar um usuário ou um e-mail válido"
-                    },
-                    new ValidationError()
-                    {
-                        PropertyName = nameof(Email),
-                        ErrorMessage = "Você deve informar um usuário ou um e-mail válido"
-                    },
+                    }
                 }
             ));
         }
 
-        if (!hasValidPassword)
+        if (invalidPassword)
         {
             return new Result<bool>(new ValidationException(new ValidationError()
             {
@@ -44,10 +39,5 @@ public class AuthenticateCommand
         }
 
         return true;
-    }
-
-    internal bool HasEmailOrUsername()
-    {
-        return !string.IsNullOrWhiteSpace(Email) ^ !string.IsNullOrWhiteSpace(Username);
     }
 }

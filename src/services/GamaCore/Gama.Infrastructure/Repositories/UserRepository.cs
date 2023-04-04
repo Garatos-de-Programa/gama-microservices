@@ -11,8 +11,13 @@ internal class UserRepository : Repository<User>, IUserRepository
     {
     }
 
+    public async Task<User?> GetByLoginAsync(string login)
+    {
+        return  await FindAll().FirstOrDefaultAsync(f => f.Email == login || f.Username == login);
+    }
+    
     public async Task<User?> GetByLoginAsync(string email, string username)
     {
-        return  await FindAll().SingleOrDefaultAsync(f => f.Email == email || f.Username == username);
+        return  await FindAll().FirstOrDefaultAsync(f => f.Email == email || f.Username == username);
     }
 }

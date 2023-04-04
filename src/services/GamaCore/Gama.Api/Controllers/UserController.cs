@@ -8,8 +8,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Gama.Api.Controllers;
 
-[Route("api/v1/users")]
 [ApiController]
+[Route("v1/users")]
 public class UserController : ControllerBase
 {
     private readonly IUserService _userService;
@@ -24,14 +24,14 @@ public class UserController : ControllerBase
     [ProducesResponseType(typeof(UserCreatedResponse), (int)HttpStatusCode.OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> Get([FromRoute] int useId)
+    public async Task<IActionResult> Get([FromRoute] int userId)
     {
         if (!ModelState.IsValid)
         {
             return BadRequest(ModelState);
         }
             
-        var user = await _userService.GetAsync(useId);
+        var user = await _userService.GetAsync(userId);
 
         return user.ToOk(m => new UserCreatedResponse(m));
     }
