@@ -14,19 +14,19 @@ export default class IncidentMessagePostgreesListener
 
       listen(): void {
         const client = new Client({
-          user: 'yourusername',
-          password: 'yourpassword',
-          database: 'yourdatabase',
+          user: 'admin',
+          password: 'admin1234',
+          database: 'GamaCoreDb',
           host: 'localhost',
           port: 5432,
         });
       
         client.connect();
         
-        client.query('LISTEN your_event');
+        client.query('LISTEN user_notification');
 
         client.on('notification', (notification : Notification) => {
-          console.log('Received notification');
+          console.log('Received notification' + notification.payload);
           const message = new IncidentMessage(notification.payload!);
           this._messageProducer.produce(message);
         });
