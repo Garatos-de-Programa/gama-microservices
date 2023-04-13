@@ -25,3 +25,13 @@ services:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data/ 
+
+  gama.api:
+    container_name: gama.api
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - "ConnectionStrings:GamaCoreDbConnectionString=Host=gamacoredb;Port=5432;Database=GamaCoreDb;Username=admin;Password=admin1234;Pooling=true;"
+    depends_on:
+      - gamacoredb
+    ports:
+      - "8000:80"

@@ -1,18 +1,21 @@
 ﻿FROM mcr.microsoft.com/dotnet/aspnet:7.0 AS base
 WORKDIR /app
 EXPOSE 80
-EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 WORKDIR /src
-COPY ["src/services/GamaCore/Gama.Api/Gama.Api.csproj", "src/services/GamaCore/Gama.Api/"]
-RUN dotnet restore "src/services/GamaCore/Gama.Api/Gama.Api.csproj"
+COPY ["src/services/GamaCore/Gama.Api/Gama.Api.csproj", "service/GamaCore/Gama.Api/"]
+COPY ["src/services/GamaCore/Gama.Application/Gama.Application.csproj", "service/GamaCore/Gama.Application/"]
+COPY ["src/services/GamaCore/Gama.Domain/Gama.Domain.csproj", "service/GamaCore/Gama.Domain/"]
+COPY ["src/services/GamaCore/Gama.Infrastructure/Gama.Infrastructure.csproj", "service/GamaCore/Gama.Infrastructure/"]
+COPY ["src/services/GamaCore/Gama.Shared/Gama.Shared.csproj", "service/GamaCore/Gama.Shared/"]
+RUN dotnet restore "service/GamaCore/Gama.Api/Gama.Api.csproj"
 COPY . .
-WORKDIR "/src/src/services/GamaCore/Gama.Api"
+WORKDIR "/src/service/GamaCore/Gama.Api"
 RUN dotnet build "Gama.Api.csproj" -c Release -o /app/build
 
 FROM build AS publish
-RUN dotnet publish "Gama.Api.csproj" -c Release -o /app/publish
+RUN dotnet publish "Gama.Api.csproj" -c Release -o /app/publish /p:UseAppHost=false
 
 FROM base AS final
 WORKDIR /app

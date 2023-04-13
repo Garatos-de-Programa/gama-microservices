@@ -1,0 +1,18 @@
+version: '3.4'
+
+services:
+  pgadmin:
+    image: dpage/pgadmin4
+
+  gamacoredb:
+    image: postgres
+
+  gama.api:
+    image: ${DOCKER_REGISTRY-}gamaapi
+    build:
+      context: .
+      dockerfile: src/services/GamaCore/Gama.Api/Dockerfile
+
+volumes:
+  pgadmin_data:
+  postgres_data:

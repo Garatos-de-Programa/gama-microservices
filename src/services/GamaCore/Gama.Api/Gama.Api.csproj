@@ -15,15 +15,15 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Content Include="..\..\..\..\.dockerignore">
-        <Link>.dockerignore</Link>
-      </Content>
-    </ItemGroup>
-
-    <ItemGroup>
       <ProjectReference Include="..\Gama.Application\Gama.Application.csproj" />
       <ProjectReference Include="..\Gama.Infrastructure\Gama.Infrastructure.csproj" />
       <ProjectReference Include="..\Gama.Shared\Gama.Shared.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Content Include="..\..\..\..\.dockerignore">
+        <Link>.dockerignore</Link>
+      </Content>
     </ItemGroup>
 
 </Project>
