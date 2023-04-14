@@ -11,7 +11,7 @@ services:
     image: ${DOCKER_REGISTRY-}gamaapi
     build:
       context: .
-      dockerfile: src/services/GamaCore/Gama.Api/Dockerfile
+      dockerfile: src/services/GamaCore/Dockerfile
 
 volumes:
   pgadmin_data:
