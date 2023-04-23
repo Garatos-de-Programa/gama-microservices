@@ -54,7 +54,7 @@ public class UserController : ControllerBase
     }
     
     [Authorize]
-    [HttpPut("{id:int}")]
+    [HttpPut("{userId:int}")]
     [ProducesResponseType(typeof(UserCreatedResponse), (int)HttpStatusCode.OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -85,5 +85,23 @@ public class UserController : ControllerBase
         var user = await _userService.DeleteAsync(userId);
 
         return user.ToNoContent();
+    }
+    
+    [HttpPut("{login}/password")]
+    [ProducesResponseType(typeof(UserCreatedResponse), (int)HttpStatusCode.OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<IActionResult> UpdatePassword(string login, UpdatePasswordCommand updatePasswordCommand)
+    {
+        if (!ModelState.IsValid)
+        {
+            return BadRequest(ModelState);
+        }
+
+        updatePasswordCommand.Login = login;
+
+        var result = await _userService.UpdatePasswordAsync(updatePasswordCommand);
+
+        return result.ToOk();
     }
 }

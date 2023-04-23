@@ -12,6 +12,7 @@
 
     <ItemGroup>
       <PackageReference Include="Flunt" Version="2.0.5" />
+      <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.2.0" />
       <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="2.2.0" />
       <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.28.1" />
     </ItemGroup>

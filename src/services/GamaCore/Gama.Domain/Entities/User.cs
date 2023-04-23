@@ -62,4 +62,11 @@ public class User : AuditableEntity
         DocumentNumber = documentNumber;
         UpdatedAt = DateTime.UtcNow;
     }
+
+    public void ChangePassword(string newPassword)
+    {
+        Password = newPassword;
+        Encrypt();
+        UpdatedAt = DateTime.UtcNow;
+    }
 }

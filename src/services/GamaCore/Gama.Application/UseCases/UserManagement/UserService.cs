@@ -93,8 +93,30 @@ public class UserService : IUserService
         return user;
     }
 
-    public Task<Result<User>> UpdatePasswordAsync(int userId, UpdatePasswordCommand command)
+    public async Task<Result<User>> UpdatePasswordAsync(UpdatePasswordCommand command)
     {
-        throw new NotImplementedException();
+        var user = await _userRepository.GetByLoginAsync(command.Login);
+        if (user is null)
+        {
+            return new Result<User>(new ValidationException(new ValidationError()
+            {
+                PropertyName = "User",
+                ErrorMessage = "Usuário ou senha inválidos"
+            }));
+        }
+
+        var isValidPassword = user.IsValidPassword(command.OldPassword);
+        if (!isValidPassword)
+        {
+            return new Result<User>(new ValidationException(new ValidationError()
+                { PropertyName = "user", ErrorMessage = "Usuário ou senha inválidos" }));
+        }
+        
+        user.ChangePassword(command.NewPassword);
+        
+        _userRepository.Patch(user);
+        await _userRepository.CommitAsync();
+
+        return user;
     }
 }

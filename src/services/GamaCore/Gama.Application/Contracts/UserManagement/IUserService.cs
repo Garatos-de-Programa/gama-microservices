@@ -10,5 +10,5 @@ public interface IUserService
     Task<Result<User>> UpdateAsync(int userId, UpdateUserCommand user);
     Task<Result<bool>> DeleteAsync(int id);
     Task<Result<User>> GetAsync(int userId);
-    Task<Result<User>> UpdatePasswordAsync(int userId, UpdatePasswordCommand command);
+    Task<Result<User>> UpdatePasswordAsync(UpdatePasswordCommand command);
 }
