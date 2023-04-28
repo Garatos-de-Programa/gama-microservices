@@ -38,8 +38,7 @@ public static class ResponseHandlerExtensions
             FailHandler
         );
     }
-
-
+    
     internal static IActionResult FailHandler(Exception exception)
     {
         if (exception is ValidationException validationException)

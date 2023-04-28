@@ -26,4 +26,8 @@
       </Content>
     </ItemGroup>
 
+    <ItemGroup>
+      <Compile Remove="Controllers\TrafficFine.cs" />
+    </ItemGroup>
+
 </Project>
