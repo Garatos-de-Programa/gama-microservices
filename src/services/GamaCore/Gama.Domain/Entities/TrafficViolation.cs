@@ -2,7 +2,7 @@
 
 public class TrafficViolation : AuditableEntity
 {
-    public string Id { get; set; }
+    public short Id { get; set; }
 
     public string Code { get; set; }
 

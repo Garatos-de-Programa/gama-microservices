@@ -7,6 +7,8 @@ public class GetTrafficViolationResponse
     public string Code { get; }
 
     public string Name { get; }
+
+    public bool Deleted => DeletedAt.HasValue; 
     
     public DateTime? CreatedAt { get; }
 

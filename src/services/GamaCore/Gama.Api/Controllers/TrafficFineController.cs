@@ -92,7 +92,8 @@ public class TrafficFineController : Controller
     }
 
     [HttpDelete("{id:long}", Name = "DeleteTrafficFine")]
-    [ProducesResponseType(typeof(void), (int)HttpStatusCode.OK)]
+    [ProducesResponseType(typeof(void), (int)HttpStatusCode.NoContent)]
+    [ProducesResponseType((int)HttpStatusCode.NotFound)]
     [ProducesResponseType((int)HttpStatusCode.BadRequest)]
     [ProducesResponseType((int)HttpStatusCode.InternalServerError)]
     public async Task<IActionResult> DeleteAsync(long id)
