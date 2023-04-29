@@ -6,44 +6,21 @@ public class User : AuditableEntity
 {
     public int Id { get; protected set; }
     
-    public string FirstName { get; protected set; }
+    public string? FirstName { get; protected set; }
 
-    public string LastName { get; protected set; }
+    public string? LastName { get; protected set; }
 
-    public string Username { get; protected set; }
+    public string? Username { get; protected set; }
 
-    public string Email { get; protected set; }
+    public string? Email { get; protected set; }
     
-    public string Password { get; protected set; }
+    public string? Password { get; protected set; }
 
-    public string DocumentNumber { get; protected set; }
+    public string? DocumentNumber { get; protected set; }
 
-    public string Role { get; protected set; }
+    public bool Active { get; protected set; }
 
-    public User(
-        string firstName,
-        string lastName,
-        string username,
-        string email,
-        string password,
-        string documentNumber,
-        string role,
-        DateTime? createdAt = null,
-        DateTime? updatedAt = null,
-        DateTime? deletedAt = null
-    )
-    {
-        FirstName = firstName;
-        LastName = lastName;
-        Username = username;
-        Email = email;
-        Password = password;
-        DocumentNumber = documentNumber;
-        Role = role;
-        CreatedAt = createdAt ?? DateTime.UtcNow;
-        UpdatedAt = updatedAt;
-        DeletedAt = deletedAt;
-    }
+    public UserAddress? Address { get; set; }
 
     public bool IsValidPassword(string password)
     {
@@ -68,5 +45,11 @@ public class User : AuditableEntity
         Password = newPassword;
         Encrypt();
         UpdatedAt = DateTime.UtcNow;
+    }
+
+    public override void Delete()
+    {
+        Active = false;
+        base.Delete();
     }
 }

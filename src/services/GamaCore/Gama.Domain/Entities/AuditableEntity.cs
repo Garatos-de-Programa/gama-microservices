@@ -8,7 +8,9 @@ public abstract class AuditableEntity
     
     public DateTime? DeletedAt { get; protected set; }
 
-    public void Delete()
+    public string? ModifiedBy { get; protected set; }
+
+    public virtual void Delete()
     {
         DeletedAt = DateTime.UtcNow;
     }
