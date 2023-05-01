@@ -1,6 +1,6 @@
 ﻿namespace Gama.Domain.Entities
 {
-    public class UserAddress : AuditableEntity
+    public class UserAddress
     {
         public int Id { get; set; }
 
@@ -15,5 +15,13 @@
         public string? State { get; set; }
 
         public string? District { get; set; }
+
+        public string? ModifiedBy { get; set; }
+
+        public DateTime? CreatedAt { get; protected set; }
+
+        public DateTime? UpdatedAt { get; protected set; }
+
+        public User? User { get; set; }
     }
 }

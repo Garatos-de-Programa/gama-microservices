@@ -13,4 +13,6 @@ public class CreateUserCommand
     public string Password { get; set;}
 
     public string DocumentNumber { get; set;}
+
+    public UserCreateAddress Address { get; set;}
 }

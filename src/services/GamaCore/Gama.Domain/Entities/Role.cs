@@ -1,4 +1,6 @@
-﻿namespace Gama.Domain.Entities
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace Gama.Domain.Entities
 {
     public class Role
     {
@@ -6,6 +8,7 @@
 
         public string? Name { get; set; }
 
-        public ICollection<UserRoles> UserRoles { get; set; }
+        [NotMapped]
+        public IEnumerable<UserRoles> UserRoles { get; set; }
     }
 }
