@@ -7,7 +7,7 @@ namespace Gama.Infrastructure.Repositories;
 
 internal abstract class Repository<T> : IRepository<T> where T : class
 {
-    private readonly DbContext _context;
+    protected readonly DbContext _context;
 
     public Repository(GamaCoreDbContext dbContext)
     {

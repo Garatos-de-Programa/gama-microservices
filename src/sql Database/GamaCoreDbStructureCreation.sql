@@ -33,6 +33,10 @@ CREATE TABLE roles (
 	name VARCHAR(15) NOT NULL
 );
 
+
+INSERT INTO public.roles (name) VALUES ('Cop'), ('Admin'), ('Citizen');
+
+
 CREATE TABLE user_roles (
 	user_id INT NOT NULL,
 	role_id INT NOT NULL,

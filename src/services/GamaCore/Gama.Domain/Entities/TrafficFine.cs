@@ -15,6 +15,6 @@ public class TrafficFine : AuditableEntity
     public bool Active { get; set; }
 
     public bool Computed { get; set; }
-    
+
     public IEnumerable<TrafficViolation>? TrafficViolations { get; set; }
 }

@@ -8,7 +8,6 @@ public abstract class AuditableEntity
     
     public DateTime? DeletedAt { get; protected set; }
 
-    public string? ModifiedBy { get; protected set; }
 
     public virtual void Delete()
     {

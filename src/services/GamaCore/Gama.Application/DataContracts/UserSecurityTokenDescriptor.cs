@@ -10,15 +10,21 @@ public class UserSecurityTokenDescriptor : SecurityTokenDescriptor
 {
     public UserSecurityTokenDescriptor(JwtOptions jwtOptions, User user)
     {
-        Subject = new ClaimsIdentity(new[]
+        var claims = new List<Claim>()
         {
             new Claim("Id", user.Id.ToString()),
             new Claim(JwtRegisteredClaimNames.Sub, user.Username),
             new Claim(JwtRegisteredClaimNames.Email, user.Email),
             new Claim(JwtRegisteredClaimNames.Jti,
                 Guid.NewGuid().ToString()),
-            new Claim("Role", user.Role.ToString())
-        });
+        };
+
+        foreach (var role in user?.UserRoles ?? new List<UserRoles>())
+        {
+            claims.Add(new Claim("Role", role.Role.Name.ToString()));
+        }
+
+        Subject = new ClaimsIdentity(claims);
         Expires = DateTime.UtcNow.AddMinutes(1);
         Issuer = jwtOptions.Issuer;
         Audience = jwtOptions.Audience;

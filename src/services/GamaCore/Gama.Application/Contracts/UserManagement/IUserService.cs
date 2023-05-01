@@ -6,7 +6,7 @@ namespace Gama.Application.Contracts.UserManagement;
 
 public interface IUserService
 {
-    Task<Result<User>> CreateAsync(CreateUserCommand user);
+    Task<Result<User>> CreateAsync(User user);
     Task<Result<User>> UpdateAsync(int userId, UpdateUserCommand user);
     Task<Result<bool>> DeleteAsync(int id);
     Task<Result<User>> GetAsync(int userId);

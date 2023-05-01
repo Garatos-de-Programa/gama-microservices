@@ -15,13 +15,17 @@ public static class InfrastructureServiceRegistration
         IConfiguration configuration)
     {
         var connectionString = configuration.GetConnectionString("GamaCoreDbConnectionString");
-        
+
         services.AddScoped<ITokenService, JwtTokenProvider>();
 
         services.AddDbContext<GamaCoreDbContext>(options =>
-            options.UseNpgsql(connectionString));
+            options.UseNpgsql(connectionString)
+            .UseSnakeCaseNamingConvention()
+            );
 
         services.AddTransient<IUserRepository, UserRepository>();
+        services.AddTransient<IRolesRepository, RolesRepository>();
+        services.AddTransient<ITrafficViolationRepository, TrafficViolationRepository>();
 
         return services;
     }

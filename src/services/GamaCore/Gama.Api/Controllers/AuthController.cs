@@ -6,8 +6,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Gama.Api.Controllers;
 
-[Route("api/v1/[controller]")]
 [ApiController]
+[Route("v1/auth")]
 public class AuthController : ControllerBase
 {
     private readonly IUserAuthenticationService _userAuthenticationService;
@@ -17,7 +17,7 @@ public class AuthController : ControllerBase
         _userAuthenticationService = userAuthenticationService;
     }
 
-    [HttpPost("/token")]
+    [HttpPost("token")]
     [AllowAnonymous]
     public async Task<IActionResult> Create([FromBody] AuthenticateCommand authenticateCommand)
     {

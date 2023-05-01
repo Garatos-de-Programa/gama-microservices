@@ -11,16 +11,18 @@ public class UserService : IUserService
 {
     private readonly IUserRepository _userRepository;
 
-    public UserService(IUserRepository userRepository)
+    public UserService(
+        IUserRepository userRepository 
+        )
     {
         _userRepository = userRepository;
     }
 
-    public async Task<Result<User>> CreateAsync(CreateUserCommand createUserCommand)
+    public async Task<Result<User>> CreateAsync(User user)
     {
-        var user = await _userRepository.GetByLoginAsync(createUserCommand.Email, createUserCommand.Username);
+        var existingUser = await _userRepository.GetByLoginAsync(user.Email, user.Username);
 
-        if (user is not null)
+        if (existingUser is not null)
         {
             return new Result<User>(new ValidationException(new ValidationError()
             {
@@ -29,12 +31,12 @@ public class UserService : IUserService
             }));
         }
 
-        var userToInsert = createUserCommand.ToUser();
+        user.PrepareToInsert();
 
-        await _userRepository.InsertAsync(userToInsert);
+        await _userRepository.InsertAsync(user);
         await _userRepository.CommitAsync();
 
-        return userToInsert;
+        return user;
     }
 
     public async Task<Result<User>> UpdateAsync(int userId, UpdateUserCommand updateUserCommand)
