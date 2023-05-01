@@ -1,6 +1,8 @@
 using Gama.Api.OptionsSetup;
 using Gama.Application;
+using Gama.Domain.Constants;
 using Gama.Infrastructure;
+using Microsoft.Extensions.Options;
 
 var builder = WebApplication.CreateBuilder(args);
 

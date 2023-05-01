@@ -21,7 +21,7 @@ public class UserSecurityTokenDescriptor : SecurityTokenDescriptor
 
         foreach (var role in user?.UserRoles ?? new List<UserRoles>())
         {
-            claims.Add(new Claim("Role", role.Role.Name.ToString()));
+            claims.Add(new Claim(ClaimTypes.Role, role.Role.Name.ToString()));
         }
 
         Subject = new ClaimsIdentity(claims);

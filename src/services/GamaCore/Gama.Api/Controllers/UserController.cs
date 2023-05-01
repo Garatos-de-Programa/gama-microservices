@@ -66,7 +66,7 @@ public class UserController : ControllerBase
     }
 
     [HttpPost("admin")]
-    [Authorize(RolesName.Admin)]
+    [Authorize(Roles = RolesName.Admin)]
     [ProducesResponseType(typeof(UserCreatedResponse), (int)HttpStatusCode.OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -87,7 +87,7 @@ public class UserController : ControllerBase
     }
 
     [HttpPost("cop")]
-    [Authorize(RolesName.Admin)]
+    [Authorize(Roles = RolesName.Admin)]
     [ProducesResponseType(typeof(UserCreatedResponse), (int)HttpStatusCode.OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
