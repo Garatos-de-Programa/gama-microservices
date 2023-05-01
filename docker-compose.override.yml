@@ -34,4 +34,4 @@ services:
     depends_on:
       - gamacoredb
     ports:
-      - "8000:80"
+      - "8001:80"
