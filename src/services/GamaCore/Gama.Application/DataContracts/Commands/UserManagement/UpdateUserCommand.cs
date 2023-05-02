@@ -4,9 +4,9 @@ namespace Gama.Application.DataContracts.Commands.UserManagement;
 
 public class UpdateUserCommand
 {
-    public string FirstName { get; }
+    public string FirstName { get; set; }
 
-    public string LastName { get; }
+    public string LastName { get; set; }
 
-    public string DocumentNumber { get; }
+    public string DocumentNumber { get; set; }
 }

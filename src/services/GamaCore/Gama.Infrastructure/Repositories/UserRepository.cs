@@ -34,11 +34,13 @@ internal class UserRepository : Repository<User>, IUserRepository
                                 State = u.Address.State,
                                 ZipCode = u.Address.ZipCode,
                                 District = u.Address.District,
+                                UserId = u.Address.UserId,
                             },
                             UserRoles = u.UserRoles.Select(ur => new UserRoles
                             {
                                 UserId = ur.UserId,
-                                Role = _context.Set<Role>().FirstOrDefault(r => r.Id == ur.RoleId)
+                                Role = _context.Set<Role>().FirstOrDefault(r => r.Id == ur.RoleId),
+                                RoleId = ur.RoleId
                             }).ToList()
                         })
                         .FirstOrDefaultAsync();
@@ -52,13 +54,18 @@ internal class UserRepository : Repository<User>, IUserRepository
                     .Select(u => new User
                     {
                         Id = u.Id,
+                        FirstName = u.FirstName,
+                        LastName = u.LastName,
                         Username = u.Username,
                         Email = u.Email,
                         Password = u.Password,
+                        DocumentNumber = u.DocumentNumber,
+                        Active = u.Active,
                         UserRoles = u.UserRoles.Select(ur => new UserRoles
                         {
                             UserId = ur.UserId,
-                            Role = _context.Set<Role>().FirstOrDefault(r => r.Id == ur.RoleId)
+                            Role = _context.Set<Role>().FirstOrDefault(r => r.Id == ur.RoleId),
+                            RoleId = ur.RoleId
                         }).ToList()
                     })
                     .FirstOrDefaultAsync();

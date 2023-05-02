@@ -107,8 +107,8 @@ public class UserController : ControllerBase
         return user.ToOk((user) => _entityMapper.Map<UserCreatedResponse, User>(user));
     }
 
-    [Authorize]
     [HttpPut("{userId:int}")]
+    [Authorize]
     [ProducesResponseType(typeof(GetUserResonse), (int)HttpStatusCode.OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
