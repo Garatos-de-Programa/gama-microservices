@@ -44,14 +44,14 @@ namespace Gama.Application.UseCases.TrafficFineManagement
 
         public async Task<Result<bool>> DeleteAsync(short id)
         {
-            var trafficViolation = await _trafficViolationRepository.DeleteAsync(id).ConfigureAwait(false);
+            //var trafficViolation = await _trafficViolationRepository.DeleteAsync(id).ConfigureAwait(false);
 
-            if (trafficViolation == null)
-                return new Result<bool>(new ValidationException(new ValidationError()
-                {
-                    PropertyName = "TrafficViolation",
-                    ErrorMessage = "Infração não encontrada"
-                }));
+            //if (trafficViolation == null)
+            //    return new Result<bool>(new ValidationException(new ValidationError()
+            //    {
+            //        PropertyName = "TrafficViolation",
+            //        ErrorMessage = "Infração não encontrada"
+            //    }));
 
             return true;
         }

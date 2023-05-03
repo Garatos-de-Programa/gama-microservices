@@ -1,8 +1,10 @@
 ﻿using AutoMapper;
 using Gama.Application.DataContracts.Commands.TrafficFineManagement;
 using Gama.Application.DataContracts.Commands.UserManagement;
+using Gama.Application.DataContracts.Responses.Pagination;
 using Gama.Application.DataContracts.Responses.TrafficManagement;
 using Gama.Application.DataContracts.Responses.UserManagement;
+using Gama.Application.Seedworks.Pagination;
 using Gama.Domain.Entities;
 
 namespace Gama.Application.Seedworks.Mappers
@@ -30,6 +32,11 @@ namespace Gama.Application.Seedworks.Mappers
             CreateMap<User, UserCreatedResponse>()
                 .ForMember(dest => dest.Roles, opt => opt.MapFrom(user => user.UserRoles.Select(ur => ur.Role.Name)));
             CreateMap<UpdateUserCommand, User>();
+
+            CreateMap<User, GetUsersResponse>()
+                .ForMember(dest => dest.Roles, opt => opt.MapFrom(user => user.UserRoles.Select(ur => ur.Role.Name)));
+
+            CreateMap<OffsetPage<User>, OffsetPageResponse<GetUsersResponse>>();
         }
     }
 }

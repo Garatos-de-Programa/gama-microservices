@@ -46,7 +46,7 @@ internal class UserRepository : Repository<User>, IUserRepository
                         .FirstOrDefaultAsync();
     }
 
-    public async Task<User?> GetByLoginAsync(string login)
+    public async Task<User?> GetAsync(string login)
     {
         return  await FindAll()
                     .Include(u => u.UserRoles)
@@ -71,8 +71,30 @@ internal class UserRepository : Repository<User>, IUserRepository
                     .FirstOrDefaultAsync();
     }
     
-    public async Task<User?> GetByLoginAsync(string email, string username)
+    public async Task<User?> GetAsync(string email, string username)
     {
         return  await FindAll().FirstOrDefaultAsync(f => f.Email == email || f.Username == username);
+    }
+
+    public async Task<IEnumerable<User>> GetAsync(int pageSize, int offset)
+    {
+        return await FindAll()
+            .OrderByDescending(x => x.CreatedAt)
+            .Select(u => new User
+                {
+                    Id = u.Id,
+                    FirstName = u.FirstName,
+                    LastName = u.LastName,
+                    DocumentNumber = u.DocumentNumber,
+                    Active = u.Active,
+                    UserRoles = u.UserRoles.Select(ur => new UserRoles
+                    {
+                        Role = _context.Set<Role>().FirstOrDefault(r => r.Id == ur.RoleId),
+                    }).ToList()
+                }
+             )
+            .Skip(offset)
+            .Take(pageSize)
+            .ToListAsync();
     }
 }

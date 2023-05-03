@@ -1,7 +1,11 @@
 using Gama.Application.Contracts.Mappers;
 using Gama.Application.Contracts.UserManagement;
 using Gama.Application.DataContracts.Commands.UserManagement;
+using Gama.Application.DataContracts.Queries.UserManagement;
+using Gama.Application.DataContracts.Responses.Pagination;
+using Gama.Application.DataContracts.Responses.TrafficManagement;
 using Gama.Application.DataContracts.Responses.UserManagement;
+using Gama.Application.Seedworks.Pagination;
 using Gama.Domain.Constants;
 using Gama.Domain.Entities;
 using Gama.Shared.Extensions;
@@ -131,7 +135,7 @@ public class UserController : ControllerBase
     [ProducesResponseType((int)HttpStatusCode.OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> Delete([FromQuery] int userId)
+    public async Task<IActionResult> Delete([FromRoute] int userId)
     {
         if (!ModelState.IsValid)
         {
@@ -159,5 +163,22 @@ public class UserController : ControllerBase
         var result = await _userService.UpdatePasswordAsync(updatePasswordCommand);
 
         return result.ToNoContent();
+    }
+
+    [Authorize]
+    [HttpGet()]
+    [ProducesResponseType(typeof(OffsetPageResponse<GetUsersResponse>), (int)HttpStatusCode.OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<IActionResult> GetUsers([FromBody] SearchUserQuery searchUserQuery)
+    {
+        if (!ModelState.IsValid)
+        {
+            return BadRequest(ModelState);
+        }
+
+        var result = await _userService.GetAsync(searchUserQuery);
+
+        return result.ToOk((trafficViolation) => _entityMapper.Map<OffsetPageResponse<GetUsersResponse>, OffsetPage<User>>(trafficViolation));
     }
 }

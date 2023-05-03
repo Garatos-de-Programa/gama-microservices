@@ -30,7 +30,7 @@ public class UserAuthenticationService : IUserAuthenticationService
             }));
         }
         
-        var user = await _userRepository.GetByLoginAsync(command.Login);
+        var user = await _userRepository.GetAsync(command.Login);
         var validPassword = user?.IsValidPassword(command.Password) ?? false;
 
         if (user is null || !validPassword)

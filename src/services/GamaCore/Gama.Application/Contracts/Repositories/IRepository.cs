@@ -8,6 +8,5 @@ public interface IRepository<T>
     Task<T?> FindOneAsync<TId>(TId id) where TId : struct;
     IQueryable<T> FindAll();
     void Patch(T tObject);
-    Task<T> DeleteAsync<TId>(TId id);
     Task CommitAsync();
 }

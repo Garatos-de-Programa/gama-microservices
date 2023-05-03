@@ -5,6 +5,7 @@ namespace Gama.Application.Contracts.Repositories;
 
 public interface IUserRepository : IRepository<User>
 {
-    Task<User?> GetByLoginAsync(string login);
-    Task<User?> GetByLoginAsync(string email, string username);
+    Task<User?> GetAsync(string login);
+    Task<User?> GetAsync(string email, string username);
+    Task<IEnumerable<User>> GetAsync(int pageSize, int offset);
 }

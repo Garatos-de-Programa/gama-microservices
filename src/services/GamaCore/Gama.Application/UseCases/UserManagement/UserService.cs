@@ -1,6 +1,8 @@
 using Gama.Application.Contracts.Repositories;
 using Gama.Application.Contracts.UserManagement;
 using Gama.Application.DataContracts.Commands.UserManagement;
+using Gama.Application.DataContracts.Queries.UserManagement;
+using Gama.Application.Seedworks.Pagination;
 using Gama.Domain.Entities;
 using Gama.Domain.Exceptions;
 using Gama.Domain.ValueTypes;
@@ -20,7 +22,7 @@ public class UserService : IUserService
 
     public async Task<Result<User>> CreateAsync(User user)
     {
-        var existingUser = await _userRepository.GetByLoginAsync(user.Email, user.Username);
+        var existingUser = await _userRepository.GetAsync(user.Email, user.Username);
 
         if (existingUser is not null)
         {
@@ -66,7 +68,7 @@ public class UserService : IUserService
 
     public async Task<Result<bool>> DeleteAsync(int id)
     {
-        var user = await _userRepository.DeleteAsync(id);
+        var user = await _userRepository.FindOneAsync(id);
        
         if (user is null)
         {
@@ -76,6 +78,11 @@ public class UserService : IUserService
                 ErrorMessage = "Usuário nao encontrado"
             }));
         }
+
+        user.Delete();
+
+        _userRepository.Patch(user);
+        await _userRepository.CommitAsync();
 
         return true;
     }
@@ -97,7 +104,7 @@ public class UserService : IUserService
 
     public async Task<Result<User>> UpdatePasswordAsync(UpdatePasswordCommand command)
     {
-        var user = await _userRepository.GetByLoginAsync(command.Login);
+        var user = await _userRepository.GetAsync(command.Login);
         if (user is null)
         {
             return new Result<User>(new ValidationException(new ValidationError()
@@ -120,5 +127,20 @@ public class UserService : IUserService
         await _userRepository.CommitAsync();
 
         return user;
+    }
+
+    public async Task<Result<OffsetPage<User>>> GetAsync(SearchUserQuery searchUserQuery)
+    {
+        var search = new OffsetPage<User>()
+        {
+            PageNumber = searchUserQuery.PageNumber,
+            Size = searchUserQuery.Size
+        };
+
+        var users = await _userRepository.GetAsync(search.Size, search.Offset);
+
+        search.Results = users;
+
+        return search;
     }
 }

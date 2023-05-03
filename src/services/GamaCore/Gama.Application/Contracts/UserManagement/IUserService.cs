@@ -1,4 +1,6 @@
 using Gama.Application.DataContracts.Commands.UserManagement;
+using Gama.Application.DataContracts.Queries.UserManagement;
+using Gama.Application.Seedworks.Pagination;
 using Gama.Domain.Entities;
 using Gama.Domain.ValueTypes;
 
@@ -11,4 +13,5 @@ public interface IUserService
     Task<Result<bool>> DeleteAsync(int id);
     Task<Result<User>> GetAsync(int userId);
     Task<Result<User>> UpdatePasswordAsync(UpdatePasswordCommand command);
+    Task<Result<OffsetPage<User>>> GetAsync(SearchUserQuery searchUserQuery);
 }

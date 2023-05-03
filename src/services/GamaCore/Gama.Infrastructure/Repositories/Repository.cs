@@ -19,13 +19,6 @@ internal abstract class Repository<T> : IRepository<T> where T : class
         await _context.SaveChangesAsync();
     }
 
-    public async Task<T> DeleteAsync<TId>(TId id)
-    {
-        var entityToBeDeleted = await _context.Set<T>().FindAsync(id);
-        Delete(entityToBeDeleted);
-        return entityToBeDeleted;
-    }
-
     public IQueryable<T> FindAll()
     {
         var query = _context.Set<T>().AsQueryable();
@@ -48,16 +41,5 @@ internal abstract class Repository<T> : IRepository<T> where T : class
         var set = _context.Set<T>();
         set.Attach(tObject);
         _context.Entry(tObject).State = EntityState.Modified;
-    }
-
-    protected virtual void Delete(T entityToDelete)
-    {
-        var set = _context.Set<T>();
-        if (_context.Entry(entityToDelete).State == EntityState.Detached)
-        {
-            set.Attach(entityToDelete);
-        }
-
-        set.Remove(entityToDelete);
     }
 }
