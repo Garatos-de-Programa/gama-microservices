@@ -170,7 +170,7 @@ public class UserController : ControllerBase
     [ProducesResponseType(typeof(OffsetPageResponse<GetUsersResponse>), (int)HttpStatusCode.OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> GetUsers([FromBody] SearchUserQuery searchUserQuery)
+    public async Task<IActionResult> GetUsers([FromQuery] SearchUserQuery searchUserQuery)
     {
         if (!ModelState.IsValid)
         {

@@ -8,10 +8,18 @@ public class TrafficViolation : AuditableEntity
 
     public string? Name { get; set; }
 
+    public bool Active { get; set; } = true;
+
     public void Update(TrafficViolation trafficViolation)
     {
         Code = trafficViolation.Code;
         Name = trafficViolation.Name;
         UpdatedAt = DateTime.UtcNow;
+    }
+
+    public override void Delete()
+    {
+        base.Delete();
+        Active = false;
     }
 }

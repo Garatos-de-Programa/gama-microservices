@@ -63,8 +63,10 @@ CREATE TABLE traffic_violations (
 	code VARCHAR(20) NOT NULL,
 	name VARCHAR(50) NOT NULL,
 	modified_by VARCHAR(50) NOT NULL,
+	active bool NOT NULL,
 	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-	updated_at TIMESTAMP
+	updated_at TIMESTAMP,
+	deleted_at TIMESTAMP
 );
 
 COMMIT;

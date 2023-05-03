@@ -44,14 +44,19 @@ namespace Gama.Application.UseCases.TrafficFineManagement
 
         public async Task<Result<bool>> DeleteAsync(short id)
         {
-            //var trafficViolation = await _trafficViolationRepository.DeleteAsync(id).ConfigureAwait(false);
+            var trafficViolation = await _trafficViolationRepository.FindOneAsync(id).ConfigureAwait(false);
 
-            //if (trafficViolation == null)
-            //    return new Result<bool>(new ValidationException(new ValidationError()
-            //    {
-            //        PropertyName = "TrafficViolation",
-            //        ErrorMessage = "Infração não encontrada"
-            //    }));
+            if (trafficViolation == null)
+                return new Result<bool>(new ValidationException(new ValidationError()
+                {
+                    PropertyName = "TrafficViolation",
+                    ErrorMessage = "Infração não encontrada"
+                }));
+
+            trafficViolation.Delete();
+
+            _trafficViolationRepository.Patch(trafficViolation);
+            await _trafficViolationRepository.CommitAsync().ConfigureAwait(false);
 
             return true;
         }
@@ -73,7 +78,7 @@ namespace Gama.Application.UseCases.TrafficFineManagement
 
         public Task<Result<IEnumerable<TrafficViolation>>> GetTrafficsViolationsAsync()
         {
-            return Task.FromResult(new Result<IEnumerable<TrafficViolation>>(_trafficViolationRepository.FindAll()));
+            return Task.FromResult(new Result<IEnumerable<TrafficViolation>>(_trafficViolationRepository.FindAll().Where(v => v.Active == true).ToList()));
         }
 
         public async Task<Result<TrafficViolation>> UpdateAsync(TrafficViolation trafficViolation)
