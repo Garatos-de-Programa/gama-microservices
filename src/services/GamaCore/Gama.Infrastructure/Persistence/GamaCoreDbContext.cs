@@ -26,6 +26,19 @@ public class GamaCoreDbContext : DbContext
             .HasOne(u => u.Address)
             .WithOne(a => a.User)
             .HasForeignKey<UserAddress>(a => a.UserId);
+
+        modelBuilder.Entity<TrafficFineTrafficViolation>()
+            .HasKey(tv => new { tv.TrafficFineId, tv.TrafficViolationId });
+
+        modelBuilder.Entity<TrafficFineTrafficViolation>()
+            .HasOne(tv => tv.TrafficFine)
+            .WithMany(tf => tf.TrafficFineTrafficViolations)
+            .HasForeignKey(tv => tv.TrafficFineId);
+
+        modelBuilder.Entity<TrafficFineTrafficViolation>()
+            .HasOne(tv => tv.TrafficViolation)
+            .WithMany(tv => tv.TrafficFineTrafficViolations)
+            .HasForeignKey(tv => tv.TrafficViolationId);
     }
 
     public DbSet<User> Users { get; set; }

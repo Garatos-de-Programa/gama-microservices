@@ -42,7 +42,7 @@ namespace Gama.Application.UseCases.TrafficFineManagement
             return trafficViolation;
         }
 
-        public async Task<Result<bool>> DeleteAsync(short id)
+        public async Task<Result<bool>> DeleteAsync(int id)
         {
             var trafficViolation = await _trafficViolationRepository.FindOneAsync(id).ConfigureAwait(false);
 
@@ -61,7 +61,7 @@ namespace Gama.Application.UseCases.TrafficFineManagement
             return true;
         }
 
-        public async Task<Result<TrafficViolation>> GetAsync(short id)
+        public async Task<Result<TrafficViolation>> GetAsync(int id)
         {
             var trafficViolation = await _trafficViolationRepository.FindOneAsync(id);
             if (trafficViolation is null)
@@ -93,7 +93,7 @@ namespace Gama.Application.UseCases.TrafficFineManagement
             var violation = await _trafficViolationRepository.FindOneAsync(trafficViolation.Id)
                     .ConfigureAwait(false);
 
-            if (violation is not null)
+            if (violation is null)
             {
                 return new Result<TrafficViolation>(new ValidationException(new ValidationError()
                 {
@@ -104,7 +104,7 @@ namespace Gama.Application.UseCases.TrafficFineManagement
 
             violation?.Update(trafficViolation);
 
-            _trafficViolationRepository.Patch(trafficViolation);
+            _trafficViolationRepository.Patch(violation);
             await _trafficViolationRepository.CommitAsync().ConfigureAwait(false);
 
             return trafficViolation;

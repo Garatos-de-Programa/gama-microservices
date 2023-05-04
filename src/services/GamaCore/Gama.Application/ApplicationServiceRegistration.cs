@@ -15,8 +15,11 @@ public static class ApplicationServiceRegistration
         services.AddScoped<IUserAuthenticationService, UserAuthenticationService>();
         services.AddScoped<IUserService, UserService>();
         services.AddScoped<ITrafficViolationService, TrafficViolationService>();
+        services.AddScoped<ICurrentUserAccessor, HttpContextCurrentUserAcessor>();
         services.AddAutoMapper(typeof(UnifiedMapperProfile));
         services.AddSingleton<IEntityMapper, AutoMapperMapper>();
+
+        services.AddHttpContextAccessor();
 
         return services;
     }

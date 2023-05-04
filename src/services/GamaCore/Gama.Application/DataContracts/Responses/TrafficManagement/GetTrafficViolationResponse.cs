@@ -2,17 +2,17 @@
 
 public class GetTrafficViolationResponse
 {
-    public string Id { get; }
+    public int Id { get; set; }
 
-    public string Code { get; }
+    public string Code { get; set; }
 
-    public string Name { get; }
+    public string Name { get; set;  }
 
-    public bool Deleted => DeletedAt.HasValue; 
+    public bool Active { get; set; } 
     
-    public DateTime? CreatedAt { get; }
+    public DateTime? CreatedAt { get; set; }
 
-    public DateTime? UpdatedAt { get; }
+    public DateTime? UpdatedAt { get; set; }
     
-    public DateTime? DeletedAt { get; }
+    public DateTime? DeletedAt { get; set; }
 }

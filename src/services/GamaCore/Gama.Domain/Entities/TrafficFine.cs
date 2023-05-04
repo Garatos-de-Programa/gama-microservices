@@ -2,7 +2,7 @@
 
 public class TrafficFine : AuditableEntity
 {
-    public long Id { get; set; }
+    public int Id { get; set; }
 
     public string? LicensePlate { get; set; }
 
@@ -16,5 +16,5 @@ public class TrafficFine : AuditableEntity
 
     public bool Computed { get; set; }
 
-    public IEnumerable<TrafficViolation>? TrafficViolations { get; set; }
+    public ICollection<TrafficFineTrafficViolation> TrafficFineTrafficViolations { get; set; }
 }

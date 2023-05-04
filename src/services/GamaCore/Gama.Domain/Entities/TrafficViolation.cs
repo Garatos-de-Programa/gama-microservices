@@ -2,13 +2,17 @@
 
 public class TrafficViolation : AuditableEntity
 {
-    public short Id { get; set; }
+    public int Id { get; set; }
 
     public string? Code { get; set; }
 
     public string? Name { get; set; }
 
+    public string ModifiedBy { get; set; }
+
     public bool Active { get; set; } = true;
+
+    public ICollection<TrafficFineTrafficViolation> TrafficFineTrafficViolations { get; set; }
 
     public void Update(TrafficViolation trafficViolation)
     {
@@ -21,5 +25,7 @@ public class TrafficViolation : AuditableEntity
     {
         base.Delete();
         Active = false;
+        UpdatedAt = DateTime.UtcNow;
+        CreatedAt= DateTime.UtcNow;
     }
 }
