@@ -26,8 +26,6 @@ namespace Gama.Application.Seedworks.Mappers
 
             CreateMap<User, GetUserResonse>()
                 .ForMember(dest => dest.Roles, opt => opt.MapFrom(user => user.UserRoles.Select(ur => ur.Role.Name)));
-            CreateMap<UserAddress, GetUserAddressResponse>();
-            CreateMap<UserCreateAddress, UserAddress>();
             CreateMap<CreateUserCommand, User>();
             CreateMap<User, UserCreatedResponse>()
                 .ForMember(dest => dest.Roles, opt => opt.MapFrom(user => user.UserRoles.Select(ur => ur.Role.Name)));

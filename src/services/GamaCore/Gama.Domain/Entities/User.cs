@@ -21,8 +21,6 @@ public class User : AuditableEntity
 
     public bool Active { get; set; }
 
-    public UserAddress? Address { get; set; }
-
     public IList<UserRoles>? UserRoles { get; set; }
 
     public bool IsValidPassword(string password)

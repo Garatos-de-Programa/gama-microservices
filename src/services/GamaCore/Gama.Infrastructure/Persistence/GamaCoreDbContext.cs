@@ -22,11 +22,6 @@ public class GamaCoreDbContext : DbContext
             .WithMany(r => r.UserRoles)
             .HasForeignKey(ur => ur.RoleId);
 
-        modelBuilder.Entity<User>()
-            .HasOne(u => u.Address)
-            .WithOne(a => a.User)
-            .HasForeignKey<UserAddress>(a => a.UserId);
-
         modelBuilder.Entity<TrafficFineTrafficViolation>()
             .HasKey(tv => new { tv.TrafficFineId, tv.TrafficViolationId });
 
@@ -48,8 +43,6 @@ public class GamaCoreDbContext : DbContext
     public DbSet<TrafficFine> TrafficFines { get; set; }
 
     public DbSet<TrafficViolation> TrafficViolations { get; set; }
-
-    public DbSet<UserAddress> UserAddress { get; set; }
 
     public DbSet<Role> Roles { get; set; }
 

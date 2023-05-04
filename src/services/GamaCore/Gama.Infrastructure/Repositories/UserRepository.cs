@@ -26,16 +26,6 @@ internal class UserRepository : Repository<User>, IUserRepository
                             Password = u.Password,
                             DocumentNumber = u.DocumentNumber,
                             Active = u.Active,
-                            Address = new UserAddress
-                            {
-                                Id = u.Address.Id,
-                                Street = u.Address.Street,
-                                City = u.Address.City,
-                                State = u.Address.State,
-                                ZipCode = u.Address.ZipCode,
-                                District = u.Address.District,
-                                UserId = u.Address.UserId,
-                            },
                             UserRoles = u.UserRoles.Select(ur => new UserRoles
                             {
                                 UserId = ur.UserId,
