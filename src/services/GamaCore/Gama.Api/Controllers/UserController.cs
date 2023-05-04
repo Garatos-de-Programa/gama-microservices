@@ -130,8 +130,8 @@ public class UserController : ControllerBase
         return user.ToOk((user) => _entityMapper.Map<GetUserResonse, User>(user));
     }
 
-    [Authorize]
     [HttpDelete("{userId:int}")]
+    [Authorize(Roles = RolesName.Admin)]
     [ProducesResponseType((int)HttpStatusCode.OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -165,8 +165,8 @@ public class UserController : ControllerBase
         return result.ToNoContent();
     }
 
-    [Authorize]
-    [HttpGet()]
+    [HttpGet]
+    [Authorize(Roles = RolesName.Admin)]
     [ProducesResponseType(typeof(OffsetPageResponse<GetUsersResponse>), (int)HttpStatusCode.OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
