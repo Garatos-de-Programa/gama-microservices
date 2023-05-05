@@ -40,9 +40,6 @@ public class UserAuthenticationService : IUserAuthenticationService
         }
 
         var token = _tokenService.Generate(user);
-        return new Result<AuthenticationResponse>(new AuthenticationResponse()
-        {
-            Token = token
-        });
+        return token;
     }
 }

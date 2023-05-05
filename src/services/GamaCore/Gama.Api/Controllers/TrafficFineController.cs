@@ -1,12 +1,16 @@
-﻿using System.Net;
-using Gama.Application.Contracts.Mappers;
+﻿using Gama.Application.Contracts.Mappers;
 using Gama.Application.Contracts.TrafficFineManagement;
 using Gama.Application.DataContracts.Commands.TrafficFineManagement;
 using Gama.Application.DataContracts.Queries.Common;
+using Gama.Application.DataContracts.Responses.Pagination;
 using Gama.Application.DataContracts.Responses.TrafficManagement;
+using Gama.Application.Seedworks.Pagination;
+using Gama.Domain.Constants;
 using Gama.Domain.Entities;
 using Gama.Shared.Extensions;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Net;
 
 namespace Gama.Api.Controllers;
 
@@ -26,12 +30,13 @@ public class TrafficFineController : Controller
         _entityMapper = entityMapper;
     }
 
-    [HttpGet("{id:long}", Name = "GetTrafficFine")]
+    [HttpGet("{id:int}", Name = "GetTrafficFine")]
+    [Authorize(Roles = $"{RolesName.Cop},{RolesName.Admin}")]
     [ProducesResponseType(typeof(GetTrafficFineResponse), (int)HttpStatusCode.OK)]
     [ProducesResponseType((int)HttpStatusCode.NotFound)]
     [ProducesResponseType((int)HttpStatusCode.BadRequest)]
     [ProducesResponseType((int)HttpStatusCode.InternalServerError)]
-    public async Task<IActionResult> GetAsync(long id)
+    public async Task<IActionResult> GetAsync(int id)
     {
         var trafficFine = await _trafficFineService.GetAsync(id).ConfigureAwait(false);
 
@@ -39,6 +44,7 @@ public class TrafficFineController : Controller
     }
 
     [HttpGet(Name = "Search")]
+    [Authorize(Roles = $"{RolesName.Cop},{RolesName.Admin}")]
     [ProducesResponseType(typeof(IEnumerable<GetTrafficFineResponse>), (int)HttpStatusCode.OK)]
     [ProducesResponseType((int)HttpStatusCode.NotFound)]
     [ProducesResponseType((int)HttpStatusCode.BadRequest)]
@@ -52,10 +58,11 @@ public class TrafficFineController : Controller
 
         var trafficFines = await _trafficFineService.GetByDateSearchAsync(search).ConfigureAwait(false);
 
-        return trafficFines.ToOk((result) => _entityMapper.Map<IEnumerable<GetTrafficFineResponse>, IEnumerable<TrafficFine>>(result));
+        return trafficFines.ToOk((result) => _entityMapper.Map<OffsetPageResponse<GetTrafficFineResponse>, OffsetPage<TrafficFine>>(result));
     }
 
     [HttpPost]
+    //[Authorize(Roles = RolesName.Cop)]
     [ProducesResponseType(typeof(GetTrafficFineResponse), (int)HttpStatusCode.OK)]
     [ProducesResponseType((int)HttpStatusCode.BadRequest)]
     [ProducesResponseType((int)HttpStatusCode.InternalServerError)]
@@ -73,32 +80,31 @@ public class TrafficFineController : Controller
         return result.ToOk((result) => _entityMapper.Map<GetTrafficFineResponse, TrafficFine>(result));
     }
 
-    [HttpPut("{id:long}")]
-    [ProducesResponseType(typeof(GetTrafficFineResponse), (int)HttpStatusCode.OK)]
+    [HttpPost("{id:int}/compute")]
+    [ProducesResponseType((int)HttpStatusCode.NoContent)]
     [ProducesResponseType((int)HttpStatusCode.BadRequest)]
     [ProducesResponseType((int)HttpStatusCode.InternalServerError)]
-    public async Task<IActionResult> UpdateAsync([FromBody] UpdateTrafficFineCommand updateTrafficFineCommand)
+    public async Task<IActionResult> ComputeAsync([FromQuery] int id)
     {
         if (!ModelState.IsValid)
         {
             return BadRequest(ModelState);
         }
 
-        var trafficFine = _entityMapper.Map<TrafficFine, UpdateTrafficFineCommand>(updateTrafficFineCommand);
-        
-        var result = await _trafficFineService.UpdateAsync(trafficFine).ConfigureAwait(false);
+        var result = await _trafficFineService.ComputeAsync(id).ConfigureAwait(false);
 
-        return result.ToOk((result) => _entityMapper.Map<GetTrafficFineResponse, TrafficFine>(result));
+        return result.ToNoContent();
     }
 
-    [HttpDelete("{id:long}", Name = "DeleteTrafficFine")]
+    [Authorize(Roles = RolesName.Cop)]
+    [HttpDelete("{id:int}", Name = "DeleteTrafficFine")]
     [ProducesResponseType(typeof(void), (int)HttpStatusCode.NoContent)]
     [ProducesResponseType((int)HttpStatusCode.NotFound)]
     [ProducesResponseType((int)HttpStatusCode.BadRequest)]
     [ProducesResponseType((int)HttpStatusCode.InternalServerError)]
-    public async Task<IActionResult> DeleteAsync(long id)
+    public async Task<IActionResult> DeleteAsync(int id)
     {
-        var result = await _trafficFineService.DeleteAsync(id);
+        var result = await _trafficFineService.DeleteAsync(id).ConfigureAwait(false);
 
         return result.ToNoContent();
     }

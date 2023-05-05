@@ -137,7 +137,7 @@ public class UserService : IUserService
             Size = searchUserQuery.Size
         };
 
-        var users = await _userRepository.GetAsync(search.Size, search.Offset);
+        var users = await _userRepository.GetAsync(search.Size, search.Offset, searchUserQuery.Role);
 
         search.Results = users;
 

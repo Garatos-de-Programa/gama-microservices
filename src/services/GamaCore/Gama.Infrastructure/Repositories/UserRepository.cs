@@ -2,6 +2,7 @@ using Gama.Application.Contracts.Repositories;
 using Gama.Domain.Entities;
 using Gama.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
+using System.Data;
 
 namespace Gama.Infrastructure.Repositories;
 
@@ -39,22 +40,23 @@ internal class UserRepository : Repository<User>, IUserRepository
     public async Task<User?> GetAsync(string login)
     {
         return  await FindAll()
-                    .Include(u => u.UserRoles)
-                    .Where(f => f.Email == login || f.Username == login)
+                    .Join(_context.Set<UserRoles>(), u => u.Id, ur => ur.UserId, (u, ur) => new { User = u, UserRole = ur })
+                    .Join(_context.Set<Role>(), u => u.UserRole.RoleId, r => r.Id, (u, r) => new { u.User, Role = r })
+                    .Where(f => f.User.Email == login || f.User.Username == login)
                     .Select(u => new User
                     {
-                        Id = u.Id,
-                        FirstName = u.FirstName,
-                        LastName = u.LastName,
-                        Username = u.Username,
-                        Email = u.Email,
-                        Password = u.Password,
-                        DocumentNumber = u.DocumentNumber,
-                        Active = u.Active,
-                        UserRoles = u.UserRoles.Select(ur => new UserRoles
+                        Id = u.User.Id,
+                        FirstName = u.User.FirstName,
+                        LastName = u.User.LastName,
+                        Username = u.User.Username,
+                        Email = u.User.Email,
+                        Password = u.User.Password,
+                        DocumentNumber = u.User.DocumentNumber,
+                        Active = u.User.Active,
+                        UserRoles = u.Role.UserRoles.Where(ur => ur.UserId == u.User.Id).Select(ur => new UserRoles
                         {
                             UserId = ur.UserId,
-                            Role = _context.Set<Role>().FirstOrDefault(r => r.Id == ur.RoleId),
+                            Role = u.Role,
                             RoleId = ur.RoleId
                         }).ToList()
                     })
@@ -66,23 +68,13 @@ internal class UserRepository : Repository<User>, IUserRepository
         return  await FindAll().FirstOrDefaultAsync(f => f.Email == email || f.Username == username);
     }
 
-    public async Task<IEnumerable<User>> GetAsync(int pageSize, int offset)
+    public async Task<IEnumerable<User>> GetAsync(int pageSize, int offset, string role)
     {
         return await FindAll()
-            .OrderByDescending(x => x.CreatedAt)
-            .Select(u => new User
-                {
-                    Id = u.Id,
-                    FirstName = u.FirstName,
-                    LastName = u.LastName,
-                    DocumentNumber = u.DocumentNumber,
-                    Active = u.Active,
-                    UserRoles = u.UserRoles.Select(ur => new UserRoles
-                    {
-                        Role = _context.Set<Role>().FirstOrDefault(r => r.Id == ur.RoleId),
-                    }).ToList()
-                }
-             )
+            .Join(_context.Set<UserRoles>(), u => u.Id, ur => ur.UserId, (u, ur) => new { User = u, UserRole = ur })
+            .Join(_context.Set<Role>(), u => u.UserRole.RoleId, r => r.Id, (u, r) => new { u.User, RoleName = r.Name })
+            .Where(ur => ur.RoleName == role)
+            .Select(ur => ur.User)
             .Skip(offset)
             .Take(pageSize)
             .ToListAsync();

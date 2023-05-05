@@ -11,7 +11,5 @@
         public string? DocumentNumber { get; set; }
 
         public bool Active { get; set; }
-
-        public IEnumerable<string>? Roles { get; set; }
     }
 }

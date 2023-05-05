@@ -14,23 +14,6 @@ CREATE TABLE users (
 
 COMMIT;
 
-CREATE TABLE user_address (
-	id SERIAL PRIMARY KEY,
-	user_id INT NOT NULL,
-	zip_code CHAR(8) NOT NULL,
-	street VARCHAR(50) NOT NULL,
-	city VARCHAR(50) NOT NULL,
-	state CHAR(2) NOT NULL,
-	district VARCHAR(50) NOT NULL,
-	modified_by VARCHAR(50),
-	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-	updated_at TIMESTAMP,
-	CONSTRAINT fk_user
-      FOREIGN KEY(user_id) 
-	  	REFERENCES users(id)
-);
-
-COMMIT;
 
 CREATE TABLE roles (
 	id SERIAL PRIMARY KEY,

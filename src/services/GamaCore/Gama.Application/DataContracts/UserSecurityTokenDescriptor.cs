@@ -25,7 +25,7 @@ public class UserSecurityTokenDescriptor : SecurityTokenDescriptor
         }
 
         Subject = new ClaimsIdentity(claims);
-        Expires = DateTime.UtcNow.AddMinutes(1);
+        Expires = DateTime.UtcNow.AddHours(2);
         Issuer = jwtOptions.Issuer;
         Audience = jwtOptions.Audience;
         SigningCredentials = new SigningCredentials

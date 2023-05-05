@@ -34,6 +34,11 @@ public class GamaCoreDbContext : DbContext
             .HasOne(tv => tv.TrafficViolation)
             .WithMany(tv => tv.TrafficFineTrafficViolations)
             .HasForeignKey(tv => tv.TrafficViolationId);
+
+        modelBuilder.Entity<TrafficFine>()
+            .HasMany(t => t.TrafficFineTrafficViolations)
+            .WithOne(t => t.TrafficFine)
+            .HasForeignKey(t => t.TrafficViolationId);
     }
 
     public DbSet<User> Users { get; set; }

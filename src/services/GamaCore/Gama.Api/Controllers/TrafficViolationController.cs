@@ -1,5 +1,4 @@
-﻿using System.Net;
-using Gama.Application.Contracts.Mappers;
+﻿using Gama.Application.Contracts.Mappers;
 using Gama.Application.Contracts.TrafficFineManagement;
 using Gama.Application.Contracts.UserManagement;
 using Gama.Application.DataContracts.Commands.TrafficFineManagement;
@@ -9,6 +8,7 @@ using Gama.Domain.Entities;
 using Gama.Shared.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Net;
 
 namespace Gama.Api.Controllers;
 
@@ -39,7 +39,7 @@ public class TrafficViolationController : Controller
     [ProducesResponseType((int)HttpStatusCode.InternalServerError)]
     public async Task<IActionResult> Get(int id)
     {
-        var result = await _trafficViolationService.GetAsync(id);
+        var result = await _trafficViolationService.GetAsync(id).ConfigureAwait(false);
 
         return result.ToOk((trafficViolation) => _entityMapper.Map<GetTrafficViolationResponse, TrafficViolation>(trafficViolation));
     }
@@ -48,7 +48,7 @@ public class TrafficViolationController : Controller
     [ProducesResponseType(typeof(IEnumerable<GetTrafficViolationResponse>), (int)HttpStatusCode.OK)]
     public async Task<IActionResult> GetTrafficsViolations()
     {
-        var result = await _trafficViolationService.GetTrafficsViolationsAsync();
+        var result = await _trafficViolationService.GetTrafficsViolationsAsync().ConfigureAwait(false);
 
         return result.ToOk((trafficViolation) => _entityMapper.Map<IEnumerable<GetTrafficViolationResponse>, IEnumerable<TrafficViolation>>(trafficViolation));
     }
@@ -70,7 +70,7 @@ public class TrafficViolationController : Controller
 
         trafficViolation.ModifiedBy = username;
 
-        var result = await _trafficViolationService.CreateAsync(trafficViolation);
+        var result = await _trafficViolationService.CreateAsync(trafficViolation).ConfigureAwait(false);
 
         return result.ToOk((trafficViolation) => _entityMapper.Map<GetTrafficViolationResponse, TrafficViolation>(trafficViolation));
     }
@@ -106,7 +106,7 @@ public class TrafficViolationController : Controller
     [ProducesResponseType((int)HttpStatusCode.InternalServerError)]
     public async Task<IActionResult> Delete(int id)
     {
-        var result = await _trafficViolationService.DeleteAsync(id);
+        var result = await _trafficViolationService.DeleteAsync(id).ConfigureAwait(false);
         return result.ToNoContent();
     }
 }

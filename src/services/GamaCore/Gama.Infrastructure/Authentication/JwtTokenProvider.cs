@@ -1,9 +1,11 @@
-using System.IdentityModel.Tokens.Jwt;
 using Gama.Application.Contracts.UserManagement;
 using Gama.Application.DataContracts;
+using Gama.Application.DataContracts.Responses.UserManagement;
 using Gama.Application.Options;
 using Gama.Domain.Entities;
+using Gama.Domain.ValueTypes;
 using Microsoft.Extensions.Options;
+using System.IdentityModel.Tokens.Jwt;
 
 namespace Gama.Infrastructure.Authentication;
 
@@ -16,12 +18,16 @@ public class JwtTokenProvider : ITokenService
         _jwtOptions = jwtOptions.Value;
     }
 
-    public string Generate(User user)
+    public Result<AuthenticationResponse> Generate(User user)
     {
         var tokenDescriptor = new UserSecurityTokenDescriptor(_jwtOptions, user);
         var tokenHandler = new JwtSecurityTokenHandler();
         var token = tokenHandler.CreateToken(tokenDescriptor);
         var stringToken = tokenHandler.WriteToken(token);
-        return stringToken;
+        return new Result<AuthenticationResponse>(new AuthenticationResponse()
+        {
+            Token = stringToken,
+            ExpiresIn = tokenDescriptor.Expires.Value.Subtract(DateTime.MinValue).TotalSeconds
+        });
     }
 }

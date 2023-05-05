@@ -10,11 +10,21 @@ public class TrafficFine : AuditableEntity
 
     public decimal Longitude { get; set; }
 
-    public string? Photo { get; set; }
-
     public bool Active { get; set; }
 
     public bool Computed { get; set; }
 
     public ICollection<TrafficFineTrafficViolation> TrafficFineTrafficViolations { get; set; }
+
+    public void Compute()
+    {
+        Computed = true;
+        UpdatedAt = DateTime.UtcNow;
+    }
+
+    public override void Delete()
+    {
+        Active = false;
+        base.Delete();
+    }
 }

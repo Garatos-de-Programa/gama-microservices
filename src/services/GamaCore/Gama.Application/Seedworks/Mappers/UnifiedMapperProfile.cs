@@ -31,8 +31,7 @@ namespace Gama.Application.Seedworks.Mappers
                 .ForMember(dest => dest.Roles, opt => opt.MapFrom(user => user.UserRoles.Select(ur => ur.Role.Name)));
             CreateMap<UpdateUserCommand, User>();
 
-            CreateMap<User, GetUsersResponse>()
-                .ForMember(dest => dest.Roles, opt => opt.MapFrom(user => user.UserRoles.Select(ur => ur.Role.Name)));
+            CreateMap<User, GetUsersResponse>();
 
             CreateMap<OffsetPage<User>, OffsetPageResponse<GetUsersResponse>>();
         }
