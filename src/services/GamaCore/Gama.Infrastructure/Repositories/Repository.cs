@@ -31,7 +31,7 @@ internal abstract class Repository<T> : IRepository<T> where T : class
         return await _context.Set<T>().FindAsync(id).AsTask();
     }
 
-    public async Task InsertAsync(T tObject)
+    public virtual async Task InsertAsync(T tObject)
     {
         await _context.Set<T>().AddAsync(tObject);
     }

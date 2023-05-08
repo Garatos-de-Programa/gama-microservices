@@ -8,8 +8,6 @@ public class TrafficViolation : AuditableEntity
 
     public string? Name { get; set; }
 
-    public string ModifiedBy { get; set; }
-
     public bool Active { get; set; } = true;
 
     public ICollection<TrafficFineTrafficViolation> TrafficFineTrafficViolations { get; set; }

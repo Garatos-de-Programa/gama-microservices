@@ -77,14 +77,14 @@ public class TrafficFineController : Controller
 
         var result = await _trafficFineService.CreateAsync(trafficFine).ConfigureAwait(false);
 
-        return result.ToOk((result) => _entityMapper.Map<GetTrafficFineResponse, TrafficFine>(result));
+        return result.ToCreated();
     }
 
     [HttpPost("{id:int}/compute")]
     [ProducesResponseType((int)HttpStatusCode.NoContent)]
     [ProducesResponseType((int)HttpStatusCode.BadRequest)]
     [ProducesResponseType((int)HttpStatusCode.InternalServerError)]
-    public async Task<IActionResult> ComputeAsync([FromQuery] int id)
+    public async Task<IActionResult> ComputeAsync([FromRoute] int id)
     {
         if (!ModelState.IsValid)
         {
@@ -102,7 +102,7 @@ public class TrafficFineController : Controller
     [ProducesResponseType((int)HttpStatusCode.NotFound)]
     [ProducesResponseType((int)HttpStatusCode.BadRequest)]
     [ProducesResponseType((int)HttpStatusCode.InternalServerError)]
-    public async Task<IActionResult> DeleteAsync(int id)
+    public async Task<IActionResult> DeleteAsync([FromRoute] int id)
     {
         var result = await _trafficFineService.DeleteAsync(id).ConfigureAwait(false);
 

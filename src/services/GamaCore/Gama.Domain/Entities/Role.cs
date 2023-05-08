@@ -10,5 +10,8 @@ namespace Gama.Domain.Entities
 
         [NotMapped]
         public IEnumerable<UserRoles> UserRoles { get; set; }
+
+        [NotMapped]
+        public IEnumerable<User> Users { get; set; }
     }
 }

@@ -3,7 +3,6 @@ using Gama.Application.Contracts.UserManagement;
 using Gama.Application.DataContracts.Commands.UserManagement;
 using Gama.Application.DataContracts.Queries.UserManagement;
 using Gama.Application.DataContracts.Responses.Pagination;
-using Gama.Application.DataContracts.Responses.TrafficManagement;
 using Gama.Application.DataContracts.Responses.UserManagement;
 using Gama.Application.Seedworks.Pagination;
 using Gama.Domain.Constants;

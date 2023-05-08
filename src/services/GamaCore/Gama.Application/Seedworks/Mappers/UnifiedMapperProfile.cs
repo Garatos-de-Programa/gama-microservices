@@ -15,7 +15,17 @@ namespace Gama.Application.Seedworks.Mappers
         {
             CreateMap<TrafficFine, GetTrafficFineResponse>();
 
-            CreateMap<CreateTrafficFineCommand, TrafficFine>();
+            CreateMap<CreateTrafficFineCommand, TrafficFine>()
+                .ForMember(dest => dest.TrafficFineTrafficViolations, 
+                    opt => opt.MapFrom(trafficFine => 
+                        trafficFine.TrafficViolations.Select(tv => new TrafficFineTrafficViolation() 
+                        {
+                            TrafficViolation = new TrafficViolation()
+                            {
+                                Id = tv.Id,
+                            }
+                        })));
+
             CreateMap<UpdateTrafficFineCommand, TrafficFine>();
 
             CreateMap<TrafficViolation, GetTrafficViolationResponse>();
@@ -25,15 +35,16 @@ namespace Gama.Application.Seedworks.Mappers
             CreateMap<CreateTrafficFineTrafficViolationCommand, TrafficViolation>();
 
             CreateMap<User, GetUserResonse>()
-                .ForMember(dest => dest.Roles, opt => opt.MapFrom(user => user.UserRoles.Select(ur => ur.Role.Name)));
+                .ForMember(dest => dest.Roles, opt => opt.MapFrom(user => user.Roles.Select(ur => ur.Role.Name)));
             CreateMap<CreateUserCommand, User>();
             CreateMap<User, UserCreatedResponse>()
-                .ForMember(dest => dest.Roles, opt => opt.MapFrom(user => user.UserRoles.Select(ur => ur.Role.Name)));
+                .ForMember(dest => dest.Roles, opt => opt.MapFrom(user => user.Roles.Select(ur => ur.Role.Name)));
             CreateMap<UpdateUserCommand, User>();
 
             CreateMap<User, GetUsersResponse>();
 
             CreateMap<OffsetPage<User>, OffsetPageResponse<GetUsersResponse>>();
+            CreateMap<OffsetPage<TrafficFine>, OffsetPageResponse<GetTrafficFineResponse>>();
         }
     }
 }

@@ -10,5 +10,8 @@ namespace Gama.Domain.Entities
 
         [NotMapped]
         public Role Role { get; set; }
+
+        [NotMapped]
+        public User User { get; set; }
     }
 }

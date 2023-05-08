@@ -1,6 +1,7 @@
 using Gama.Domain.Exceptions;
 using Gama.Domain.ValueTypes;
 using Microsoft.AspNetCore.Mvc;
+using System.Net;
 
 namespace Gama.Shared.Extensions;
 
@@ -38,7 +39,16 @@ public static class ResponseHandlerExtensions
             FailHandler
         );
     }
-    
+
+    public static IActionResult ToCreated<TResult>(this Result<TResult> result)
+    {
+        return result.Match<IActionResult>(
+            success => new StatusCodeResult((int)HttpStatusCode.Created),
+            FailHandler
+        );
+    }
+
+
     internal static IActionResult FailHandler(Exception exception)
     {
         if (exception is ValidationException validationException)

@@ -1,7 +1,9 @@
 ﻿using Gama.Application.Contracts.Repositories;
 using Gama.Application.Contracts.TrafficFineManagement;
+using Gama.Application.Contracts.UserManagement;
 using Gama.Application.DataContracts.Queries.Common;
 using Gama.Application.Seedworks.Pagination;
+using Gama.Domain.Constants;
 using Gama.Domain.Entities;
 using Gama.Domain.Exceptions;
 using Gama.Domain.ValueTypes;
@@ -11,10 +13,14 @@ namespace Gama.Application.UseCases.TrafficFineManagement
     internal class TrafficFineService : ITrafficFineService
     {
         private readonly ITrafficFineRepository _trafficFineRepository;
+        private readonly ICurrentUserAccessor _currentUserAccessor;
 
-        public TrafficFineService(ITrafficFineRepository trafficFineRepository)
+        public TrafficFineService(
+            ITrafficFineRepository trafficFineRepository,
+            ICurrentUserAccessor currentUserAccessor
+            )
         {
-
+            _currentUserAccessor = currentUserAccessor;
             _trafficFineRepository = trafficFineRepository;
         }
 
@@ -29,7 +35,14 @@ namespace Gama.Application.UseCases.TrafficFineManagement
                     ErrorMessage = "Multa não encontrada"
                 }));
 
-            trafficFine.Compute();
+            var user = _currentUserAccessor.GetUser();
+
+            var result = trafficFine.Compute(user);
+
+            if (result.IsFaulted)
+            {
+                return result;
+            }
 
             _trafficFineRepository.Patch(trafficFine);
             await _trafficFineRepository.CommitAsync().ConfigureAwait(false);
@@ -45,6 +58,9 @@ namespace Gama.Application.UseCases.TrafficFineManagement
                     PropertyName = "TrafficFine",
                     ErrorMessage = "Você deve informar uma multa valida"
                 }));
+
+            trafficFine.UserId = _currentUserAccessor.GetUserId();
+            trafficFine.PrepareToInsert();
 
             await _trafficFineRepository.InsertAsync(trafficFine).ConfigureAwait(false);
             await _trafficFineRepository.CommitAsync().ConfigureAwait(false);
@@ -63,7 +79,14 @@ namespace Gama.Application.UseCases.TrafficFineManagement
                     ErrorMessage = "Multa não encontrada"
                 }));
 
-            trafficFine.Delete();
+            var user = _currentUserAccessor.GetUser();
+
+            var result = trafficFine.Delete(user);
+
+            if (result.IsFaulted)
+            {
+                return result;
+            }
 
             _trafficFineRepository.Patch(trafficFine);
             await _trafficFineRepository.CommitAsync().ConfigureAwait(false);
@@ -79,7 +102,20 @@ namespace Gama.Application.UseCases.TrafficFineManagement
                 return new Result<TrafficFine>(new ValidationException(new ValidationError()
                 {
                     PropertyName = "TrafficFine",
-                    ErrorMessage = "Infração não encontrada"
+                    ErrorMessage = "Multa não encontrada"
+                }));
+            }
+
+            var user = _currentUserAccessor.GetUser();
+
+            var notAllowed = !trafficFine.IsUserAllowedToHandle(user);
+
+            if(notAllowed)
+            {
+                return new Result<TrafficFine>(new ValidationException(new ValidationError()
+                {
+                    PropertyName = "TrafficFine",
+                    ErrorMessage = "Multa não encontrada"
                 }));
             }
 
@@ -93,6 +129,10 @@ namespace Gama.Application.UseCases.TrafficFineManagement
                 PageNumber = dateSearchQuery.PageNumber,
                 Size = dateSearchQuery.Size
             };
+
+            var user = _currentUserAccessor.GetUser();
+
+            var isCop = user.IsRole(RolesName.Cop);
 
             var trafficFine = await _trafficFineRepository.GetAsync(dateSearchQuery, search.Offset, search.Size);
 

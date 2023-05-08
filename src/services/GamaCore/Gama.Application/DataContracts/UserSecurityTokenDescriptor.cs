@@ -19,7 +19,7 @@ public class UserSecurityTokenDescriptor : SecurityTokenDescriptor
                 Guid.NewGuid().ToString()),
         };
 
-        foreach (var role in user?.UserRoles ?? new List<UserRoles>())
+        foreach (var role in user?.Roles ?? new List<UserRoles>())
         {
             claims.Add(new Claim(ClaimTypes.Role, role.Role.Name.ToString()));
         }

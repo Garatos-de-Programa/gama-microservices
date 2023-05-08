@@ -1,5 +1,6 @@
 using Gama.Domain.Constants;
 using Gama.Domain.ValueTypes;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Gama.Domain.Entities;
 
@@ -21,7 +22,9 @@ public class User : AuditableEntity
 
     public bool Active { get; set; }
 
-    public IList<UserRoles>? UserRoles { get; set; }
+    public ICollection<UserRoles> Roles { get; set; }
+
+    public IEnumerable<TrafficFine>? TrafficFines { get; set; }
 
     public bool IsValidPassword(string password)
     {
@@ -51,18 +54,14 @@ public class User : AuditableEntity
 
     public void AddRole(string role)
     {
-        UserRoles ??= new List<UserRoles>();
+        Roles ??= new List<UserRoles>();
 
         var roleToInsert = RolesName.Roles[role];
 
-        if (UserRoles.Any(x => x.RoleId == roleToInsert.Id))
+        if (Roles.Any(x => x.Role.Id == roleToInsert.Id))
             return;
 
-        UserRoles.Add(new UserRoles()
-        {
-            RoleId = roleToInsert.Id,
-            Role = roleToInsert
-        });
+        Roles.Add(new () { Role = roleToInsert });
     }
 
     public void PrepareToInsert()
@@ -72,8 +71,23 @@ public class User : AuditableEntity
         CreatedAt = DateTime.UtcNow;
     }
 
+    public bool IsDiferentUser(int userId)
+    {
+        return userId != Id;
+    }
+
+    public bool IsRole(string role)
+    {
+        return Roles?.Any(r => r.Role.Name == role) ?? false;
+    }
+
     internal void Encrypt()
     {
         Password = BCryptPassword.Parse(Password);
+    }
+
+    internal bool IsDiferentUser(User user)
+    {
+        return user.Id != Id;
     }
 }

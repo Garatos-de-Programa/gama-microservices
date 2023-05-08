@@ -66,10 +66,6 @@ public class TrafficViolationController : Controller
         
         var trafficViolation = _entityMapper.Map<TrafficViolation, CreateTrafficViolationCommand>(createTrafficViolationCommand);
 
-        var username = _currentUserAccessor.GetUsername();
-
-        trafficViolation.ModifiedBy = username;
-
         var result = await _trafficViolationService.CreateAsync(trafficViolation).ConfigureAwait(false);
 
         return result.ToOk((trafficViolation) => _entityMapper.Map<GetTrafficViolationResponse, TrafficViolation>(trafficViolation));
@@ -89,9 +85,6 @@ public class TrafficViolationController : Controller
 
         var trafficViolation = _entityMapper.Map<TrafficViolation, UpdateTrafficViolationCommand>(updateTrafficViolationCommand);
 
-        var username = _currentUserAccessor.GetUsername();
-
-        trafficViolation.ModifiedBy = username;
         trafficViolation.Id = id;
 
         var result = await _trafficViolationService.UpdateAsync(trafficViolation).ConfigureAwait(false);

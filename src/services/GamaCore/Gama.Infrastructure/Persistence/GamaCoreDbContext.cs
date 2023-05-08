@@ -1,5 +1,6 @@
 using Gama.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Gama.Infrastructure.Persistence;
 
@@ -13,33 +14,45 @@ public class GamaCoreDbContext : DbContext
             .HasKey(ur => new { ur.UserId, ur.RoleId });
 
         modelBuilder.Entity<UserRoles>()
-            .HasOne<User>()
-            .WithMany(u => u.UserRoles)
+            .HasOne(ur => ur.User)
+            .WithMany(u => u.Roles)
             .HasForeignKey(ur => ur.UserId);
 
         modelBuilder.Entity<UserRoles>()
-            .HasOne<Role>()
-            .WithMany(r => r.UserRoles)
+            .HasOne(ur => ur.Role)
+            .WithMany()
             .HasForeignKey(ur => ur.RoleId);
 
+        modelBuilder.Entity<TrafficFine>()
+           .ToTable("traffic_fines");
+
+        modelBuilder.Entity<TrafficViolation>()
+           .ToTable("traffic_violations");
+
+        modelBuilder.Entity<Role>()
+           .ToTable("roles");
+
         modelBuilder.Entity<TrafficFineTrafficViolation>()
+            .ToTable("traffic_fine_traffic_violations")
             .HasKey(tv => new { tv.TrafficFineId, tv.TrafficViolationId });
 
-        modelBuilder.Entity<TrafficFineTrafficViolation>()
-            .HasOne(tv => tv.TrafficFine)
-            .WithMany(tf => tf.TrafficFineTrafficViolations)
-            .HasForeignKey(tv => tv.TrafficFineId);
+        // Find all entities with DateTime properties
+        var entitiesWithDateTimeProperties = modelBuilder.Model.GetEntityTypes()
+            .Where(e => e.ClrType.GetProperties().Any(p => p.PropertyType == typeof(DateTime?) || p.PropertyType == typeof(DateTime)));
 
-        modelBuilder.Entity<TrafficFineTrafficViolation>()
-            .HasOne(tv => tv.TrafficViolation)
-            .WithMany(tv => tv.TrafficFineTrafficViolations)
-            .HasForeignKey(tv => tv.TrafficViolationId);
-
-        modelBuilder.Entity<TrafficFine>()
-            .HasMany(t => t.TrafficFineTrafficViolations)
-            .WithOne(t => t.TrafficFine)
-            .HasForeignKey(t => t.TrafficViolationId);
+        // Configure a Value Converter for each DateTime property
+        foreach (var entity in entitiesWithDateTimeProperties)
+        {
+            foreach (var property in entity.ClrType.GetProperties().Where(p => p.PropertyType == typeof(DateTime?) || p.PropertyType == typeof(DateTime)))
+            {
+                modelBuilder.Entity(entity.ClrType)
+                    .Property(property.Name)
+                    .HasConversion(new DateTimeConverter());
+            }
+        }
     }
+
+
 
     public DbSet<User> Users { get; set; }
 
@@ -49,7 +62,16 @@ public class GamaCoreDbContext : DbContext
 
     public DbSet<TrafficViolation> TrafficViolations { get; set; }
 
-    public DbSet<Role> Roles { get; set; }
+    public DbSet<TrafficFineTrafficViolation> TrafficFineTrafficViolations { get; set; }
 
-    public DbSet<UserRoles> UserRoles { get; set; }
+    public DbSet<Role> Roles { get; set; }
+}
+
+public class DateTimeConverter : ValueConverter<DateTime, DateTime>
+{
+    public DateTimeConverter() : base(
+        fromDb => fromDb.ToUniversalTime(),
+        toDb => DateTime.SpecifyKind(toDb, DateTimeKind.Utc))
+    {
+    }
 }

@@ -2,27 +2,27 @@
 
 public class GetTrafficFineResponse
 {
-    public long Id { get; }
+    public long Id { get; set; }
 
-    public string LicensePlate { get; }
+    public string LicensePlate { get; set; }
 
-    public decimal Latitude { get; }
+    public decimal Latitude { get; set; }
 
-    public decimal Longitude { get; }
+    public decimal Longitude { get; set; }
 
-    public string Photo { get; }
+    public string Photo { get; set; }
 
-    public bool Active { get; }
+    public bool Active { get; set; }
 
-    public bool Computed { get; }
+    public bool Computed { get; set; }
     
-    public IEnumerable<GetTrafficViolationResponse> TrafficViolations { get; }
+    public IEnumerable<GetTrafficViolationResponse> TrafficViolations { get; set; }
     
     public bool Deleted => DeletedAt.HasValue; 
     
-    public DateTime? CreatedAt { get; }
+    public DateTime? CreatedAt { get; set; }
 
-    public DateTime? UpdatedAt { get; }
+    public DateTime? UpdatedAt { get; set; }
     
-    public DateTime? DeletedAt { get; }
+    public DateTime? DeletedAt { get; set; }
 }

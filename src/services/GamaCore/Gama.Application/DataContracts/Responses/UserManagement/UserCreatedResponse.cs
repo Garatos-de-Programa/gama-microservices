@@ -16,7 +16,5 @@ public class UserCreatedResponse
 
     public bool Active { get; set; }
 
-    public GetUserAddressResponse? Address { get; set; }
-
     public IEnumerable<string>? Roles { get; set; }
 }

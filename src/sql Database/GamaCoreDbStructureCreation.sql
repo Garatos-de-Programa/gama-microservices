@@ -45,7 +45,6 @@ CREATE TABLE traffic_violations (
 	id SERIAL PRIMARY KEY,
 	code VARCHAR(20) NOT NULL,
 	name VARCHAR(50) NOT NULL,
-	modified_by VARCHAR(50) NOT NULL,
 	active bool NOT NULL,
 	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	updated_at TIMESTAMP,
@@ -56,15 +55,18 @@ COMMIT;
 
 CREATE TABLE traffic_fines (
 	id SERIAL PRIMARY KEY,
-	license_plate VARCHAR(50) NOT NULL,
+	license_plate CHAR(7) NOT NULL,
 	latitude numeric(10, 8) NOT NULL,
   	longitude numeric(11, 8) NOT NULL,
 	active bool NOT NULL,
 	computed bool NOT NULL,
-	modified_by VARCHAR(50) NOT NULL,
+	user_id INT NOT NULL,
 	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	updated_at TIMESTAMP,	
-	deleted_at TIMESTAMP
+	deleted_at TIMESTAMP,
+	CONSTRAINT fk_user
+      FOREIGN KEY(user_id) 
+	  	REFERENCES users(id)
 );
 
 COMMIT;
@@ -117,7 +119,6 @@ CREATE TABLE occurrences (
 	description VARCHAR(200) NOT NULL,
 	user_id INT NOT NULL,
 	active bool NOT NULL,
-	modified_by VARCHAR(50) NOT NULL,
 	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	updated_at TIMESTAMP,	
 	deleted_at TIMESTAMP,
