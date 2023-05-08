@@ -36,6 +36,8 @@ namespace Gama.Application.UseCases.TrafficFineManagement
                 }));
             }
 
+            trafficViolation.PrepareToInsert();
+
             await _trafficViolationRepository.InsertAsync(trafficViolation).ConfigureAwait(false);
             await _trafficViolationRepository.CommitAsync().ConfigureAwait(false);
 

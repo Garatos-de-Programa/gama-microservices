@@ -23,7 +23,10 @@ public class TrafficViolation : AuditableEntity
     {
         base.Delete();
         Active = false;
-        UpdatedAt = DateTime.UtcNow;
-        CreatedAt= DateTime.UtcNow;
+    }
+
+    public void PrepareToInsert()
+    {
+        CreatedAt = DateTime.UtcNow;
     }
 }

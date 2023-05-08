@@ -13,7 +13,10 @@ namespace Gama.Application.Seedworks.Mappers
     {
         public UnifiedMapperProfile()
         {
-            CreateMap<TrafficFine, GetTrafficFineResponse>();
+            CreateMap<TrafficFine, GetTrafficFineResponse>()
+                .ForMember(dest => dest.TrafficViolations,
+                    opt => opt.MapFrom(trafficFine =>
+                        trafficFine.TrafficFineTrafficViolations.Select(tv => tv.TrafficViolation)));
 
             CreateMap<CreateTrafficFineCommand, TrafficFine>()
                 .ForMember(dest => dest.TrafficFineTrafficViolations, 
