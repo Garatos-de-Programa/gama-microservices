@@ -1,7 +1,9 @@
 using Gama.Application.Contracts.Mappers;
+using Gama.Application.Contracts.OccurrenceManagement;
 using Gama.Application.Contracts.TrafficFineManagement;
 using Gama.Application.Contracts.UserManagement;
 using Gama.Application.Seedworks.Mappers;
+using Gama.Application.UseCases.OccurrenceManagement;
 using Gama.Application.UseCases.TrafficFineManagement;
 using Gama.Application.UseCases.UserManagement;
 using Microsoft.Extensions.DependencyInjection;
@@ -17,6 +19,7 @@ public static class ApplicationServiceRegistration
         services.AddScoped<ITrafficViolationService, TrafficViolationService>();
         services.AddScoped<ICurrentUserAccessor, HttpContextCurrentUserAcessor>();
         services.AddScoped<ITrafficFineService, TrafficFineService>();
+        services.AddScoped<IOccurrenceService, OccurrenceService>();
         services.AddAutoMapper(typeof(UnifiedMapperProfile));
         services.AddSingleton<IEntityMapper, AutoMapperMapper>();
 

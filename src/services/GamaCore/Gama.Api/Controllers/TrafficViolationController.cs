@@ -14,7 +14,6 @@ namespace Gama.Api.Controllers;
 
 [ApiController]
 [Route("v1/traffic-violation")]
-[Authorize(Roles = RolesName.Admin)]
 public class TrafficViolationController : Controller
 {
     private readonly ITrafficViolationService _trafficViolationService;
@@ -32,6 +31,7 @@ public class TrafficViolationController : Controller
         _currentUserAccessor = currentUserAccessor;
     }
 
+    [Authorize(Roles = RolesName.Admin)]
     [HttpGet("{id:int}", Name = "GetTrafficViolation")]
     [ProducesResponseType(typeof(GetTrafficViolationResponse), (int)HttpStatusCode.OK)]
     [ProducesResponseType((int)HttpStatusCode.NotFound)]
@@ -44,6 +44,7 @@ public class TrafficViolationController : Controller
         return result.ToOk((trafficViolation) => _entityMapper.Map<GetTrafficViolationResponse, TrafficViolation>(trafficViolation));
     }
 
+    [Authorize]
     [HttpGet("", Name = "GetTrafficsViolations")]
     [ProducesResponseType(typeof(IEnumerable<GetTrafficViolationResponse>), (int)HttpStatusCode.OK)]
     public async Task<IActionResult> GetTrafficsViolations()
@@ -54,6 +55,7 @@ public class TrafficViolationController : Controller
     }
 
     [HttpPost]
+    [Authorize(Roles = RolesName.Admin)]
     [ProducesResponseType(typeof(GetTrafficViolationResponse), (int)HttpStatusCode.OK)]
     [ProducesResponseType((int)HttpStatusCode.BadRequest)]
     [ProducesResponseType((int)HttpStatusCode.InternalServerError)]
@@ -72,6 +74,7 @@ public class TrafficViolationController : Controller
     }
 
     [HttpPut("{id:int}")]
+    [Authorize(Roles = RolesName.Admin)]
     [ProducesResponseType(typeof(GetTrafficViolationResponse), (int)HttpStatusCode.OK)]
     [ProducesResponseType((int)HttpStatusCode.NotFound)]
     [ProducesResponseType((int)HttpStatusCode.BadRequest)]
@@ -92,6 +95,7 @@ public class TrafficViolationController : Controller
         return result.ToOk((result) => _entityMapper.Map<GetTrafficViolationResponse, TrafficViolation>(result));
     }
 
+    [Authorize(Roles = RolesName.Admin)]
     [HttpDelete("{id:int}", Name = "DeleteTrafficViolation")]
     [ProducesResponseType(typeof(void), (int)HttpStatusCode.NoContent)]
     [ProducesResponseType((int)HttpStatusCode.NotFound)]

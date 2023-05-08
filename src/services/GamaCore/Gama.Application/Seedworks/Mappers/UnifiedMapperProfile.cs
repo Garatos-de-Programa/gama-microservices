@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
+using Gama.Application.DataContracts.Commands.OccurrenceManagement;
 using Gama.Application.DataContracts.Commands.TrafficFineManagement;
 using Gama.Application.DataContracts.Commands.UserManagement;
+using Gama.Application.DataContracts.Responses.OccurrenceManagement;
 using Gama.Application.DataContracts.Responses.Pagination;
 using Gama.Application.DataContracts.Responses.TrafficManagement;
 using Gama.Application.DataContracts.Responses.UserManagement;
@@ -48,6 +50,10 @@ namespace Gama.Application.Seedworks.Mappers
 
             CreateMap<OffsetPage<User>, OffsetPageResponse<GetUsersResponse>>();
             CreateMap<OffsetPage<TrafficFine>, OffsetPageResponse<GetTrafficFineResponse>>();
+            CreateMap<OffsetPage<Occurrence>, OffsetPageResponse<SearchOcurrenceResponse>>();
+
+            CreateMap<Occurrence, GetOccurrenceResponse>();
+            CreateMap<CreateOccurrenceCommand, Occurrence>();
         }
     }
 }

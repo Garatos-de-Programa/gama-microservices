@@ -27,6 +27,7 @@ public static class InfrastructureServiceRegistration
         services.AddTransient<IRolesRepository, RolesRepository>();
         services.AddTransient<ITrafficViolationRepository, TrafficViolationRepository>();
         services.AddTransient<ITrafficFineRepository, TrafficFineRepository>();
+        services.AddTransient<IOccurrenceRepository, OccurrenceRepository>();
 
         return services;
     }

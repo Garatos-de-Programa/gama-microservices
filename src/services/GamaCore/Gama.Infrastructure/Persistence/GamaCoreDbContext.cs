@@ -32,6 +32,21 @@ public class GamaCoreDbContext : DbContext
         modelBuilder.Entity<Role>()
            .ToTable("roles");
 
+        modelBuilder.Entity<OccurrenceStatus>()
+           .ToTable("occurrence_status");
+
+        modelBuilder.Entity<OccurrenceUrgencyLevel>()
+           .ToTable("occurrence_urgency_levels");
+
+        modelBuilder.Entity<OccurrenceType>()
+           .ToTable("occurrence_types");
+
+        modelBuilder.Entity<OccurrenceType>()
+           .ToTable("occurrence_types");
+
+        modelBuilder.Entity<Occurrence>()
+           .ToTable("occurrences");
+
         modelBuilder.Entity<TrafficFineTrafficViolation>()
             .ToTable("traffic_fine_traffic_violations")
             .HasKey(tv => new { tv.TrafficFineId, tv.TrafficViolationId });
@@ -65,6 +80,12 @@ public class GamaCoreDbContext : DbContext
     public DbSet<TrafficFineTrafficViolation> TrafficFineTrafficViolations { get; set; }
 
     public DbSet<Role> Roles { get; set; }
+
+    public DbSet<OccurrenceType> OccurrenceTypes { get; set; }
+
+    public DbSet<OccurrenceStatus> OccurrenceStatus { get; set; }
+
+    public DbSet<OccurrenceUrgencyLevel> OccurrenceUrgencyLevels { get; set; }
 }
 
 public class DateTimeConverter : ValueConverter<DateTime, DateTime>

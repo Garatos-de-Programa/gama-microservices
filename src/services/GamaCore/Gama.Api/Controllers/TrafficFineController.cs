@@ -62,7 +62,7 @@ public class TrafficFineController : Controller
     }
 
     [HttpPost]
-    //[Authorize(Roles = RolesName.Cop)]
+    [Authorize(Roles = RolesName.Cop)]
     [ProducesResponseType(typeof(GetTrafficFineResponse), (int)HttpStatusCode.OK)]
     [ProducesResponseType((int)HttpStatusCode.BadRequest)]
     [ProducesResponseType((int)HttpStatusCode.InternalServerError)]

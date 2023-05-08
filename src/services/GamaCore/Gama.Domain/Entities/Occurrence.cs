@@ -1,8 +1,11 @@
-﻿namespace Gama.Domain.Entities
+﻿using Gama.Domain.Exceptions;
+using Gama.Domain.ValueTypes;
+
+namespace Gama.Domain.Entities
 {
     public class Occurrence : AuditableEntity
     {
-        public long Id { get; set; }
+        public int Id { get; set; }
 
         public int UserId { get; set; }
 
@@ -23,5 +26,32 @@
         public byte OccurrenceUrgencyLevelId { get; set; }
 
         public bool Active { get; set; }
+
+        public OccurrenceStatus? Status { get; set; }
+
+        public OccurrenceType? OccurrenceType { get; set; }
+
+        public OccurrenceUrgencyLevel? OccurrenceUrgencyLevel { get; set; }
+
+        public Result<bool> Delete(User user)
+        {
+            if (user.IsDiferentUser(UserId))
+            {
+                return new Result<bool>(new ValidationException(new ValidationError()
+                {
+                    PropertyName = "Occurrence",
+                    ErrorMessage = "Operação invalida"
+                }));
+            }
+
+            Active = false;
+            return true;
+        }
+
+        public void PrepareToInsert()
+        {
+            Active = true;
+            CreatedAt = DateTime.UtcNow;
+        }
     }
 }
