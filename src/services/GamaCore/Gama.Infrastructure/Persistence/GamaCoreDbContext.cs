@@ -41,11 +41,26 @@ public class GamaCoreDbContext : DbContext
         modelBuilder.Entity<OccurrenceType>()
            .ToTable("occurrence_types");
 
-        modelBuilder.Entity<OccurrenceType>()
-           .ToTable("occurrence_types");
-
         modelBuilder.Entity<Occurrence>()
            .ToTable("occurrences");
+
+        modelBuilder.Entity<Occurrence>()
+            .HasOne(o => o.Status)
+            .WithMany()
+            .HasForeignKey(o => o.OccurrenceStatusId)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        modelBuilder.Entity<Occurrence>()
+            .HasOne(o => o.OccurrenceUrgencyLevel)
+            .WithMany()
+            .HasForeignKey(o => o.OccurrenceUrgencyLevelId)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        modelBuilder.Entity<Occurrence>()
+            .HasOne(o => o.OccurrenceType)
+            .WithMany()
+            .HasForeignKey(o => o.OccurrenceTypeId)
+            .OnDelete(DeleteBehavior.Restrict);
 
         modelBuilder.Entity<TrafficFineTrafficViolation>()
             .ToTable("traffic_fine_traffic_violations")

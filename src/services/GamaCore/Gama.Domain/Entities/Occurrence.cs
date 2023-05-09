@@ -19,11 +19,11 @@ namespace Gama.Domain.Entities
 
         public string? Description { get; set; }
 
-        public byte OccurrenceStatusId { get; set; }
+        public short OccurrenceStatusId { get; set; }
 
-        public byte OccurrenceTypeId { get; set; }
+        public short OccurrenceTypeId { get; set; }
 
-        public byte OccurrenceUrgencyLevelId { get; set; }
+        public short OccurrenceUrgencyLevelId { get; set; }
 
         public bool Active { get; set; }
 

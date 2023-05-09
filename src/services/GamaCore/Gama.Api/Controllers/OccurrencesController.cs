@@ -44,7 +44,7 @@ namespace Gama.Api.Controllers
         }
 
         [Authorize]
-        [HttpGet(Name = "Search")]
+        [HttpGet(Name = "SearchOccurrence")]
         [ProducesResponseType(typeof(OffsetPageResponse<SearchOcurrenceResponse>), (int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
@@ -81,7 +81,7 @@ namespace Gama.Api.Controllers
         }
 
         [Authorize(Roles = RolesName.Cop)]
-        [HttpDelete("{id:int}", Name = "DeleteTrafficFine")]
+        [HttpDelete("{id:int}", Name = "DeleteOccurrence")]
         [ProducesResponseType(typeof(void), (int)HttpStatusCode.NoContent)]
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]

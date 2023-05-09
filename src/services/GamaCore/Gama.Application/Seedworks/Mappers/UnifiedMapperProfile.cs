@@ -53,6 +53,7 @@ namespace Gama.Application.Seedworks.Mappers
             CreateMap<OffsetPage<Occurrence>, OffsetPageResponse<SearchOcurrenceResponse>>();
 
             CreateMap<Occurrence, GetOccurrenceResponse>();
+            CreateMap<Occurrence, SearchOcurrenceResponse>();
             CreateMap<CreateOccurrenceCommand, Occurrence>();
         }
     }
