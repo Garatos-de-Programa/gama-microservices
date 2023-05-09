@@ -23,7 +23,7 @@ export default class IncidentMessagePostgreesListener
       
         client.connect();
         
-        client.query('LISTEN user_notification');
+        client.query('LISTEN occurrence_notification');
 
         client.on('notification', (notification : Notification) => {
           console.log('Received notification' + notification.payload);
