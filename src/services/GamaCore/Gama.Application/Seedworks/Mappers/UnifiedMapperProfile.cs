@@ -21,9 +21,9 @@ namespace Gama.Application.Seedworks.Mappers
                         trafficFine.TrafficFineTrafficViolations.Select(tv => tv.TrafficViolation)));
 
             CreateMap<CreateTrafficFineCommand, TrafficFine>()
-                .ForMember(dest => dest.TrafficFineTrafficViolations, 
-                    opt => opt.MapFrom(trafficFine => 
-                        trafficFine.TrafficViolations.Select(tv => new TrafficFineTrafficViolation() 
+                .ForMember(dest => dest.TrafficFineTrafficViolations,
+                    opt => opt.MapFrom(trafficFine =>
+                        trafficFine.TrafficViolations.Select(tv => new TrafficFineTrafficViolation()
                         {
                             TrafficViolation = new TrafficViolation()
                             {
@@ -52,8 +52,14 @@ namespace Gama.Application.Seedworks.Mappers
             CreateMap<OffsetPage<TrafficFine>, OffsetPageResponse<GetTrafficFineResponse>>();
             CreateMap<OffsetPage<Occurrence>, OffsetPageResponse<SearchOcurrenceResponse>>();
 
-            CreateMap<Occurrence, GetOccurrenceResponse>();
-            CreateMap<Occurrence, SearchOcurrenceResponse>();
+            CreateMap<Occurrence, GetOccurrenceResponse>()
+                 .ForMember(dest => dest.Status, opt => opt.MapFrom(o => o.Status.Name))
+                .ForMember(dest => dest.OccurrenceUrgencyLevel, opt => opt.MapFrom(o => o.OccurrenceUrgencyLevel.Name))
+                .ForMember(dest => dest.OccurrenceType, opt => opt.MapFrom(o => o.OccurrenceType.Name));
+            CreateMap<Occurrence, SearchOcurrenceResponse>()
+                .ForMember(dest => dest.Status, opt => opt.MapFrom(o => o.Status.Name))
+                .ForMember(dest => dest.OccurrenceUrgencyLevel, opt => opt.MapFrom(o => o.OccurrenceUrgencyLevel.Name))
+                .ForMember(dest => dest.OccurrenceType, opt => opt.MapFrom(o => o.OccurrenceType.Name));
             CreateMap<CreateOccurrenceCommand, Occurrence>();
         }
     }

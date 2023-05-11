@@ -45,6 +45,7 @@ namespace Gama.Domain.Entities
             }
 
             Active = false;
+            base.Delete();
             return true;
         }
 
