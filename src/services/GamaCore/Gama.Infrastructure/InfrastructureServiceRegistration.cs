@@ -1,5 +1,6 @@
 using Gama.Application.Contracts.Repositories;
 using Gama.Application.Contracts.UserManagement;
+using Gama.Domain.Entities;
 using Gama.Infrastructure.Authentication;
 using Gama.Infrastructure.Persistence;
 using Gama.Infrastructure.Repositories;
@@ -28,6 +29,9 @@ public static class InfrastructureServiceRegistration
         services.AddTransient<ITrafficViolationRepository, TrafficViolationRepository>();
         services.AddTransient<ITrafficFineRepository, TrafficFineRepository>();
         services.AddTransient<IOccurrenceRepository, OccurrenceRepository>();
+        services.AddTransient<IOccurrenceUrgencyLevelRepository, OccurrenceUrgencyLevelRepository>();
+        services.AddTransient<IOccurrenceTypeRepository, OccurrenceTypeRepository>();
+        services.AddTransient<IOccurrenceStatusRepository, OccurrenceStatusRepository>();
 
         return services;
     }

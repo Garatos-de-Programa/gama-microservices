@@ -2,6 +2,7 @@
 using Gama.Application.Contracts.Repositories;
 using Gama.Application.Contracts.UserManagement;
 using Gama.Application.DataContracts.Queries.Common;
+using Gama.Application.DataContracts.Responses.OccurrenceManagement;
 using Gama.Application.Seedworks.Pagination;
 using Gama.Domain.Entities;
 using Gama.Domain.Exceptions;
@@ -13,15 +14,23 @@ namespace Gama.Application.UseCases.OccurrenceManagement
     {
         private readonly IOccurrenceRepository _occurrenceRepository;
         private readonly ICurrentUserAccessor _currentUserAccessor;
+        private readonly IOccurrenceUrgencyLevelRepository _occurrenceUrgencyLevelRepository;
+        private readonly IOccurrenceTypeRepository _occurrenceTypeRepository;
+        private readonly IOccurrenceStatusRepository _occurrenceStatusRepository;
 
         public OccurrenceService(
             IOccurrenceRepository occurrenceRepository, 
-            ICurrentUserAccessor currentUserAccessor
+            ICurrentUserAccessor currentUserAccessor,
+            IOccurrenceUrgencyLevelRepository occurrenceUrgencyLevelRepository,
+            IOccurrenceTypeRepository occurrenceTypeRepository,
+            IOccurrenceStatusRepository occurrenceStatusRepository
             )
         {
             _occurrenceRepository = occurrenceRepository;
             _currentUserAccessor = currentUserAccessor;
-
+            _occurrenceTypeRepository = occurrenceTypeRepository;
+            _occurrenceStatusRepository = occurrenceStatusRepository;
+            _occurrenceUrgencyLevelRepository = occurrenceUrgencyLevelRepository;
         }
 
         public async Task<Result<Occurrence>> CreateAsync(Occurrence occurrence)
@@ -96,6 +105,16 @@ namespace Gama.Application.UseCases.OccurrenceManagement
             offsetPage.Results = occurrence;
 
             return offsetPage;
+        }
+
+        public async Task<Result<OccurrencePropertiesResponse>> GetOccurrencePropertiesAsync()
+        {
+            return new OccurrencePropertiesResponse()
+            {
+                Types = _occurrenceTypeRepository.FindAll().Select(t => new GetOccurrenceTypeResponse() { Id = t.Id, Name = t.Name }),
+                Status = _occurrenceStatusRepository.FindAll().Select(s => new GetOccurrenceStatusResponse() { Id = s.Id, Name = s.Name }),
+                UrgencyLevels = _occurrenceUrgencyLevelRepository.FindAll().Select(u =>  new GetOccurrenceUrgencyLevelResponse() { Id = u.Id, Name = u.Name }),
+            };
         }
     }
 }

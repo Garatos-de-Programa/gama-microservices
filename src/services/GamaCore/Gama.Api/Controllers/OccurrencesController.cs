@@ -92,5 +92,15 @@ namespace Gama.Api.Controllers
 
             return result.ToNoContent();
         }
+
+        [Authorize]
+        [HttpGet("properties")]
+        [ProducesResponseType(typeof(void), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> GetOccurrencePropertiesAsync()
+        {
+            var result = await _occurrenceService.GetOccurrencePropertiesAsync().ConfigureAwait(false);
+
+            return result.ToOk();
+        }
     }
 }
