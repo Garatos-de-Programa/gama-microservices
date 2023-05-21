@@ -1,6 +1,9 @@
-﻿namespace Gama.Application.DataContracts.Commands.OccurrenceManagement
+﻿using Flunt.Notifications;
+using Gama.Application.Seedworks.ValidationContracts;
+
+namespace Gama.Application.DataContracts.Commands.OccurrenceManagement
 {
-    public class CreateOccurrenceCommand
+    public class CreateOccurrenceCommand : Notifiable<Notification>, IRequest
     {
         public decimal Latitude { get; set; }
 
@@ -17,5 +20,10 @@
         public byte OccurrenceTypeId { get; set; }
 
         public byte OccurrenceUrgencyLevelId { get; set; }
+
+        public void Validate()
+        {
+            AddNotifications(new  CreateOccurrenceCommandContract(this));
+        }
     }
 }

@@ -21,11 +21,9 @@ public class AuthController : ControllerBase
     [AllowAnonymous]
     public async Task<IActionResult> Create([FromBody] AuthenticateCommand authenticateCommand)
     {
-        var validationResult = authenticateCommand.IsValid();
-
-        if (validationResult.IsFaulted)
+        if (!ModelState.IsValid)
         {
-            return validationResult.ToBadRequest();
+            return BadRequest(ModelState);
         }
 
         var token = await _userAuthenticationService.AuthenticateAsync(authenticateCommand);

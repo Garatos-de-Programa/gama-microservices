@@ -1,10 +1,14 @@
 using Gama.Api.OptionsSetup;
 using Gama.Application;
 using Gama.Infrastructure;
+using Microsoft.AspNetCore.Mvc.Filters;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddControllers();
+builder.Services.AddControllers(o =>
+{
+    o.Filters.Add<ActionFilterAttribute>();
+});
 
 builder.Services.AddSwaggerGen();
 

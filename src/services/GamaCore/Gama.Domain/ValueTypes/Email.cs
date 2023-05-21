@@ -25,8 +25,14 @@ public struct Email
         throw new ArgumentException("E-mail inválido!");
     }
     
-    public static bool TryParse(string value, out Email email)
+    public static bool TryParse(string? value, out Email email)
     {
+        if (string.IsNullOrEmpty(value))
+        {
+            email = new Email();
+            return false;
+        }
+
         if (!RegexValidator.IsMatch(value))
         {
             email = new Email();
