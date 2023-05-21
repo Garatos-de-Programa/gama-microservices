@@ -7,9 +7,9 @@ namespace Gama.Application.Seedworks.ValidationContracts
     {
         public CreateOccurrenceCommandContract(CreateOccurrenceCommand createOccurrenceCommand)
         {
-            IsNotNullOrWhiteSpace(createOccurrenceCommand.Location, nameof(createOccurrenceCommand.Location));
-            IsNotNullOrWhiteSpace(createOccurrenceCommand.Name, nameof(createOccurrenceCommand.Name));
-            IsNotNullOrWhiteSpace(createOccurrenceCommand.Description, nameof(createOccurrenceCommand.Description));
+            IsNotNullOrWhiteSpace(createOccurrenceCommand.Location, nameof(createOccurrenceCommand.Location), "Você deve informar uma localização.");
+            IsNotNullOrWhiteSpace(createOccurrenceCommand.Name, nameof(createOccurrenceCommand.Name), "Você deve informar um nome.");
+            IsNotNullOrWhiteSpace(createOccurrenceCommand.Description, nameof(createOccurrenceCommand.Description), "Você deve informar uma descrição.");
         }
     }
 }

@@ -7,8 +7,8 @@ namespace Gama.Application.Seedworks.ValidationContracts
     {
         public UpdateTrafficViolationCommandContract(UpdateTrafficViolationCommand updateTrafficViolationCommand)
         {
-            IsNotNullOrEmpty(updateTrafficViolationCommand.Name, nameof(updateTrafficViolationCommand.Name));
-            IsNotNullOrEmpty(updateTrafficViolationCommand.Code, nameof(updateTrafficViolationCommand.Code));
+            IsNotNullOrEmpty(updateTrafficViolationCommand.Name, nameof(updateTrafficViolationCommand.Name), "Você deve informar um nome.");
+            IsNotNullOrEmpty(updateTrafficViolationCommand.Code, nameof(updateTrafficViolationCommand.Code), "Você deve informar um código.");
         }
     }
 }

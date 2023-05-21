@@ -7,8 +7,8 @@ namespace Gama.Application.Seedworks.ValidationContracts
     {
         public PagedSearchQueryContract(PagedSearchQuery pagedSearchQuery)
         {
-            IsGreaterOrEqualsThan(pagedSearchQuery.PageNumber, 1, "Você deve informar uma página válida");
-            IsLowerOrEqualsThan(pagedSearchQuery.Size, 30, "Você deve informar um valor menor ou igual a 30");
+            IsGreaterOrEqualsThan(pagedSearchQuery.PageNumber, 1, nameof(pagedSearchQuery.PageNumber), "Você deve informar uma página válida");
+            IsLowerOrEqualsThan(pagedSearchQuery.Size, 30, nameof(pagedSearchQuery.Size), "Você deve informar um valor menor ou igual a 30");
         }
     }
 }

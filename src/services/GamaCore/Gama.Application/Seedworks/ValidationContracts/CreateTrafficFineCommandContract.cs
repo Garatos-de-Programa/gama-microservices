@@ -8,8 +8,8 @@ namespace Gama.Application.Seedworks.ValidationContracts
     {
         public CreateTrafficFineCommandContract(CreateTrafficFineCommand createTrafficFineCommand)
         {
-            IsTrue(MercosulLicensePlate.TryParse(createTrafficFineCommand.LicensePlate, out var _), nameof(createTrafficFineCommand.LicensePlate));
-            IsNotEmpty(createTrafficFineCommand.TrafficViolations, nameof(createTrafficFineCommand.TrafficViolations));
+            IsTrue(MercosulLicensePlate.TryParse(createTrafficFineCommand.LicensePlate, out var _), nameof(createTrafficFineCommand.LicensePlate), "Você deve informar uma placa válida.");
+            IsNotEmpty(createTrafficFineCommand.TrafficViolations, nameof(createTrafficFineCommand.TrafficViolations), "Você deve informar as infrações.");
         }
     }
 }

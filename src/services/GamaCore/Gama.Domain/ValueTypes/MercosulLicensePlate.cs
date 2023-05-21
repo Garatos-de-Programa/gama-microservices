@@ -1,4 +1,5 @@
-﻿using System.Text.RegularExpressions;
+﻿using System.Runtime.CompilerServices;
+using System.Text.RegularExpressions;
 
 namespace Gama.Domain.ValueTypes
 {
@@ -27,8 +28,14 @@ namespace Gama.Domain.ValueTypes
             throw new ArgumentException("Placa inválida!");
         }
 
-        public static bool TryParse(string value, out MercosulLicensePlate licensePlate)
+        public static bool TryParse(string? value, out MercosulLicensePlate licensePlate)
         {
+            if (string.IsNullOrWhiteSpace(value))
+            {
+                licensePlate = new MercosulLicensePlate();
+                return false;
+            }
+
             if (value.Length > 8)
             {
                 licensePlate = new MercosulLicensePlate();
