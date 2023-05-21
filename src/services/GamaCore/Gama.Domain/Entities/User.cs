@@ -31,12 +31,12 @@ public class User : AuditableEntity
         return BCryptPassword.IsValid(password, Password);
     }
 
-    public void Update(string firstName, string lastName, string documentNumber)
+    public void Update(string? firstName, string? lastName, string? documentNumber)
     {
         FirstName = firstName;
         LastName = lastName;
-        DocumentNumber = documentNumber;
         UpdatedAt = DateTime.UtcNow;
+        DocumentNumber = Cpf.GetDigits(documentNumber);
     }
 
     public void ChangePassword(string newPassword)
@@ -69,6 +69,7 @@ public class User : AuditableEntity
         Encrypt();
         Active = true;
         CreatedAt = DateTime.UtcNow;
+        DocumentNumber = Cpf.GetDigits(DocumentNumber);
     }
 
     public bool IsDiferentUser(int userId)

@@ -36,7 +36,7 @@ namespace Gama.Domain.ValueTypes
                 return false;
             }
 
-            if (value.Length > 8)
+            if (value.Length > 8 || value.Length < 7)
             {
                 licensePlate = new MercosulLicensePlate();
                 return false;

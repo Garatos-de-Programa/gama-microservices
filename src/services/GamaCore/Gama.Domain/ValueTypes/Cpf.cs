@@ -1,4 +1,6 @@
-﻿namespace Gama.Domain.ValueTypes
+﻿using System;
+
+namespace Gama.Domain.ValueTypes
 {
     public readonly struct Cpf
     {
@@ -112,5 +114,27 @@
 
             return true;
         }
+
+        internal static string? GetDigits(string? documentNumber)
+        {
+            if (string.IsNullOrWhiteSpace(documentNumber))
+            {
+                return string.Empty;
+            }
+
+            var cpfArray = new char[11];
+            var count = 0;
+            foreach (var c in documentNumber)
+            {
+                if (char.IsDigit(c))
+                {
+                    cpfArray[count] = c;
+                    count++;
+                }
+            }
+
+            return new string(cpfArray); 
+        }
+
     }
 }
