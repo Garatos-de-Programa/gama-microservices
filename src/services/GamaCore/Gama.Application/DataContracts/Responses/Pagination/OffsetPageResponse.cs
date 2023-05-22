@@ -6,5 +6,7 @@ public class OffsetPageResponse<T>
 
     public int Size { get; set; }
 
+    public int Count { get; set; }
+
     public IEnumerable<T> Results { get; set; }
 }

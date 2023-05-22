@@ -131,16 +131,8 @@ public class UserService : IUserService
 
     public async Task<Result<OffsetPage<User>>> GetAsync(SearchUserQuery searchUserQuery)
     {
-        var search = new OffsetPage<User>()
-        {
-            PageNumber = searchUserQuery.PageNumber,
-            Size = searchUserQuery.Size
-        };
+        var users = await _userRepository.GetAsync(searchUserQuery.Size, searchUserQuery.PageNumber, searchUserQuery.Role);
 
-        var users = await _userRepository.GetAsync(search.Size, search.Offset, searchUserQuery.Role);
-
-        search.Results = users;
-
-        return search;
+        return users;
     }
 }

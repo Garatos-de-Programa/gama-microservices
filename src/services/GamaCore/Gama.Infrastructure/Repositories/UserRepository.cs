@@ -1,8 +1,11 @@
 using Gama.Application.Contracts.Repositories;
+using Gama.Application.DataContracts.Queries.UserManagement;
+using Gama.Application.Seedworks.Pagination;
 using Gama.Domain.Entities;
 using Gama.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using System.Data;
+using System.Linq;
 
 namespace Gama.Infrastructure.Repositories;
 
@@ -47,15 +50,26 @@ internal class UserRepository : Repository<User>, IUserRepository
         await base.InsertAsync(user);
     }
 
-    public async Task<IEnumerable<User>> GetAsync(int pageSize, int offset, string role)
+    public async Task<OffsetPage<User>> GetAsync(int pageSize, int pageNumber, string role)
     {
-        return await FindAll()
+        var search = new OffsetPage<User>()
+        {
+            PageNumber = pageNumber,
+            Size = pageSize
+        };
+
+        var query = FindAll()
             .Join(_context.Set<UserRoles>(), u => u.Id, ur => ur.UserId, (u, ur) => new { User = u, UserRole = ur })
             .Join(_context.Set<Role>(), u => u.UserRole.RoleId, r => r.Id, (u, r) => new { u.User, RoleName = r.Name })
-            .Where(ur => ur.RoleName == role)
-            .Select(ur => ur.User)
-            .Skip(offset)
+            .Where(ur => ur.RoleName == role);
+
+        search.Count = await query.CountAsync();
+
+        search.Results = await query.Select(ur => ur.User)
+            .Skip(search.Offset)
             .Take(pageSize)
             .ToListAsync();
+
+        return search;
     }
 }
