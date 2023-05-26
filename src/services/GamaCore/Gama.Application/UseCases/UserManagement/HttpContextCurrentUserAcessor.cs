@@ -1,5 +1,5 @@
 ﻿using Gama.Application.Contracts.UserManagement;
-using Gama.Domain.Entities;
+using Gama.Domain.Models.Users;
 using Microsoft.AspNetCore.Http;
 using System.Security.Claims;
 

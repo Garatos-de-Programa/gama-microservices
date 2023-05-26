@@ -26,6 +26,31 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data/ 
 
+  nationalgeographicdb:
+    container_name: nationalgeographicdb
+    environment:
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=admin1234
+      - POSTGRES_DB=NationalGeographicDb
+      - TZ:'UTC'
+      - PGTZ:'UTC'
+    restart: always
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgis-data:/var/lib/postgresql/data/ 
+  
+  rabbitmq:
+    container_name: 'rabbitmq'
+    ports:
+      - 5672:5672
+      - 15672:15672
+    volumes:
+      - ~/.docker-conf/rabbitmq/data/:/var/lib/rabbitmq/
+      - ~/.docker-conf/rabbitmq/log/:/var/log/rabbitmq
+    networks:
+      - rabbitmq_go_net
+
   gama.api:
     container_name: gama.api
     environment:
@@ -35,3 +60,7 @@ services:
       - gamacoredb
     ports:
       - "8001:80"
+
+networks:
+  rabbitmq_go_net:
+    driver: bridge

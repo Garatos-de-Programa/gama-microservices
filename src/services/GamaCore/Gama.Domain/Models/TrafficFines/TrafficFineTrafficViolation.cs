@@ -1,8 +1,8 @@
-﻿namespace Gama.Domain.Entities
+﻿namespace Gama.Domain.Models.TrafficFines
 {
     public class TrafficFineTrafficViolation
     {
-        public int TrafficFineId { get; set;}
+        public int TrafficFineId { get; set; }
 
         public int TrafficViolationId { get; set; }
 

@@ -1,6 +1,4 @@
-﻿using Gama.Domain.Entities;
-
-namespace Gama.Application.DataContracts.Responses.OccurrenceManagement
+﻿namespace Gama.Application.DataContracts.Responses.OccurrenceManagement
 {
     public class GetOccurrenceResponse
     {

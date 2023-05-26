@@ -13,6 +13,12 @@ services:
       context: .
       dockerfile: src/services/GamaCore/Dockerfile
 
+  nationalgeographicdb:
+    image: postgis/postgis:15-3.3
+
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+
 volumes:
   pgadmin_data:
   postgres_data:

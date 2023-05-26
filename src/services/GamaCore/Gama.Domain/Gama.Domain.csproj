@@ -23,4 +23,8 @@
       <None Remove="Enums\**" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Events\" />
+    </ItemGroup>
+
 </Project>

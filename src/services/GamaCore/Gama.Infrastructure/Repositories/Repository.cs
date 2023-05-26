@@ -36,10 +36,11 @@ internal abstract class Repository<T> : IRepository<T> where T : class
         await _context.Set<T>().AddAsync(tObject);
     }
 
-    public void Patch(T tObject)
+    public virtual Task Patch(T tObject)
     {
         var set = _context.Set<T>();
         set.Attach(tObject);
         _context.Entry(tObject).State = EntityState.Modified;
+        return Task.CompletedTask;
     }
 }

@@ -1,13 +1,14 @@
+using Gama.Domain.Common;
 using Gama.Domain.Constants;
+using Gama.Domain.Models.TrafficFines;
 using Gama.Domain.ValueTypes;
-using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Gama.Domain.Entities;
+namespace Gama.Domain.Models.Users;
 
 public class User : AuditableEntity
 {
     public int Id { get; set; }
-    
+
     public string? FirstName { get; set; }
 
     public string? LastName { get; set; }
@@ -15,9 +16,9 @@ public class User : AuditableEntity
     public string? Username { get; set; }
 
     public string? Email { get; set; }
-    
+
     public string? Password { get; set; }
-        
+
     public string? DocumentNumber { get; set; }
 
     public bool Active { get; set; }
@@ -61,7 +62,7 @@ public class User : AuditableEntity
         if (Roles.Any(x => x.Role.Id == roleToInsert.Id))
             return;
 
-        Roles.Add(new () { Role = roleToInsert });
+        Roles.Add(new() { Role = roleToInsert });
     }
 
     public void PrepareToInsert()

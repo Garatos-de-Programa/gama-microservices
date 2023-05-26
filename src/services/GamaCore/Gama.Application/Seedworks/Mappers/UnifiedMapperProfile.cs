@@ -7,7 +7,9 @@ using Gama.Application.DataContracts.Responses.Pagination;
 using Gama.Application.DataContracts.Responses.TrafficManagement;
 using Gama.Application.DataContracts.Responses.UserManagement;
 using Gama.Application.Seedworks.Pagination;
-using Gama.Domain.Entities;
+using Gama.Domain.Models.Occurrences;
+using Gama.Domain.Models.TrafficFines;
+using Gama.Domain.Models.Users;
 
 namespace Gama.Application.Seedworks.Mappers
 {

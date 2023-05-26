@@ -4,8 +4,8 @@ using Gama.Application.Contracts.UserManagement;
 using Gama.Application.DataContracts.Queries.Common;
 using Gama.Application.DataContracts.Responses.OccurrenceManagement;
 using Gama.Application.Seedworks.Pagination;
-using Gama.Domain.Entities;
 using Gama.Domain.Exceptions;
+using Gama.Domain.Models.Occurrences;
 using Gama.Domain.ValueTypes;
 
 namespace Gama.Application.UseCases.OccurrenceManagement
@@ -91,7 +91,7 @@ namespace Gama.Application.UseCases.OccurrenceManagement
 
             return occurrence;
         }
-
+      
         public async Task<Result<OffsetPage<Occurrence>>> GetByDateSearchAsync(DateSearchQuery search)
         {
             var offsetPage = new OffsetPage<Occurrence>()
@@ -107,14 +107,14 @@ namespace Gama.Application.UseCases.OccurrenceManagement
             return offsetPage;
         }
 
-        public async Task<Result<OccurrencePropertiesResponse>> GetOccurrencePropertiesAsync()
+        public Task<Result<OccurrencePropertiesResponse>> GetOccurrencePropertiesAsync()
         {
-            return new OccurrencePropertiesResponse()
+            return Task.FromResult(new Result<OccurrencePropertiesResponse>(new OccurrencePropertiesResponse()
             {
                 Types = _occurrenceTypeRepository.FindAll().Select(t => new GetOccurrenceTypeResponse() { Id = t.Id, Name = t.Name }),
                 Status = _occurrenceStatusRepository.FindAll().Select(s => new GetOccurrenceStatusResponse() { Id = s.Id, Name = s.Name }),
                 UrgencyLevels = _occurrenceUrgencyLevelRepository.FindAll().Select(u =>  new GetOccurrenceUrgencyLevelResponse() { Id = u.Id, Name = u.Name }),
-            };
+            }));
         }
     }
 }

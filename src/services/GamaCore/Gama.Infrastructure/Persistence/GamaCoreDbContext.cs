@@ -1,4 +1,6 @@
-using Gama.Domain.Entities;
+using Gama.Domain.Models.Occurrences;
+using Gama.Domain.Models.TrafficFines;
+using Gama.Domain.Models.Users;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 

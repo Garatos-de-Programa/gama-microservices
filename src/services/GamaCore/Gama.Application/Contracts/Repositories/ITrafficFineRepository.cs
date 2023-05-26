@@ -1,5 +1,5 @@
 ﻿using Gama.Application.DataContracts.Queries.Common;
-using Gama.Domain.Entities;
+using Gama.Domain.Models.TrafficFines;
 
 namespace Gama.Application.Contracts.Repositories
 {

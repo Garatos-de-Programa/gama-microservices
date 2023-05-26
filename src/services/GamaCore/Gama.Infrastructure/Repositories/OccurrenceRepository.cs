@@ -1,22 +1,31 @@
 ﻿using Gama.Application.Contracts.Repositories;
 using Gama.Application.DataContracts.Queries.Common;
-using Gama.Domain.Entities;
+using Gama.Domain.Models.Occurrences;
 using Gama.Infrastructure.Persistence;
+using MassTransit;
 using Microsoft.EntityFrameworkCore;
 
 namespace Gama.Infrastructure.Repositories
 {
     internal class OccurrenceRepository : Repository<Occurrence>, IOccurrenceRepository
     {
-        public OccurrenceRepository(GamaCoreDbContext dbContext) : base(dbContext)
+        private readonly IPublishEndpoint _publishEndpoint;
+
+        public OccurrenceRepository(GamaCoreDbContext dbContext, IPublishEndpoint publishEndpoint) : base(dbContext)
         {
+            _publishEndpoint = publishEndpoint;
         }
 
         public override Task InsertAsync(Occurrence tObject)
         {
-            
-
+            _publishEndpoint.Publish(tObject.Events);
             return base.InsertAsync(tObject);
+        }
+
+        public override Task Patch(Occurrence tObject)
+        {
+            _publishEndpoint.Publish(tObject.Events);
+            return base.Patch(tObject);
         }
 
         public async override Task<Occurrence?> FindOneAsync<TId>(TId id)

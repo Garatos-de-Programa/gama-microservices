@@ -1,4 +1,4 @@
-﻿using Gama.Domain.Entities;
+﻿using Gama.Domain.Models.TrafficFines;
 
 namespace Gama.Application.Contracts.Repositories
 {

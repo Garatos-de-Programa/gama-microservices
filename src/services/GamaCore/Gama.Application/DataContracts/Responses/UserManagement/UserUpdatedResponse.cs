@@ -1,4 +1,4 @@
-using Gama.Domain.Entities;
+using Gama.Domain.Models.Users;
 
 namespace Gama.Application.DataContracts.Responses.UserManagement;
 

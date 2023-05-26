@@ -6,7 +6,7 @@ using Gama.Application.DataContracts.Responses.Pagination;
 using Gama.Application.DataContracts.Responses.TrafficManagement;
 using Gama.Application.Seedworks.Pagination;
 using Gama.Domain.Constants;
-using Gama.Domain.Entities;
+using Gama.Domain.Models.TrafficFines;
 using Gama.Shared.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

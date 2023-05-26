@@ -4,7 +4,7 @@ using Gama.Application.Contracts.UserManagement;
 using Gama.Application.DataContracts.Commands.TrafficFineManagement;
 using Gama.Application.DataContracts.Responses.TrafficManagement;
 using Gama.Domain.Constants;
-using Gama.Domain.Entities;
+using Gama.Domain.Models.TrafficFines;
 using Gama.Shared.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

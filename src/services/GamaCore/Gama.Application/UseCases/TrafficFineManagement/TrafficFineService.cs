@@ -4,8 +4,8 @@ using Gama.Application.Contracts.UserManagement;
 using Gama.Application.DataContracts.Queries.Common;
 using Gama.Application.Seedworks.Pagination;
 using Gama.Domain.Constants;
-using Gama.Domain.Entities;
 using Gama.Domain.Exceptions;
+using Gama.Domain.Models.TrafficFines;
 using Gama.Domain.ValueTypes;
 
 namespace Gama.Application.UseCases.TrafficFineManagement

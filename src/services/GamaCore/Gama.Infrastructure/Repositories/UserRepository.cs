@@ -1,11 +1,9 @@
 using Gama.Application.Contracts.Repositories;
-using Gama.Application.DataContracts.Queries.UserManagement;
 using Gama.Application.Seedworks.Pagination;
-using Gama.Domain.Entities;
+using Gama.Domain.Models.Users;
 using Gama.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using System.Data;
-using System.Linq;
 
 namespace Gama.Infrastructure.Repositories;
 

@@ -1,5 +1,5 @@
 ﻿using Gama.Application.Contracts.Repositories;
-using Gama.Domain.Entities;
+using Gama.Domain.Models.Users;
 using Gama.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 

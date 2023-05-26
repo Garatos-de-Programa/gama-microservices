@@ -1,4 +1,6 @@
-﻿namespace Gama.Domain.Entities;
+﻿using Gama.Domain.Common;
+
+namespace Gama.Domain.Models.TrafficFines;
 
 public class TrafficViolation : AuditableEntity
 {

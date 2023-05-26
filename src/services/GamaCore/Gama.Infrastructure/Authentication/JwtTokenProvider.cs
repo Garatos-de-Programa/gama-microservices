@@ -2,7 +2,7 @@ using Gama.Application.Contracts.UserManagement;
 using Gama.Application.DataContracts;
 using Gama.Application.DataContracts.Responses.UserManagement;
 using Gama.Application.Options;
-using Gama.Domain.Entities;
+using Gama.Domain.Models.Users;
 using Gama.Domain.ValueTypes;
 using Microsoft.Extensions.Options;
 using System.IdentityModel.Tokens.Jwt;

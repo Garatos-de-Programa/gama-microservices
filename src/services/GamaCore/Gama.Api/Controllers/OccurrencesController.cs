@@ -6,7 +6,7 @@ using Gama.Application.DataContracts.Responses.OccurrenceManagement;
 using Gama.Application.DataContracts.Responses.Pagination;
 using Gama.Application.Seedworks.Pagination;
 using Gama.Domain.Constants;
-using Gama.Domain.Entities;
+using Gama.Domain.Models.Occurrences;
 using Gama.Shared.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

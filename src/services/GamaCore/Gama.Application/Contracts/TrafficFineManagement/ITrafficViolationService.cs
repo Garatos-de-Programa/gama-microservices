@@ -1,4 +1,4 @@
-﻿using Gama.Domain.Entities;
+﻿using Gama.Domain.Models.TrafficFines;
 using Gama.Domain.ValueTypes;
 
 namespace Gama.Application.Contracts.TrafficFineManagement;

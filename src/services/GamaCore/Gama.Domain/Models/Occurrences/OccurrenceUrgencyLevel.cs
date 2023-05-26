@@ -1,4 +1,4 @@
-﻿namespace Gama.Domain.Entities
+﻿namespace Gama.Domain.Models.Occurrences
 {
     public class OccurrenceUrgencyLevel
     {

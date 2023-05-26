@@ -1,5 +1,5 @@
 using Gama.Application.DataContracts.Responses.UserManagement;
-using Gama.Domain.Entities;
+using Gama.Domain.Models.Users;
 using Gama.Domain.ValueTypes;
 
 namespace Gama.Application.Contracts.UserManagement;

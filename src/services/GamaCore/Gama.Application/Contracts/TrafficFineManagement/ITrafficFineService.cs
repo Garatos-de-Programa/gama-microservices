@@ -1,7 +1,7 @@
 ﻿using Gama.Application.Contracts.Repositories;
 using Gama.Application.DataContracts.Queries.Common;
 using Gama.Application.Seedworks.Pagination;
-using Gama.Domain.Entities;
+using Gama.Domain.Models.TrafficFines;
 using Gama.Domain.ValueTypes;
 
 namespace Gama.Application.Contracts.TrafficFineManagement;

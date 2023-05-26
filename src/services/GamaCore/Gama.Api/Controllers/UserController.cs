@@ -6,7 +6,7 @@ using Gama.Application.DataContracts.Responses.Pagination;
 using Gama.Application.DataContracts.Responses.UserManagement;
 using Gama.Application.Seedworks.Pagination;
 using Gama.Domain.Constants;
-using Gama.Domain.Entities;
+using Gama.Domain.Models.Users;
 using Gama.Shared.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

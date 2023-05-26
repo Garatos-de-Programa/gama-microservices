@@ -1,6 +1,6 @@
-﻿namespace Gama.Domain.Entities
+﻿namespace Gama.Domain.Models.Occurrences
 {
-    public class OccurrenceStatus
+    public class OccurrenceType
     {
         public short Id { get; set; }
 

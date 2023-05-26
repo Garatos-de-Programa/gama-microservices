@@ -1,7 +1,9 @@
-﻿using Gama.Domain.Exceptions;
+﻿using Gama.Domain.Common;
+using Gama.Domain.Exceptions;
+using Gama.Domain.Models.Users;
 using Gama.Domain.ValueTypes;
 
-namespace Gama.Domain.Entities
+namespace Gama.Domain.Models.Occurrences
 {
     public class Occurrence : AuditableEntity
     {
@@ -45,6 +47,7 @@ namespace Gama.Domain.Entities
             }
 
             Active = false;
+            AddEvent(new DeletedOccurrenceEvent(this));
             base.Delete();
             return true;
         }
@@ -53,6 +56,7 @@ namespace Gama.Domain.Entities
         {
             Active = true;
             CreatedAt = DateTime.UtcNow;
+            AddEvent(new CreatedOccurrenceEvent(this, ""));
         }
     }
 }

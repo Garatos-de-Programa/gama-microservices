@@ -1,7 +1,7 @@
 using Gama.Application.DataContracts.Commands.UserManagement;
 using Gama.Application.DataContracts.Queries.UserManagement;
 using Gama.Application.Seedworks.Pagination;
-using Gama.Domain.Entities;
+using Gama.Domain.Models.Users;
 using Gama.Domain.ValueTypes;
 
 namespace Gama.Application.Contracts.UserManagement;
