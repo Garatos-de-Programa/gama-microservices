@@ -35,9 +35,9 @@ namespace Gama.Domain.Models.Occurrences
             Location = occurrence.Location;
             OccurrenceName = occurrence.Name;
             Active = occurrence.Active;
-            StatusName = occurrence?.Status?.Name;
-            OccurrenceTypeName = occurrence?.OccurrenceType?.Name;
-            OccurrenceUrgencyLevelName = occurrence?.OccurrenceUrgencyLevel?.Name;
+            StatusName = ((OccurrenceUrgencyLevelType)occurrence?.OccurrenceStatusId).ToString();
+            OccurrenceTypeName = ((OccurrenceUrgencyLevelType)occurrence?.OccurrenceTypeId).ToString();
+            OccurrenceUrgencyLevelName = ((OccurrenceUrgencyLevelType)occurrence?.OccurrenceUrgencyLevelId).ToString();
         }
     }
 }

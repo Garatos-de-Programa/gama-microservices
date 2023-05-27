@@ -1,14 +1,23 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gama.Api", "src\services\GamaCore\Gama.Api\Gama.Api.csproj", "{592A24AD-FA2C-4E61-98C1-5961C5C86911}"
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.33530.505
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gama.Api", "src\services\GamaCore\Gama.Api\Gama.Api.csproj", "{592A24AD-FA2C-4E61-98C1-5961C5C86911}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gama.Application", "src\services\GamaCore\Gama.Application\Gama.Application.csproj", "{A8A4406A-C50D-4D97-9DF1-7B4D0FDAC279}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gama.Application", "src\services\GamaCore\Gama.Application\Gama.Application.csproj", "{A8A4406A-C50D-4D97-9DF1-7B4D0FDAC279}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gama.Domain", "src\services\GamaCore\Gama.Domain\Gama.Domain.csproj", "{A7829EE0-B5B2-4E9D-8B5E-6B2405A8690D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gama.Domain", "src\services\GamaCore\Gama.Domain\Gama.Domain.csproj", "{A7829EE0-B5B2-4E9D-8B5E-6B2405A8690D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gama.Infrastructure", "src\services\GamaCore\Gama.Infrastructure\Gama.Infrastructure.csproj", "{311C5B7E-0D81-46A1-BDD5-0792F8CF63A6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gama.Infrastructure", "src\services\GamaCore\Gama.Infrastructure\Gama.Infrastructure.csproj", "{311C5B7E-0D81-46A1-BDD5-0792F8CF63A6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gama.Shared", "src\services\GamaCore\Gama.Shared\Gama.Shared.csproj", "{CB4922DB-084D-42C8-AD07-3F11B95F24F1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gama.Shared", "src\services\GamaCore\Gama.Shared\Gama.Shared.csproj", "{CB4922DB-084D-42C8-AD07-3F11B95F24F1}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "GamaApi", "GamaApi", "{7DA23132-FCE4-4158-A7D9-021F4C9EB5F9}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NationalGeographicWorker", "NationalGeographicWorker", "{E9E84961-C0D0-4224-B25E-D7C1571EC042}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NationalGeographicWorker", "src\services\NationalGeographicWorker\NationalGeographicWorker.csproj", "{6738BD56-8336-4B7A-A1E1-58A270AB7A6A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -36,5 +45,23 @@ Global
 		{CB4922DB-084D-42C8-AD07-3F11B95F24F1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CB4922DB-084D-42C8-AD07-3F11B95F24F1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CB4922DB-084D-42C8-AD07-3F11B95F24F1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6738BD56-8336-4B7A-A1E1-58A270AB7A6A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6738BD56-8336-4B7A-A1E1-58A270AB7A6A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6738BD56-8336-4B7A-A1E1-58A270AB7A6A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6738BD56-8336-4B7A-A1E1-58A270AB7A6A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{592A24AD-FA2C-4E61-98C1-5961C5C86911} = {7DA23132-FCE4-4158-A7D9-021F4C9EB5F9}
+		{A8A4406A-C50D-4D97-9DF1-7B4D0FDAC279} = {7DA23132-FCE4-4158-A7D9-021F4C9EB5F9}
+		{A7829EE0-B5B2-4E9D-8B5E-6B2405A8690D} = {7DA23132-FCE4-4158-A7D9-021F4C9EB5F9}
+		{311C5B7E-0D81-46A1-BDD5-0792F8CF63A6} = {7DA23132-FCE4-4158-A7D9-021F4C9EB5F9}
+		{CB4922DB-084D-42C8-AD07-3F11B95F24F1} = {7DA23132-FCE4-4158-A7D9-021F4C9EB5F9}
+		{6738BD56-8336-4B7A-A1E1-58A270AB7A6A} = {E9E84961-C0D0-4224-B25E-D7C1571EC042}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {8ADDD6AD-EECC-46AA-9791-B24882295922}
 	EndGlobalSection
 EndGlobal

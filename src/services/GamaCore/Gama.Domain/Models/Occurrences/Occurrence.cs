@@ -52,11 +52,12 @@ namespace Gama.Domain.Models.Occurrences
             return true;
         }
 
-        public void PrepareToInsert()
+        public void PrepareToInsert(User user)
         {
             Active = true;
             CreatedAt = DateTime.UtcNow;
-            AddEvent(new CreatedOccurrenceEvent(this, ""));
+            UserId = user.Id;
+            AddEvent(new CreatedOccurrenceEvent(this, user.Username));
         }
     }
 }

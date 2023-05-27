@@ -42,11 +42,11 @@ namespace Gama.Application.UseCases.OccurrenceManagement
                     ErrorMessage = "Você deve informar uma ocorrencia valida"
                 }));
 
-            occurrence.UserId = _currentUserAccessor.GetUserId();
-            occurrence.PrepareToInsert();
+
+            var user = _currentUserAccessor.GetUser();
+            occurrence.PrepareToInsert(user);
 
             await _occurrenceRepository.InsertAsync(occurrence).ConfigureAwait(false);
-            await _occurrenceRepository.CommitAsync().ConfigureAwait(false);
 
             return occurrence;
         }

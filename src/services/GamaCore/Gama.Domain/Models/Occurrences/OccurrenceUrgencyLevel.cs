@@ -6,4 +6,9 @@
 
         public string? Name { get; set; }
     }
+
+    public enum OccurrenceUrgencyLevelType
+    {
+        None = 1,
+    }
 }

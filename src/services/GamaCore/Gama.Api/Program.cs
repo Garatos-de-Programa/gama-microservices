@@ -2,7 +2,6 @@ using Gama.Api.OptionsSetup;
 using Gama.Application;
 using Gama.Application.Seedworks.ValidationContracts;
 using Gama.Infrastructure;
-using Microsoft.AspNetCore.Mvc.Filters;
 
 var builder = WebApplication.CreateBuilder(args);
 

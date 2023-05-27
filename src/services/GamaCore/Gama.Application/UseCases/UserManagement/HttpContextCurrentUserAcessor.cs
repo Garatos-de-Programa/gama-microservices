@@ -35,6 +35,7 @@ namespace Gama.Application.UseCases.UserManagement
             var claimsPrincipal = GetClaimsPrincipal();
 
             var id = GetUserId();
+            var userName = GetUsername();
             var roles = claimsPrincipal.FindAll(ClaimTypes.Role).Select(x => new UserRoles() {
                 Role = new Role()
                 {
@@ -45,7 +46,8 @@ namespace Gama.Application.UseCases.UserManagement
             return new User() 
             { 
                 Id = id,
-                Roles = roles
+                Roles = roles,
+                Username = userName
             };
         }
 

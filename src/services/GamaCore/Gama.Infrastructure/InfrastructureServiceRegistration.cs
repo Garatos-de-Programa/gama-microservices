@@ -1,9 +1,10 @@
+using Gama.Application.Contracts.EventBus;
 using Gama.Application.Contracts.Repositories;
 using Gama.Application.Contracts.UserManagement;
 using Gama.Infrastructure.Authentication;
+using Gama.Infrastructure.EventBus;
 using Gama.Infrastructure.Persistence;
 using Gama.Infrastructure.Repositories;
-using MassTransit;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -33,13 +34,7 @@ public static class InfrastructureServiceRegistration
         services.AddTransient<IOccurrenceTypeRepository, OccurrenceTypeRepository>();
         services.AddTransient<IOccurrenceStatusRepository, OccurrenceStatusRepository>();
 
-        services.AddMassTransit(c =>
-         {
-             c.UsingRabbitMq((ctx, cfg) =>
-             {
-                 cfg.Host(configuration.GetConnectionString("EventBusConnectionString"));
-             });
-         });
+        services.AddSingleton<IEventBusProducer, RabbitMqEventBusProducer>();
 
         return services;
     }

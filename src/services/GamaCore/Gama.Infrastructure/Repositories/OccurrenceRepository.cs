@@ -1,31 +1,31 @@
-﻿using Gama.Application.Contracts.Repositories;
+﻿using Gama.Application.Contracts.EventBus;
+using Gama.Application.Contracts.Repositories;
 using Gama.Application.DataContracts.Queries.Common;
 using Gama.Domain.Models.Occurrences;
 using Gama.Infrastructure.Persistence;
-using MassTransit;
 using Microsoft.EntityFrameworkCore;
 
 namespace Gama.Infrastructure.Repositories
 {
     internal class OccurrenceRepository : Repository<Occurrence>, IOccurrenceRepository
     {
-        private readonly IPublishEndpoint _publishEndpoint;
-
-        public OccurrenceRepository(GamaCoreDbContext dbContext, IPublishEndpoint publishEndpoint) : base(dbContext)
+        private readonly IEventBusProducer _eventBusProducer;
+        public OccurrenceRepository(GamaCoreDbContext dbContext, IEventBusProducer eventBusProducer) : base(dbContext)
         {
-            _publishEndpoint = publishEndpoint;
+            _eventBusProducer = eventBusProducer;
         }
 
-        public override Task InsertAsync(Occurrence tObject)
+        public override async Task InsertAsync(Occurrence tObject)
         {
-            _publishEndpoint.Publish(tObject.Events);
-            return base.InsertAsync(tObject);
+            await base.InsertAsync(tObject);
+            await CommitAsync().ConfigureAwait(false);
+            PublishMessage(tObject);
         }
 
-        public override Task Patch(Occurrence tObject)
+        public override async Task Patch(Occurrence tObject)
         {
-            _publishEndpoint.Publish(tObject.Events);
-            return base.Patch(tObject);
+            PublishMessage(tObject);
+            await base.Patch(tObject);
         }
 
         public async override Task<Occurrence?> FindOneAsync<TId>(TId id)
@@ -48,6 +48,20 @@ namespace Gama.Infrastructure.Repositories
                     .Skip(offset)
                     .Take(size)
                     .ToListAsync();
+        }
+
+        internal void PublishMessage(Occurrence tObject)
+        {
+            var @event = tObject.Events.First();
+
+            if (@event != null)
+            {
+                if (@event is CreatedOccurrenceEvent createdEvent)
+                {
+                    createdEvent.OccurrenceId = tObject.Id;
+                }
+                _eventBusProducer.Publish(@event, "gama.api:event-occurrences");
+            }
         }
     }
 }

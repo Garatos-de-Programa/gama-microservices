@@ -22,3 +22,4 @@ services:
 volumes:
   pgadmin_data:
   postgres_data:
+  postgis_data: 
