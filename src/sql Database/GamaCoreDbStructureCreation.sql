@@ -139,44 +139,6 @@ CREATE TABLE occurrences (
 COMMIT;
 
 
-CREATE OR REPLACE FUNCTION occurrences_notification_function() RETURNS trigger AS $$
-DECLARE
-    row RECORD;
-    output TEXT;
-	occurrence_urgency_level TEXT;
-	occurrence_type TEXT;
-BEGIN
-	IF (TG_OP = 'DELETE') THEN
-      row = OLD;
-    ELSE
-      row = NEW;
-    END IF;
-	
-	SELECT name INTO occurrence_urgency_level FROM public.occurrence_urgency_levels WHERE id = row.occurrence_urgency_level_id;
-	SELECT name INTO occurrence_type FROM public.occurrence_types WHERE id = row.occurrence_type_id;
-
-	output = 'id:' || row.id || ';latitude:' || row.latitude 
-				|| ';longitude:' || row.longitude || ';name:' 
-				|| row.name || ';active:' || row.active 
-				|| ';occurrenceUrgencyLevel:' || occurrence_urgency_level 
-				|| ';occurrenceType:' || occurrence_type;
-	
-  	PERFORM pg_notify('occurrence_notification',output);
-  
-  RETURN NULL;
-END;
-$$ LANGUAGE plpgsql;
-
-
-
-COMMIT;
-
-
-CREATE TRIGGER occurrences_event_trigger
-AFTER INSERT OR UPDATE OR DELETE
-ON public.occurrences
-FOR EACH ROW
-EXECUTE FUNCTION occurrences_notification_function();
 
 
 

@@ -1,10 +1,11 @@
 using MassTransit;
-using MassTransit.Serialization;
-using NationalGeographicWorker.Consumers.OccurrenceEvents;
+using Microsoft.EntityFrameworkCore;
+using NationalGeographicWorker.Application.Consumers.OccurrenceEvents;
+using NationalGeographicWorker.Infrastructure.Persistence;
 using RabbitMQ.Client;
 
 IHost host = Host.CreateDefaultBuilder(args)
-    .ConfigureServices((ctx, services) =>
+    .ConfigureServices((builderctx, services) =>
     {
         services.AddMassTransit(c =>
         {
@@ -12,7 +13,7 @@ IHost host = Host.CreateDefaultBuilder(args)
 
             c.UsingRabbitMq((ctx, cfg) =>
             {
-                cfg.Host("amqp://guest:guest@localhost:5672");
+                cfg.Host(builderctx.Configuration.GetConnectionString("EventBusConnectionString"));
                 cfg.ReceiveEndpoint("national-geographic-worker", c =>
                 {
                     c.ConfigureConsumeTopology = false;
@@ -27,6 +28,12 @@ IHost host = Host.CreateDefaultBuilder(args)
                 });
             });
         });
+
+        var connectionString = builderctx.Configuration.GetConnectionString("NationalGeographicDbConnectionString");
+        services.AddDbContext<NationalGeographicDbContext>(options =>
+            options.UseNpgsql(connectionString, x => x.UseNetTopologySuite())
+            .UseSnakeCaseNamingConvention()
+            );
     })
     .Build();
 

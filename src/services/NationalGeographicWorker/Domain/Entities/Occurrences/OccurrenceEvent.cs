@@ -1,6 +1,6 @@
-﻿using NationalGeographicWorker.Common;
+﻿using NationalGeographicWorker.Domain.Common;
 
-namespace NationalGeographicWorker.Consumers.OccurrenceEvents
+namespace NationalGeographicWorker.Domain.Entities.Occurrences
 {
     internal class OccurrenceEvent : Event
     {
@@ -17,7 +17,7 @@ namespace NationalGeographicWorker.Consumers.OccurrenceEvents
         public string? Location { get; set; }
 
         public string? OccurrenceName { get; set; }
-            
+
         public bool Active { get; set; }
 
         public string? StatusName { get; set; }

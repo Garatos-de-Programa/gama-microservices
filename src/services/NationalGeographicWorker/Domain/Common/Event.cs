@@ -1,4 +1,4 @@
-﻿namespace NationalGeographicWorker.Common
+﻿namespace NationalGeographicWorker.Domain.Common
 {
     internal abstract class Event
     {
