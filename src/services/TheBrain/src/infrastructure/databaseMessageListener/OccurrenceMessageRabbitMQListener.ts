@@ -1,6 +1,6 @@
-import IDatabaseMessageListener from "@application/Contracts/Infrastructure/IDatabaseMessageListener";
-import IMessageProducer from "@application/Contracts/Infrastructure/IMessageProducer";
-import OccurrenceEventMessage from "@domain/occurrences/Occurrence";
+import IDatabaseMessageListener from "@domain/messenger/IDatabaseMessageListener";
+import IMessageProducer from "@domain/messenger/IMessageProducer";
+import OccurrenceEventMessage from "@domain/occurrences/OccurrenceEventMessage";
 import { Channel, connect, Connection, Message } from 'amqplib';
 
 export default class OccurrenceMessageRabbitMQListener 

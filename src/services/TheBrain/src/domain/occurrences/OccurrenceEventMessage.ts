@@ -14,11 +14,7 @@ export default class OccurrenceEventMessage {
     public Active: boolean = false;
 
     toIncidentMessage() : IncidentMessage {
-        const messageString = 'id:' + this.OccurrenceId + ';latitude:' + this.Latitude
-        + ';longitude:' + this.Longitude + ';name:' 
-        + this.OccurrenceName + ';active:' + this.Active 
-        + ';occurrenceUrgencyLevel:' + this.OccurrenceUrgencyLevelName 
-        + ';occurrenceType:' + this.OccurrenceTypeName;
+        const messageString = JSON.stringify(this);
         return new IncidentMessage(messageString);
     }
 }

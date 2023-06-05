@@ -27,5 +27,19 @@ export default class NetClientSocketConnection {
     });
   }
 
+  subscribe() : void {
+    const encoder = new TextEncoder();
+    const message = "{ 'type': 'subscribe', 'latitude'-22.7533418:, 'longitude':-47.3309513, 'radius': 20 }";
+    const bytes = encoder.encode(message);
+    this.socket.write(bytes);
+  }
+
+  unsubscribe() : void {
+    const encoder = new TextEncoder();
+    const message = "{ 'type': 'unsubscribe' }";
+    const bytes = encoder.encode(message);
+    this.socket.write(bytes);
+  }
+
 }
 

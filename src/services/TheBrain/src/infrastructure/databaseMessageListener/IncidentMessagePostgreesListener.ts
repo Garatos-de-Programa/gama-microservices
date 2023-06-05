@@ -1,31 +1,28 @@
-import IDatabaseMessageListener from "@application/Contracts/Infrastructure/IDatabaseMessageListener";
-import IMessageProducer from "@application/Contracts/Infrastructure/IMessageProducer";
+import IDatabaseMessageListener from "@domain/messenger/IDatabaseMessageListener";
+import IMessageProducer from "@domain/messenger/IMessageProducer";
 import IncidentMessage from "@domain/messenger/IncidentMessage";
+import IDatabaseConnection from "@infrastructure/persistence/IDatabaseConnection";
 import { Client, Notification } from 'pg';
 
 export default class IncidentMessagePostgreesListener 
     implements IDatabaseMessageListener {
 
       private readonly _messageProducer : IMessageProducer;
+      private readonly _databaseConnection : IDatabaseConnection
 
-      constructor(messageProducer : IMessageProducer) {
+      constructor(messageProducer : IMessageProducer, databaseConnection : IDatabaseConnection) {
         this._messageProducer = messageProducer;
+        this._databaseConnection = databaseConnection;
       }
 
       listen(): void {
-        const client = new Client({
-          user: 'admin',
-          password: 'admin1234',
-          database: 'GamaCoreDb',
-          host: 'localhost',
-          port: 5432,
-        });
-      
-        client.connect();
-        
-        client.query('LISTEN occurrence_notification');
+        const connection = this._databaseConnection.getPostgressConnection();
 
-        client.on('notification', (notification : Notification) => {
+        connection.connect();
+        
+        connection.query('LISTEN occurrence_notification');
+
+        connection.on('notification', (notification : Notification) => {
           console.log('Received notification' + notification.payload);
           const message = new IncidentMessage(notification.payload!);
           this._messageProducer.produce(message);

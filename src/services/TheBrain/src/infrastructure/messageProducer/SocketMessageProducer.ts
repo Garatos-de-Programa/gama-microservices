@@ -1,4 +1,4 @@
-import IMessageProducer from "@application/Contracts/Infrastructure/IMessageProducer";
+import IMessageProducer from "@domain/messenger/IMessageProducer";
 import IMessage from "@domain/messenger/IMessage";
 import ISocketConnection from "@infrastructure/Socket/ISocketConnection";
 
