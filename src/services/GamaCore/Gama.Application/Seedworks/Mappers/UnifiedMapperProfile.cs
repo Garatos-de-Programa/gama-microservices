@@ -63,6 +63,8 @@ namespace Gama.Application.Seedworks.Mappers
                 .ForMember(dest => dest.OccurrenceUrgencyLevel, opt => opt.MapFrom(o => o.OccurrenceUrgencyLevel.Name))
                 .ForMember(dest => dest.OccurrenceType, opt => opt.MapFrom(o => o.OccurrenceType.Name));
             CreateMap<CreateOccurrenceCommand, Occurrence>();
+
+            CreateMap<GetTrafficFineFileResponse, TrafficFineFile>();
         }
     }
 }

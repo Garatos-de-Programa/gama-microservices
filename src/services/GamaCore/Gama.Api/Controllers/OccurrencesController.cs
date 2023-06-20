@@ -15,7 +15,7 @@ using System.Net;
 namespace Gama.Api.Controllers
 {
     [ApiController]
-    [Route("v1/occurrence")]
+    [Route("v1/occurrences")]
     public class OccurrencesController : Controller
     {
         private readonly IOccurrenceService _occurrenceService;

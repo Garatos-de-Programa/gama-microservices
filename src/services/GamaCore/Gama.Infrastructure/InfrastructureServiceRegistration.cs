@@ -1,8 +1,10 @@
 using Gama.Application.Contracts.EventBus;
+using Gama.Application.Contracts.FileManagement;
 using Gama.Application.Contracts.Repositories;
 using Gama.Application.Contracts.UserManagement;
 using Gama.Infrastructure.Authentication;
 using Gama.Infrastructure.EventBus;
+using Gama.Infrastructure.FileManager;
 using Gama.Infrastructure.Persistence;
 using Gama.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
@@ -33,6 +35,8 @@ public static class InfrastructureServiceRegistration
         services.AddTransient<IOccurrenceUrgencyLevelRepository, OccurrenceUrgencyLevelRepository>();
         services.AddTransient<IOccurrenceTypeRepository, OccurrenceTypeRepository>();
         services.AddTransient<IOccurrenceStatusRepository, OccurrenceStatusRepository>();
+
+        services.AddScoped<IFileManager, LocalFileManager>();
 
         services.AddSingleton<IEventBusProducer, RabbitMqEventBusProducer>();
 

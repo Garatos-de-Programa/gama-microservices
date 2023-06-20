@@ -13,12 +13,11 @@ using System.Net;
 namespace Gama.Api.Controllers;
 
 [ApiController]
-[Route("v1/traffic-violation")]
+[Route("v1/traffic-violations")]
 public class TrafficViolationController : Controller
 {
     private readonly ITrafficViolationService _trafficViolationService;
     private readonly IEntityMapper _entityMapper;
-    private readonly ICurrentUserAccessor _currentUserAccessor;
 
     public TrafficViolationController(
         ITrafficViolationService trafficViolationService, 
@@ -28,7 +27,6 @@ public class TrafficViolationController : Controller
     {
         _trafficViolationService = trafficViolationService;
         _entityMapper = entityMapper;
-        _currentUserAccessor = currentUserAccessor;
     }
 
     [Authorize(Roles = RolesName.Admin)]

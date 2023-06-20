@@ -15,7 +15,7 @@ using System.Net;
 namespace Gama.Api.Controllers;
 
 [ApiController]
-[Route("v1/traffic-fine")]
+[Route("v1/traffic-fines")]
 public class TrafficFineController : Controller
 {
     private readonly ITrafficFineService _trafficFineService;
