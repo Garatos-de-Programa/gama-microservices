@@ -19,6 +19,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NationalGeographicWorker", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NationalGeographicWorker", "src\services\NationalGeographicWorker\NationalGeographicWorker.csproj", "{6738BD56-8336-4B7A-A1E1-58A270AB7A6A}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NationalGeographicMessager", "NationalGeographicMessager", "{11701FC6-18F1-4108-92DB-B27BDA6EDE7F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NationalGeographicMessager", "src\services\NationalGeographicMessager\NationalGeographicMessager.csproj", "{657B3AC4-D557-4DF0-AA45-55BEB71E4D6B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -49,6 +53,10 @@ Global
 		{6738BD56-8336-4B7A-A1E1-58A270AB7A6A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6738BD56-8336-4B7A-A1E1-58A270AB7A6A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6738BD56-8336-4B7A-A1E1-58A270AB7A6A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{657B3AC4-D557-4DF0-AA45-55BEB71E4D6B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{657B3AC4-D557-4DF0-AA45-55BEB71E4D6B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{657B3AC4-D557-4DF0-AA45-55BEB71E4D6B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{657B3AC4-D557-4DF0-AA45-55BEB71E4D6B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -60,6 +68,7 @@ Global
 		{311C5B7E-0D81-46A1-BDD5-0792F8CF63A6} = {7DA23132-FCE4-4158-A7D9-021F4C9EB5F9}
 		{CB4922DB-084D-42C8-AD07-3F11B95F24F1} = {7DA23132-FCE4-4158-A7D9-021F4C9EB5F9}
 		{6738BD56-8336-4B7A-A1E1-58A270AB7A6A} = {E9E84961-C0D0-4224-B25E-D7C1571EC042}
+		{657B3AC4-D557-4DF0-AA45-55BEB71E4D6B} = {11701FC6-18F1-4108-92DB-B27BDA6EDE7F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8ADDD6AD-EECC-46AA-9791-B24882295922}
