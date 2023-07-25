@@ -1,5 +1,4 @@
-﻿using NationalGeographicMessager.Domain.GeolocationAggregated;
-using NationalGeographicMessager.Domain.NotificationMessageAggregated;
+﻿using NationalGeographicMessager.Domain.NotificationMessageAggregated;
 using NationalGeographicMessager.Infrastructure.SocketConnection;
 
 namespace NationalGeographicMessager.Infrastructure.Notifier
@@ -7,41 +6,21 @@ namespace NationalGeographicMessager.Infrastructure.Notifier
     internal class RadiusBoundedSocketMessageNotifier : IMessageNotifier
     {
         private readonly ISocketConnection _sockerConnection;
-        private readonly IGeoLocationCalculator _geoLocationCalculator;
+        private readonly ISocketConnectionManager _socketConnectionManager;
 
         public RadiusBoundedSocketMessageNotifier(
             ISocketConnection socketConnection,
-            IGeoLocationCalculator geoLocationCalculator
+            ISocketConnectionManager socketConnectionManager
             )
         {
             _sockerConnection = socketConnection;
-            _geoLocationCalculator = geoLocationCalculator;
+            _socketConnectionManager = socketConnectionManager;
         }
 
         public Task NotifyAsync(IMessage message)
         {
-            var connectionToNotify = GetConnectionsIdsInsideTheBound(message.Point);
+            var connectionToNotify = _socketConnectionManager.GetConnectionsInsideTheBoundary(message.Point);
             return _sockerConnection.WriteAsync(connectionToNotify, message.GetBytes());
-        }
-
-        internal IEnumerable<string> GetConnectionsIdsInsideTheBound(Point messageLocation)
-        {
-            foreach ( var connection in _sockerConnection.Connections )
-            {
-                var point = connection.Value;
-                var isInsideRadius = _geoLocationCalculator.IsInsideRadius(
-                        point.Latitude,
-                        point.Longitude,
-                        messageLocation.Latitude,
-                        messageLocation.Longitude,
-                        point.Radius
-                    );
-
-                if (isInsideRadius)
-                {
-                    yield return connection.Key;
-                }
-            }
         }
     }
 }
