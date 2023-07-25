@@ -1,6 +1,6 @@
 ﻿namespace NationalGeographicMessager.Domain.OcurrencesAggregated
 {
-    public class Occurrence
+    internal class Occurrence
     {
         public int OccurrenceId { get; set; }
 

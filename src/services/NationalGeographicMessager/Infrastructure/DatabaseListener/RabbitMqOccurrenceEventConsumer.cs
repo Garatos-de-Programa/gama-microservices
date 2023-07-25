@@ -4,7 +4,7 @@ using NationalGeographicMessager.Domain.OcurrencesAggregated;
 
 namespace NationalGeographicMessager.Infrastructure.DatabaseListener
 {
-    public class RabbitMqOccurrenceEventConsumer : IConsumer<OccurrenceEventMessage>
+    internal class RabbitMqOccurrenceEventConsumer : IConsumer<OccurrenceEventMessage>
     {
         private readonly ILogger<RabbitMqOccurrenceEventConsumer> _logger;
         private readonly IMessageNotifier _messageNotifier;

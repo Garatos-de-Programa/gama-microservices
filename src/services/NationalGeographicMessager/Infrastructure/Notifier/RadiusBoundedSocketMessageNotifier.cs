@@ -4,7 +4,7 @@ using NationalGeographicMessager.Infrastructure.SocketConnection;
 
 namespace NationalGeographicMessager.Infrastructure.Notifier
 {
-    public class RadiusBoundedSocketMessageNotifier : IMessageNotifier
+    internal class RadiusBoundedSocketMessageNotifier : IMessageNotifier
     {
         private readonly ISocketConnection _sockerConnection;
         private readonly IGeoLocationCalculator _geoLocationCalculator;

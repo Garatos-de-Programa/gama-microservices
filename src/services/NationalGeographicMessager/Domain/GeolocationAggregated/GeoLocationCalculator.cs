@@ -1,6 +1,6 @@
 ﻿namespace NationalGeographicMessager.Domain.GeolocationAggregated
 {
-    public class GeoLocationCalculator : IGeoLocationCalculator
+    internal class GeoLocationCalculator : IGeoLocationCalculator
     {
         private const double EarthRadiusInMeters = 6371000;
         private const int EarthRadiusInKilometers = 6371;

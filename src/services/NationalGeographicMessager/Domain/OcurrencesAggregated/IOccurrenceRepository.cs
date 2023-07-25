@@ -5,6 +5,6 @@ namespace NationalGeographicMessager.Domain.OcurrencesAggregated
 {
     public interface IOccurrenceRepository
     {
-        Task<OccurrenceEventMessage[]> GetAsync(Point occurrenceLocation);
+        Task<IEnumerable<OccurrenceEventMessage>> GetAsync(Point occurrenceLocation);
     }
 }

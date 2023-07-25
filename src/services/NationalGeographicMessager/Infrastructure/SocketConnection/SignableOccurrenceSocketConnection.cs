@@ -5,7 +5,7 @@ using System.Net.Sockets;
 
 namespace NationalGeographicMessager.Infrastructure.SocketConnection
 {
-    public class SignableOccurrenceSocketConnection : Hub, ISocketConnection 
+    internal class SignableOccurrenceSocketConnection : Hub, ISocketConnection 
     {
         private readonly IOccurrenceRepository _occurrenceRepository;
 
