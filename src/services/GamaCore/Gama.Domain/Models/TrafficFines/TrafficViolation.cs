@@ -12,7 +12,7 @@ public class TrafficViolation : AuditableEntity
 
     public bool Active { get; set; } = true;
 
-    public ICollection<TrafficFineTrafficViolation> TrafficFineTrafficViolations { get; set; }
+    public ICollection<TrafficFineTrafficViolation>? TrafficFineTrafficViolations { get; set; }
 
     public void Update(TrafficViolation trafficViolation)
     {

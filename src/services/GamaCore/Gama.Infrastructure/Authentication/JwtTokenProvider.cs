@@ -27,7 +27,7 @@ public class JwtTokenProvider : ITokenService
         return new Result<AuthenticationResponse>(new AuthenticationResponse()
         {
             Token = stringToken,
-            ExpiresIn = tokenDescriptor.Expires.Value.Subtract(DateTime.MinValue).TotalSeconds
+            ExpiresIn = tokenDescriptor.Expires!.Value.Subtract(DateTime.MinValue).TotalSeconds
         });
     }
 }

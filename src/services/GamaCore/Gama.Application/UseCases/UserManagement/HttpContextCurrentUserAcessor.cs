@@ -27,7 +27,7 @@ namespace Gama.Application.UseCases.UserManagement
             var claimsPrincipal = GetClaimsPrincipal();
 
             var id = claimsPrincipal.FindFirst("Id");
-            return int.Parse(id?.Value);
+            return int.Parse(id?.Value!);
         }
 
         public User GetUser()

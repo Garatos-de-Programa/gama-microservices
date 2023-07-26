@@ -15,15 +15,15 @@ namespace Gama.Infrastructure.Repositories
         public override async Task<TrafficFine?> FindOneAsync<TId>(TId id)
         {
             return await _context.Set<TrafficFine>()
-                .Include(i => i.TrafficFineTrafficViolations)
+                .Include(i => i.TrafficFineTrafficViolations!)
                     .ThenInclude(t => t.TrafficViolation)
-                .FirstOrDefaultAsync(t => t.Id == int.Parse(id.ToString()));
+                .FirstOrDefaultAsync(t => t.Id == int.Parse(id.ToString()!));
         }
 
         public override Task InsertAsync(TrafficFine trafficFine)
         {
-            var trafficFineViolations = trafficFine.TrafficFineTrafficViolations
-                    .Select(v => v.TrafficViolation.Id).ToList();
+            var trafficFineViolations = trafficFine.TrafficFineTrafficViolations!
+                    .Select(v => v.TrafficViolation?.Id).ToList();
 
 
             var trafficViolation = _context.Set<TrafficViolation>()

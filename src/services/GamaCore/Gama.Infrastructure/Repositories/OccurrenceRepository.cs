@@ -34,7 +34,7 @@ namespace Gama.Infrastructure.Repositories
                             .Include(o => o.OccurrenceType)
                             .Include(o => o.OccurrenceUrgencyLevel)
                             .Include(o => o.Status)
-                            .FirstOrDefaultAsync(o => o.Id == int.Parse(id.ToString()));
+                            .FirstOrDefaultAsync(o => o.Id == int.Parse(id.ToString()!));
         }
 
         public async Task<IEnumerable<Occurrence>> GetAsync(DateSearchQuery search, int offset, int size)

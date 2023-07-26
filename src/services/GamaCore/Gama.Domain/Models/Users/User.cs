@@ -23,13 +23,13 @@ public class User : AuditableEntity
 
     public bool Active { get; set; }
 
-    public ICollection<UserRoles> Roles { get; set; }
+    public ICollection<UserRoles>? Roles { get; set; }
 
     public IEnumerable<TrafficFine>? TrafficFines { get; set; }
 
     public bool IsValidPassword(string password)
     {
-        return BCryptPassword.IsValid(password, Password);
+        return BCryptPassword.IsValid(password, Password!);
     }
 
     public void Update(string? firstName, string? lastName, string? documentNumber)
@@ -85,7 +85,7 @@ public class User : AuditableEntity
 
     internal void Encrypt()
     {
-        Password = BCryptPassword.Parse(Password);
+        Password = BCryptPassword.Parse(Password!);
     }
 
     internal bool IsDiferentUser(User user)

@@ -13,15 +13,15 @@ public class UserSecurityTokenDescriptor : SecurityTokenDescriptor
         var claims = new List<Claim>()
         {
             new Claim("Id", user.Id.ToString()),
-            new Claim(JwtRegisteredClaimNames.Sub, user.Username),
-            new Claim(JwtRegisteredClaimNames.Email, user.Email),
+            new Claim(JwtRegisteredClaimNames.Sub, user.Username!),
+            new Claim(JwtRegisteredClaimNames.Email, user.Email!),
             new Claim(JwtRegisteredClaimNames.Jti,
                 Guid.NewGuid().ToString()),
         };
 
         foreach (var role in user?.Roles ?? new List<UserRoles>())
         {
-            claims.Add(new Claim(ClaimTypes.Role, role.Role.Name.ToString()));
+            claims.Add(new Claim(ClaimTypes.Role, role.Role.Name!.ToString()));
         }
 
         Subject = new ClaimsIdentity(claims);

@@ -36,7 +36,7 @@ namespace Gama.Application.UseCases.TrafficFineManagement
                 }));
             }
 
-            trafficViolation.PrepareToInsert();
+            trafficViolation!.PrepareToInsert();
 
             await _trafficViolationRepository.InsertAsync(trafficViolation).ConfigureAwait(false);
             await _trafficViolationRepository.CommitAsync().ConfigureAwait(false);
@@ -57,7 +57,7 @@ namespace Gama.Application.UseCases.TrafficFineManagement
 
             trafficViolation.Delete();
 
-            _trafficViolationRepository.Patch(trafficViolation);
+            await _trafficViolationRepository.Patch(trafficViolation);
             await _trafficViolationRepository.CommitAsync().ConfigureAwait(false);
 
             return true;
@@ -106,7 +106,7 @@ namespace Gama.Application.UseCases.TrafficFineManagement
 
             violation?.Update(trafficViolation);
 
-            _trafficViolationRepository.Patch(violation);
+            await _trafficViolationRepository.Patch(violation!);
             await _trafficViolationRepository.CommitAsync().ConfigureAwait(false);
 
             return trafficViolation;

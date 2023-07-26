@@ -24,6 +24,6 @@ public struct Result<T>
         new(value);
 
     public TR Match<TR>(Func<T, TR> success, Func<Exception, TR> fail) =>
-        IsFaulted ? fail(_error) : success(_value);
+        IsFaulted ? fail(_error!) : success(_value!);
     
 }

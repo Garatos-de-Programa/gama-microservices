@@ -22,9 +22,9 @@ public class TrafficFine : AuditableEntity
 
     public int UserId { get; set; }
 
-    public User User { get; set; }
+    public User? User { get; set; }
 
-    public ICollection<TrafficFineTrafficViolation> TrafficFineTrafficViolations { get; set; }
+    public ICollection<TrafficFineTrafficViolation>? TrafficFineTrafficViolations { get; set; }
 
     public Result<bool> Compute(User user)
     {

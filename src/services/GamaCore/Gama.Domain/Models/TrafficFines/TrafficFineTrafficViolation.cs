@@ -6,8 +6,8 @@
 
         public int TrafficViolationId { get; set; }
 
-        public TrafficFine TrafficFine { get; set; }
+        public TrafficFine? TrafficFine { get; set; }
 
-        public TrafficViolation TrafficViolation { get; set; }
+        public TrafficViolation? TrafficViolation { get; set; }
     }
 }

@@ -9,9 +9,9 @@ namespace Gama.Domain.Models.Users
         public string? Name { get; set; }
 
         [NotMapped]
-        public IEnumerable<UserRoles> UserRoles { get; set; }
+        public IEnumerable<UserRoles>? UserRoles { get; set; }
 
         [NotMapped]
-        public IEnumerable<User> Users { get; set; }
+        public IEnumerable<User>? Users { get; set; }
     }
 }

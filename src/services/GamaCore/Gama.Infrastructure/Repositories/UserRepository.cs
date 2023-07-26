@@ -18,7 +18,7 @@ internal class UserRepository : Repository<User>, IUserRepository
         return await FindAll()
             .Include(u => u.Roles)
                 .ThenInclude(ur => ur.Role)
-                    .FirstOrDefaultAsync(u => u.Id == int.Parse(id.ToString()));
+                    .FirstOrDefaultAsync(u => u.Id == int.Parse(id.ToString()!));
     }
 
     public async Task<User?> GetAsync(string login)

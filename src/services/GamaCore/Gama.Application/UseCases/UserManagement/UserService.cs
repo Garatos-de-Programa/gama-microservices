@@ -22,7 +22,7 @@ public class UserService : IUserService
 
     public async Task<Result<User>> CreateAsync(User user)
     {
-        var existingUser = await _userRepository.GetAsync(user.Email, user.Username);
+        var existingUser = await _userRepository.GetAsync(user.Email!, user.Username!);
 
         if (existingUser is not null)
         {
@@ -60,7 +60,7 @@ public class UserService : IUserService
             updateUserCommand.DocumentNumber
             );
 
-        _userRepository.Patch(user);
+        await _userRepository.Patch(user);
         await _userRepository.CommitAsync();
 
         return user;
@@ -81,7 +81,7 @@ public class UserService : IUserService
 
         user.Delete();
 
-        _userRepository.Patch(user);
+        await _userRepository.Patch(user);
         await _userRepository.CommitAsync();
 
         return true;
@@ -104,7 +104,7 @@ public class UserService : IUserService
 
     public async Task<Result<User>> UpdatePasswordAsync(UpdatePasswordCommand command)
     {
-        var user = await _userRepository.GetAsync(command.Login);
+        var user = await _userRepository.GetAsync(command.Login!);
         if (user is null)
         {
             return new Result<User>(new ValidationException(new ValidationError()
@@ -114,16 +114,16 @@ public class UserService : IUserService
             }));
         }
 
-        var isValidPassword = user.IsValidPassword(command.OldPassword);
+        var isValidPassword = user.IsValidPassword(command.OldPassword!);
         if (!isValidPassword)
         {
             return new Result<User>(new ValidationException(new ValidationError()
                 { PropertyName = "user", ErrorMessage = "Usuário ou senha inválidos" }));
         }
         
-        user.ChangePassword(command.NewPassword);
+        user.ChangePassword(command.NewPassword!);
         
-        _userRepository.Patch(user);
+        await _userRepository.Patch(user);
         await _userRepository.CommitAsync();
 
         return user;

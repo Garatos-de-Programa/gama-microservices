@@ -44,7 +44,7 @@ namespace Gama.Application.UseCases.TrafficFineManagement
                 return result;
             }
 
-            _trafficFineRepository.Patch(trafficFine);
+            await _trafficFineRepository.Patch(trafficFine);
             await _trafficFineRepository.CommitAsync().ConfigureAwait(false);
 
             return true;
@@ -88,7 +88,7 @@ namespace Gama.Application.UseCases.TrafficFineManagement
                 return result;
             }
 
-            _trafficFineRepository.Patch(trafficFine);
+            await _trafficFineRepository.Patch(trafficFine);
             await _trafficFineRepository.CommitAsync().ConfigureAwait(false);
 
             return true;

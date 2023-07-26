@@ -57,7 +57,7 @@ namespace Gama.Domain.Models.Occurrences
             Active = true;
             CreatedAt = DateTime.UtcNow;
             UserId = user.Id;
-            AddEvent(new CreatedOccurrenceEvent(this, user.Username));
+            AddEvent(new CreatedOccurrenceEvent(this, user.Username!));
         }
     }
 }

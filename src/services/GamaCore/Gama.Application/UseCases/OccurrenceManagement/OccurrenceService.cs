@@ -71,7 +71,7 @@ namespace Gama.Application.UseCases.OccurrenceManagement
                 return result;
             }
 
-            _occurrenceRepository.Patch(occurrence);
+            await _occurrenceRepository.Patch(occurrence);
             await _occurrenceRepository.CommitAsync().ConfigureAwait(false);
 
             return true;

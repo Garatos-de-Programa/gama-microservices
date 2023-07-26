@@ -16,7 +16,7 @@ public class GetTrafficFineResponse
 
     public bool Computed { get; set; }
     
-    public IEnumerable<GetTrafficViolationResponse> TrafficViolations { get; set; }
+    public IEnumerable<GetTrafficViolationResponse>? TrafficViolations { get; set; }
     
     public bool Deleted => DeletedAt.HasValue; 
     
