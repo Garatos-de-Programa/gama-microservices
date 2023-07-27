@@ -1,5 +1,5 @@
 ﻿using Flunt.Validations;
-using Gama.Application.DataContracts.Commands.UserManagement;
+using Gama.Application.UseCases.UserAgg.Commands;
 using Gama.Domain.ValueTypes;
 
 namespace Gama.Application.Seedworks.ValidationContracts

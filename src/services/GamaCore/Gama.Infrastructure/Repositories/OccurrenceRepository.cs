@@ -1,9 +1,10 @@
 ﻿using Gama.Application.Contracts.EventBus;
 using Gama.Application.Contracts.Repositories;
-using Gama.Application.DataContracts.Queries.Common;
+using Gama.Application.Seedworks.Queries;
 using Gama.Domain.Models.Occurrences;
 using Gama.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
 
 namespace Gama.Infrastructure.Repositories
 {
@@ -37,14 +38,14 @@ namespace Gama.Infrastructure.Repositories
                             .FirstOrDefaultAsync(o => o.Id == int.Parse(id.ToString()!));
         }
 
-        public async Task<IEnumerable<Occurrence>> GetAsync(DateSearchQuery search, int offset, int size)
+        public async Task<IEnumerable<Occurrence>> GetAsync(Expression<Func<Occurrence, bool>> search, int offset, int size)
         {
             return await FindAll()
                     .Include(o => o.OccurrenceType)
                     .Include(o => o.Status)
                     .Include(o => o.OccurrenceUrgencyLevel)
                     .OrderBy(x => x.CreatedAt)
-                    .Where(t => t.CreatedAt >= search.CreatedSince.ToUniversalTime() && t.CreatedAt <= search.CreatedUntil.ToUniversalTime())
+                    .Where(search)
                     .Skip(offset)
                     .Take(size)
                     .ToListAsync();

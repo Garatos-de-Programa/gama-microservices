@@ -1,5 +1,5 @@
 ﻿using Flunt.Validations;
-using Gama.Application.DataContracts.Commands.TrafficFineManagement;
+using Gama.Application.UseCases.TrafficFineAgg.Commands;
 
 namespace Gama.Application.Seedworks.ValidationContracts
 {

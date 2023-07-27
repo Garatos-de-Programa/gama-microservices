@@ -1,5 +1,5 @@
 ﻿using Flunt.Validations;
-using Gama.Application.DataContracts.Commands.OccurrenceManagement;
+using Gama.Application.UseCases.OccurrenceAgg.Commands;
 
 namespace Gama.Application.Seedworks.ValidationContracts
 {

@@ -1,7 +1,7 @@
 ﻿using Gama.Application.Contracts.Mappers;
-using Gama.Application.Contracts.TrafficFineManagement;
-using Gama.Application.DataContracts.Responses.TrafficManagement;
-using Gama.Domain.Constants;
+using Gama.Application.UseCases.TrafficFineAgg.Interfaces;
+using Gama.Application.UseCases.TrafficFineAgg.Responses;
+using Gama.Domain.Entities.UsersAgg;
 using Gama.Domain.Models.TrafficFines;
 using Gama.Shared.Extensions;
 using Microsoft.AspNetCore.Authorization;

@@ -1,11 +1,11 @@
 using Gama.Application.Contracts.Mappers;
-using Gama.Application.Contracts.OccurrenceManagement;
-using Gama.Application.Contracts.TrafficFineManagement;
-using Gama.Application.Contracts.UserManagement;
 using Gama.Application.Seedworks.Mappers;
-using Gama.Application.UseCases.OccurrenceManagement;
-using Gama.Application.UseCases.TrafficFineManagement;
-using Gama.Application.UseCases.UserManagement;
+using Gama.Application.UseCases.OccurrenceAgg.Implementations;
+using Gama.Application.UseCases.OccurrenceAgg.Interfaces;
+using Gama.Application.UseCases.TrafficFineAgg.Implementations;
+using Gama.Application.UseCases.TrafficFineAgg.Interfaces;
+using Gama.Application.UseCases.UserAgg.Implementations;
+using Gama.Application.UseCases.UserAgg.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Gama.Application;

@@ -1,8 +1,9 @@
 ﻿using Gama.Application.Contracts.Repositories;
-using Gama.Application.DataContracts.Queries.Common;
+using Gama.Application.Seedworks.Queries;
 using Gama.Domain.Models.TrafficFines;
 using Gama.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
 
 namespace Gama.Infrastructure.Repositories
 {
@@ -36,11 +37,11 @@ namespace Gama.Infrastructure.Repositories
             return base.InsertAsync(trafficFine);
         }
 
-        public async Task<IEnumerable<TrafficFine>> GetAsync(DateSearchQuery dateSearchQuery, int offset, int size)
+        public async Task<IEnumerable<TrafficFine>> GetAsync(Expression<Func<TrafficFine, bool>> dateSearchQuery, int offset, int size)
         {
             return await FindAll()
                     .OrderBy(x => x.CreatedAt)
-                    .Where(t => t.CreatedAt >= dateSearchQuery.CreatedSince.ToUniversalTime() && t.CreatedAt <= dateSearchQuery.CreatedUntil.ToUniversalTime())
+                    .Where(dateSearchQuery)
                     .Skip(offset)
                     .Take(size)
                     .ToListAsync();

@@ -1,5 +1,5 @@
-using Gama.Application.Contracts.UserManagement;
-using Gama.Application.DataContracts.Commands.UserManagement;
+using Gama.Application.UseCases.UserAgg.Commands;
+using Gama.Application.UseCases.UserAgg.Interfaces;
 using Gama.Shared.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

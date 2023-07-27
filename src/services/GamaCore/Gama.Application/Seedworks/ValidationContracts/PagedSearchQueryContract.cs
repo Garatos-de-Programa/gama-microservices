@@ -1,5 +1,5 @@
 ﻿using Flunt.Validations;
-using Gama.Application.DataContracts.Queries.Common;
+using Gama.Application.Seedworks.Queries;
 
 namespace Gama.Application.Seedworks.ValidationContracts
 {

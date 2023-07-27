@@ -1,6 +1,6 @@
 using Gama.Application.Contracts.Repositories;
-using Gama.Application.Seedworks.Pagination;
 using Gama.Domain.Models.Users;
+using Gama.Domain.ValueTypes;
 using Gama.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using System.Data;

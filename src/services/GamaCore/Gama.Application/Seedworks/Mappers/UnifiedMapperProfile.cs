@@ -1,15 +1,15 @@
 ﻿using AutoMapper;
-using Gama.Application.DataContracts.Commands.OccurrenceManagement;
-using Gama.Application.DataContracts.Commands.TrafficFineManagement;
-using Gama.Application.DataContracts.Commands.UserManagement;
-using Gama.Application.DataContracts.Responses.OccurrenceManagement;
-using Gama.Application.DataContracts.Responses.Pagination;
-using Gama.Application.DataContracts.Responses.TrafficManagement;
-using Gama.Application.DataContracts.Responses.UserManagement;
 using Gama.Application.Seedworks.Pagination;
+using Gama.Application.UseCases.OccurrenceAgg.Commands;
+using Gama.Application.UseCases.OccurrenceAgg.Responses;
+using Gama.Application.UseCases.TrafficFineAgg.Commands;
+using Gama.Application.UseCases.TrafficFineAgg.Responses;
+using Gama.Application.UseCases.UserAgg.Commands;
+using Gama.Application.UseCases.UserAgg.Responses;
 using Gama.Domain.Models.Occurrences;
 using Gama.Domain.Models.TrafficFines;
 using Gama.Domain.Models.Users;
+using Gama.Domain.ValueTypes;
 
 namespace Gama.Application.Seedworks.Mappers
 {
