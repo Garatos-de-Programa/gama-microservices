@@ -5,12 +5,12 @@ using Gama.Application.UseCases.OccurrenceAgg.Commands;
 using Gama.Application.UseCases.OccurrenceAgg.Interfaces;
 using Gama.Application.UseCases.OccurrenceAgg.Responses;
 using Gama.Domain.Entities.UsersAgg;
-using Gama.Domain.Models.Occurrences;
 using Gama.Domain.ValueTypes;
 using Gama.Shared.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
+using Gama.Domain.Entities.OccurrencesAgg;
 
 namespace Gama.Api.Controllers
 {

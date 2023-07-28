@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Gama.Domain.Models.Users
+namespace Gama.Domain.Entities.UsersAgg
 {
     public class UserRoles
     {

@@ -1,4 +1,4 @@
-﻿namespace Gama.Application.Contracts.FileManagement
+﻿namespace Gama.Domain.Interfaces.FileManagement
 {
     public interface IFileManager
     {

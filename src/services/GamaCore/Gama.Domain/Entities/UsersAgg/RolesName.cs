@@ -1,5 +1,3 @@
-using Gama.Domain.Models.Users;
-
 namespace Gama.Domain.Entities.UsersAgg;
 
 public static class RolesName

@@ -2,12 +2,12 @@
 using Gama.Application.UseCases.TrafficFineAgg.Interfaces;
 using Gama.Application.UseCases.TrafficFineAgg.Responses;
 using Gama.Domain.Entities.UsersAgg;
-using Gama.Domain.Models.TrafficFines;
 using Gama.Shared.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.IO;
 using System.Net;
+using Gama.Domain.Entities.TrafficFinesAgg;
 
 namespace Gama.Api.Controllers
 {
@@ -57,7 +57,7 @@ namespace Gama.Api.Controllers
                 return NoContent();
             }
 
-            return File(result, "application/octet-stream", $"{Guid.NewGuid}.jpg");
+            return File(result, "application/octet-stream", $"{Guid.NewGuid()}.jpg");
         }
     }
 }

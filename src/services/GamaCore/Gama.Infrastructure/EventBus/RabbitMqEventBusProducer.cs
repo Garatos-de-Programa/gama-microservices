@@ -1,8 +1,8 @@
-﻿using Gama.Application.Contracts.EventBus;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using RabbitMQ.Client;
 using System.Text;
+using Gama.Domain.Interfaces.EventBus;
 
 namespace Gama.Infrastructure.EventBus
 {

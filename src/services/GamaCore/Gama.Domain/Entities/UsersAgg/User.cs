@@ -1,9 +1,8 @@
 using Gama.Domain.Common;
-using Gama.Domain.Entities.UsersAgg;
-using Gama.Domain.Models.TrafficFines;
+using Gama.Domain.Entities.TrafficFinesAgg;
 using Gama.Domain.ValueTypes;
 
-namespace Gama.Domain.Models.Users;
+namespace Gama.Domain.Entities.UsersAgg;
 
 public class User : AuditableEntity
 {

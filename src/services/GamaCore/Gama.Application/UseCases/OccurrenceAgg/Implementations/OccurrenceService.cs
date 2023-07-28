@@ -1,11 +1,10 @@
-﻿using Gama.Application.Contracts.Repositories;
-using Gama.Application.Seedworks.Pagination;
+﻿using Gama.Application.Seedworks.Pagination;
 using Gama.Application.Seedworks.Queries;
 using Gama.Application.UseCases.OccurrenceAgg.Interfaces;
 using Gama.Application.UseCases.OccurrenceAgg.Responses;
 using Gama.Application.UseCases.UserAgg.Interfaces;
+using Gama.Domain.Entities.OccurrencesAgg;
 using Gama.Domain.Exceptions;
-using Gama.Domain.Models.Occurrences;
 using Gama.Domain.ValueTypes;
 
 namespace Gama.Application.UseCases.OccurrenceAgg.Implementations

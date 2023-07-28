@@ -1,10 +1,9 @@
-﻿using Gama.Application.Contracts.Repositories;
-using Gama.Application.Seedworks.Queries;
+﻿using Gama.Application.Seedworks.Queries;
 using Gama.Application.UseCases.TrafficFineAgg.Interfaces;
 using Gama.Application.UseCases.UserAgg.Interfaces;
+using Gama.Domain.Entities.TrafficFinesAgg;
 using Gama.Domain.Entities.UsersAgg;
 using Gama.Domain.Exceptions;
-using Gama.Domain.Models.TrafficFines;
 using Gama.Domain.ValueTypes;
 
 namespace Gama.Application.UseCases.TrafficFineAgg.Implementations

@@ -1,4 +1,4 @@
-﻿namespace Gama.Domain.Models.TrafficFines
+﻿namespace Gama.Domain.Entities.TrafficFinesAgg
 {
     public class TrafficFineTrafficViolation
     {

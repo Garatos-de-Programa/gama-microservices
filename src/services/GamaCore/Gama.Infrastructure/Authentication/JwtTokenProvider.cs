@@ -2,10 +2,10 @@ using Gama.Application.Options;
 using Gama.Application.UseCases.UserAgg.Implementations;
 using Gama.Application.UseCases.UserAgg.Interfaces;
 using Gama.Application.UseCases.UserAgg.Responses;
-using Gama.Domain.Models.Users;
 using Gama.Domain.ValueTypes;
 using Microsoft.Extensions.Options;
 using System.IdentityModel.Tokens.Jwt;
+using Gama.Domain.Entities.UsersAgg;
 
 namespace Gama.Infrastructure.Authentication;
 

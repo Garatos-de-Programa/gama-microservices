@@ -1,4 +1,4 @@
-﻿using Gama.Domain.Models.TrafficFines;
+﻿using Gama.Domain.Entities.TrafficFinesAgg;
 using Gama.Domain.ValueTypes;
 using Microsoft.AspNetCore.Http;
 

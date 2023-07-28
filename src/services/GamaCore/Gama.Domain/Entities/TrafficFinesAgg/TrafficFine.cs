@@ -1,10 +1,9 @@
 ﻿using Gama.Domain.Common;
 using Gama.Domain.Entities.UsersAgg;
 using Gama.Domain.Exceptions;
-using Gama.Domain.Models.Users;
 using Gama.Domain.ValueTypes;
 
-namespace Gama.Domain.Models.TrafficFines;
+namespace Gama.Domain.Entities.TrafficFinesAgg;
 
 public class TrafficFine : AuditableEntity
 {

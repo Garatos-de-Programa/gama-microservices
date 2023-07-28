@@ -1,9 +1,9 @@
 ﻿using Gama.Domain.Common;
+using Gama.Domain.Entities.UsersAgg;
 using Gama.Domain.Exceptions;
-using Gama.Domain.Models.Users;
 using Gama.Domain.ValueTypes;
 
-namespace Gama.Domain.Models.Occurrences
+namespace Gama.Domain.Entities.OccurrencesAgg
 {
     public class Occurrence : AuditableEntity
     {

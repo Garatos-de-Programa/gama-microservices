@@ -4,11 +4,11 @@ using Gama.Application.UseCases.TrafficFineAgg.Interfaces;
 using Gama.Application.UseCases.TrafficFineAgg.Responses;
 using Gama.Application.UseCases.UserAgg.Interfaces;
 using Gama.Domain.Entities.UsersAgg;
-using Gama.Domain.Models.TrafficFines;
 using Gama.Shared.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
+using Gama.Domain.Entities.TrafficFinesAgg;
 
 namespace Gama.Api.Controllers;
 

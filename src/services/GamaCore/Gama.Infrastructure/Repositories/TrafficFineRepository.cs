@@ -1,9 +1,8 @@
-﻿using Gama.Application.Contracts.Repositories;
-using Gama.Application.Seedworks.Queries;
-using Gama.Domain.Models.TrafficFines;
+﻿using Gama.Application.Seedworks.Queries;
 using Gama.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
+using Gama.Domain.Entities.TrafficFinesAgg;
 
 namespace Gama.Infrastructure.Repositories
 {

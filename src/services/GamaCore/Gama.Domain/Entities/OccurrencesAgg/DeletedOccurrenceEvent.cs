@@ -1,6 +1,6 @@
 ﻿using Gama.Domain.Common;
 
-namespace Gama.Domain.Models.Occurrences
+namespace Gama.Domain.Entities.OccurrencesAgg
 {
     internal class DeletedOccurrenceEvent : Event
     {

@@ -1,7 +1,6 @@
-﻿using Gama.Application.Contracts.Repositories;
-using Gama.Application.UseCases.TrafficFineAgg.Interfaces;
+﻿using Gama.Application.UseCases.TrafficFineAgg.Interfaces;
+using Gama.Domain.Entities.TrafficFinesAgg;
 using Gama.Domain.Exceptions;
-using Gama.Domain.Models.TrafficFines;
 using Gama.Domain.ValueTypes;
 
 namespace Gama.Application.UseCases.TrafficFineAgg.Implementations

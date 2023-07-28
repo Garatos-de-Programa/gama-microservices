@@ -1,6 +1,6 @@
-﻿using Gama.Domain.Models.Users;
+﻿using Gama.Domain.Interfaces.Repositories;
 
-namespace Gama.Application.Contracts.Repositories
+namespace Gama.Domain.Entities.UsersAgg
 {
     public interface IRolesRepository : IRepository<Role>
     {

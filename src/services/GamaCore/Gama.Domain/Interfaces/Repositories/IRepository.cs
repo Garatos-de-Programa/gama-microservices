@@ -1,6 +1,4 @@
-using System.Linq.Expressions;
-
-namespace Gama.Application.Contracts.Repositories;
+namespace Gama.Domain.Interfaces.Repositories;
 
 public interface IRepository<T>
 {

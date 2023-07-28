@@ -1,7 +1,9 @@
-using Gama.Application.Contracts.EventBus;
-using Gama.Application.Contracts.FileManagement;
-using Gama.Application.Contracts.Repositories;
 using Gama.Application.UseCases.UserAgg.Interfaces;
+using Gama.Domain.Entities.OccurrencesAgg;
+using Gama.Domain.Entities.TrafficFinesAgg;
+using Gama.Domain.Entities.UsersAgg;
+using Gama.Domain.Interfaces.EventBus;
+using Gama.Domain.Interfaces.FileManagement;
 using Gama.Infrastructure.Authentication;
 using Gama.Infrastructure.EventBus;
 using Gama.Infrastructure.FileManager;

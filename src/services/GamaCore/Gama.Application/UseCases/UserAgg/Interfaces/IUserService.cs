@@ -1,7 +1,7 @@
 using Gama.Application.Seedworks.Pagination;
 using Gama.Application.UseCases.UserAgg.Commands;
 using Gama.Application.UseCases.UserAgg.Queries;
-using Gama.Domain.Models.Users;
+using Gama.Domain.Entities.UsersAgg;
 using Gama.Domain.ValueTypes;
 
 namespace Gama.Application.UseCases.UserAgg.Interfaces;

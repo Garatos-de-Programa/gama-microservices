@@ -5,7 +5,6 @@ using Gama.Application.UseCases.UserAgg.Interfaces;
 using Gama.Application.UseCases.UserAgg.Queries;
 using Gama.Application.UseCases.UserAgg.Responses;
 using Gama.Domain.Entities.UsersAgg;
-using Gama.Domain.Models.Users;
 using Gama.Domain.ValueTypes;
 using Gama.Shared.Extensions;
 using Microsoft.AspNetCore.Authorization;

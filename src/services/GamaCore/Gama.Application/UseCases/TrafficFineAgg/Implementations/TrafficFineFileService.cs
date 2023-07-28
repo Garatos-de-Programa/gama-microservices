@@ -1,7 +1,6 @@
-﻿using Gama.Application.Contracts.FileManagement;
-using Gama.Application.Contracts.Repositories;
-using Gama.Application.UseCases.TrafficFineAgg.Interfaces;
-using Gama.Domain.Models.TrafficFines;
+﻿using Gama.Application.UseCases.TrafficFineAgg.Interfaces;
+using Gama.Domain.Entities.TrafficFinesAgg;
+using Gama.Domain.Interfaces.FileManagement;
 using Gama.Domain.ValueTypes;
 using Microsoft.AspNetCore.Http;
 

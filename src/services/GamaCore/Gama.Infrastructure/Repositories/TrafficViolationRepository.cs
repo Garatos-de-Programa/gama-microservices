@@ -1,5 +1,4 @@
-﻿using Gama.Application.Contracts.Repositories;
-using Gama.Domain.Models.TrafficFines;
+﻿using Gama.Domain.Entities.TrafficFinesAgg;
 using Gama.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 

@@ -1,7 +1,7 @@
-using Gama.Application.Contracts.Repositories;
 using Gama.Application.UseCases.UserAgg.Commands;
 using Gama.Application.UseCases.UserAgg.Interfaces;
 using Gama.Application.UseCases.UserAgg.Responses;
+using Gama.Domain.Entities.UsersAgg;
 using Gama.Domain.Exceptions;
 using Gama.Domain.ValueTypes;
 

@@ -1,5 +1,4 @@
-﻿using Gama.Application.Contracts.Repositories;
-using Gama.Domain.Models.Occurrences;
+﻿using Gama.Domain.Entities.OccurrencesAgg;
 using Gama.Infrastructure.Persistence;
 
 namespace Gama.Infrastructure.Repositories

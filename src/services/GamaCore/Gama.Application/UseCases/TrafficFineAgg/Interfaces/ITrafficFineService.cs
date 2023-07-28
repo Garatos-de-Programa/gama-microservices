@@ -1,7 +1,6 @@
-﻿using Gama.Application.Contracts.Repositories;
-using Gama.Application.Seedworks.Pagination;
+﻿using Gama.Application.Seedworks.Pagination;
 using Gama.Application.Seedworks.Queries;
-using Gama.Domain.Models.TrafficFines;
+using Gama.Domain.Entities.TrafficFinesAgg;
 using Gama.Domain.ValueTypes;
 
 namespace Gama.Application.UseCases.TrafficFineAgg.Interfaces;

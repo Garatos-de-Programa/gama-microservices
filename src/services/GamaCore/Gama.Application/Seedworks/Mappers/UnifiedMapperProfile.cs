@@ -6,9 +6,9 @@ using Gama.Application.UseCases.TrafficFineAgg.Commands;
 using Gama.Application.UseCases.TrafficFineAgg.Responses;
 using Gama.Application.UseCases.UserAgg.Commands;
 using Gama.Application.UseCases.UserAgg.Responses;
-using Gama.Domain.Models.Occurrences;
-using Gama.Domain.Models.TrafficFines;
-using Gama.Domain.Models.Users;
+using Gama.Domain.Entities.OccurrencesAgg;
+using Gama.Domain.Entities.TrafficFinesAgg;
+using Gama.Domain.Entities.UsersAgg;
 using Gama.Domain.ValueTypes;
 
 namespace Gama.Application.Seedworks.Mappers

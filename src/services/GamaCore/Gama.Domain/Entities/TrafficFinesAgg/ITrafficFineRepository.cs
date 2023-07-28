@@ -1,7 +1,7 @@
-﻿using Gama.Domain.Models.TrafficFines;
-using System.Linq.Expressions;
+﻿using System.Linq.Expressions;
+using Gama.Domain.Interfaces.Repositories;
 
-namespace Gama.Application.Contracts.Repositories
+namespace Gama.Domain.Entities.TrafficFinesAgg
 {
     public interface ITrafficFineRepository : IRepository<TrafficFine>
     {

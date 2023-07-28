@@ -1,6 +1,6 @@
-﻿using Gama.Domain.Models.TrafficFines;
+﻿using Gama.Domain.Interfaces.Repositories;
 
-namespace Gama.Application.Contracts.Repositories
+namespace Gama.Domain.Entities.TrafficFinesAgg
 {
     public interface ITrafficViolationRepository : IRepository<TrafficViolation>
     {

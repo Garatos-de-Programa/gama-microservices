@@ -1,4 +1,4 @@
-﻿namespace Gama.Application.Contracts.EventBus
+﻿namespace Gama.Domain.Interfaces.EventBus
 {
     public interface IEventBusProducer
     {

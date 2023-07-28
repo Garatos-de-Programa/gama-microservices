@@ -1,5 +1,5 @@
 using System.Linq.Expressions;
-using Gama.Application.Contracts.Repositories;
+using Gama.Domain.Interfaces.Repositories;
 using Gama.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 

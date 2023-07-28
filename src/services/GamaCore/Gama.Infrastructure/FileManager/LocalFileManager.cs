@@ -1,4 +1,4 @@
-﻿using Gama.Application.Contracts.FileManagement;
+﻿using Gama.Domain.Interfaces.FileManagement;
 
 namespace Gama.Infrastructure.FileManager
 {

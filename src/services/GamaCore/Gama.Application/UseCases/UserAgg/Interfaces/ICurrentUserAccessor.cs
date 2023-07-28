@@ -1,4 +1,4 @@
-﻿using Gama.Domain.Models.Users;
+﻿using Gama.Domain.Entities.UsersAgg;
 
 namespace Gama.Application.UseCases.UserAgg.Interfaces
 {

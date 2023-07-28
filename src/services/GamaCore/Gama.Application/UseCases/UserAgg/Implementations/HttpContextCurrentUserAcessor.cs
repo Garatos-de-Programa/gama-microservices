@@ -1,7 +1,7 @@
 ﻿using Gama.Application.UseCases.UserAgg.Interfaces;
-using Gama.Domain.Models.Users;
 using Microsoft.AspNetCore.Http;
 using System.Security.Claims;
+using Gama.Domain.Entities.UsersAgg;
 
 namespace Gama.Application.UseCases.UserAgg.Implementations
 {

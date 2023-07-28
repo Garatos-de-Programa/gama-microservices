@@ -1,7 +1,7 @@
-using Gama.Domain.Models.Users;
+using Gama.Domain.Interfaces.Repositories;
 using Gama.Domain.ValueTypes;
 
-namespace Gama.Application.Contracts.Repositories;
+namespace Gama.Domain.Entities.UsersAgg;
 
 public interface IUserRepository : IRepository<User>
 {

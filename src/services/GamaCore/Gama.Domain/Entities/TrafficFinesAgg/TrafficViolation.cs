@@ -1,6 +1,6 @@
 ﻿using Gama.Domain.Common;
 
-namespace Gama.Domain.Models.TrafficFines;
+namespace Gama.Domain.Entities.TrafficFinesAgg;
 
 public class TrafficViolation : AuditableEntity
 {

@@ -1,6 +1,6 @@
 using System.Security.Claims;
 using Gama.Application.Options;
-using Gama.Domain.Models.Users;
+using Gama.Domain.Entities.UsersAgg;
 using Microsoft.IdentityModel.JsonWebTokens;
 using Microsoft.IdentityModel.Tokens;
 
