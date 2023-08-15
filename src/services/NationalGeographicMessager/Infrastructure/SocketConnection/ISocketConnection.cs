@@ -1,7 +1,10 @@
-﻿namespace NationalGeographicMessager.Infrastructure.SocketConnection
+﻿using Microsoft.AspNetCore.SignalR;
+using NationalGeographicMessager.Domain.NotificationMessageAggregated;
+
+namespace NationalGeographicMessager.Infrastructure.SocketConnection
 {
     public interface ISocketConnection
     {
-        Task WriteAsync(IEnumerable<string> connectionId, byte[] data);
+        Task WriteAsync(IEnumerable<ISingleClientProxy> connections, IMessage message);
     }
 }

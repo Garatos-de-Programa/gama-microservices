@@ -1,4 +1,4 @@
-CREATE TABLE users (
+CREATE IF NOT EXISTS TABLE users (
 	id SERIAL PRIMARY KEY,
 	first_name VARCHAR(30) NOT NULL,
 	last_name VARCHAR(30) NOT NULL,
@@ -15,7 +15,7 @@ CREATE TABLE users (
 COMMIT;
 
 
-CREATE TABLE roles (
+CREATE IF NOT EXISTS TABLE roles (
 	id SERIAL PRIMARY KEY,
 	name VARCHAR(15) NOT NULL
 );
@@ -23,11 +23,16 @@ CREATE TABLE roles (
 COMMIT;
 
 
-INSERT INTO public.roles (name) VALUES ('Cop'), ('Admin'), ('Citizen');
+INSERT INTO public.roles (name) 
+VALUES 
+	('Cop'), 
+	('Admin'),
+	('Citizen')
+ON CONFLICT (name) DO NOTHING;;
 
 COMMIT;
 
-CREATE TABLE user_roles (
+CREATE IF NOT EXISTS TABLE user_roles (
 	user_id INT NOT NULL,
 	role_id INT NOT NULL,
 	PRIMARY KEY(user_id, role_id),
@@ -41,7 +46,7 @@ CREATE TABLE user_roles (
 
 COMMIT;
 
-CREATE TABLE traffic_violations (
+CREATE IF NOT EXISTS TABLE traffic_violations (
 	id SERIAL PRIMARY KEY,
 	code VARCHAR(20) NOT NULL,
 	name VARCHAR(50) NOT NULL,
@@ -53,7 +58,7 @@ CREATE TABLE traffic_violations (
 
 COMMIT;
 
-CREATE TABLE traffic_fines (
+CREATE IF NOT EXISTS TABLE traffic_fines (
 	id SERIAL PRIMARY KEY,
 	license_plate CHAR(7) NOT NULL,
 	latitude numeric(10, 8) NOT NULL,
@@ -71,7 +76,7 @@ CREATE TABLE traffic_fines (
 
 COMMIT;
 
-CREATE TABLE traffic_fine_traffic_violations (
+CREATE IF NOT EXISTS TABLE traffic_fine_traffic_violations (
 	traffic_fine_id INT NOT NULL,
 	traffic_violation_id INT NOT NULL,
 	PRIMARY KEY(traffic_fine_id, traffic_violation_id),
@@ -85,21 +90,21 @@ CREATE TABLE traffic_fine_traffic_violations (
 
 COMMIT;
 
-CREATE TABLE occurrence_status (
+CREATE IF NOT EXISTS TABLE occurrence_status (
 	id SMALLSERIAL PRIMARY KEY,
 	name VARCHAR(20) NOT NULL
 );
 
 COMMIT;
 
-CREATE TABLE occurrence_types (
+CREATE IF NOT EXISTS TABLE occurrence_types (
 	id SMALLSERIAL PRIMARY KEY,
 	name VARCHAR(20) NOT NULL
 );
 
 COMMIT;
 
-CREATE TABLE occurrence_urgency_levels (
+CREATE IF NOT EXISTS TABLE occurrence_urgency_levels (
 	id SMALLSERIAL PRIMARY KEY,
 	name VARCHAR(20) NOT NULL
 );
@@ -107,7 +112,7 @@ CREATE TABLE occurrence_urgency_levels (
 COMMIT;
 
 
-CREATE TABLE occurrences (
+CREATE IF NOT EXISTS TABLE occurrences (
 	id SERIAL PRIMARY KEY,
 	latitude numeric(10, 8) NOT NULL,
   	longitude numeric(11, 8) NOT NULL,

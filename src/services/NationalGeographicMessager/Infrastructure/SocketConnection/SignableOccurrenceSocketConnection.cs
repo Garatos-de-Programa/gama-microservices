@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.SignalR;
+using NationalGeographicMessager.Domain.NotificationMessageAggregated;
 using NationalGeographicMessager.Domain.OcurrencesAggregated;
 using System.Net.Sockets;
 
@@ -19,12 +20,12 @@ namespace NationalGeographicMessager.Infrastructure.SocketConnection
 
         }
 
-        public async Task WriteAsync(IEnumerable<string> connectionId, byte[] data)
+        public async Task WriteAsync(IEnumerable<ISingleClientProxy> connections, IMessage message)
         {
             var tasks = new List<Task>();
-            foreach (var id in connectionId)
+            foreach (var connection in connections)
             {
-                tasks.Add(Clients.Client(id).SendAsync("ReceiveMessage", data));
+                tasks.Add(connection.SendAsync("ReceiveMessage", message));
             }
 
             await Task.WhenAll(tasks).ConfigureAwait(false);
@@ -34,7 +35,7 @@ namespace NationalGeographicMessager.Infrastructure.SocketConnection
         {
             var occurrences = await _occurrenceRepository.GetAsync(new (latitude, longitude, radius)).ConfigureAwait(false);
             await Task.WhenAll(
-                Clients.Caller.SendAsync("ReceiveOccurrences", occurrences),
+                Clients.Caller.SendAsync("ReceiveMessage", occurrences),
                 Groups.AddToGroupAsync(Context.ConnectionId, "occurrenceGroup")
                 ).ConfigureAwait(false);
             _socketConnectionManager.AddSocketConnection(Context.ConnectionId, new(latitude, longitude, radius));
@@ -44,6 +45,12 @@ namespace NationalGeographicMessager.Infrastructure.SocketConnection
         {
             await Groups.RemoveFromGroupAsync(Context.ConnectionId, "occurrenceGroup");
             _socketConnectionManager.RemoveSocketConnection(Context.ConnectionId);
+        }
+
+        public override Task OnDisconnectedAsync(Exception? exception)
+        {
+            _socketConnectionManager.RemoveSocketConnection(Context.ConnectionId);
+            return base.OnDisconnectedAsync(exception);
         }
     }
 }

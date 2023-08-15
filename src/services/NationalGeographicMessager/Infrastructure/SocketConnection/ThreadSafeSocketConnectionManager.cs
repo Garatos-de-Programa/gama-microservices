@@ -1,16 +1,22 @@
-﻿using NationalGeographicMessager.Domain.GeolocationAggregated;
+﻿using Microsoft.AspNetCore.SignalR;
+using NationalGeographicMessager.Domain.GeolocationAggregated;
 using System.Collections.Concurrent;
 
 namespace NationalGeographicMessager.Infrastructure.SocketConnection
 {
-    public class ThreadSafeSocketConnectionManager : ISocketConnectionManager
+    internal class ThreadSafeSocketConnectionManager : ISocketConnectionManager
     {
         private readonly ConcurrentDictionary<string, Point> _connections = new();
         private readonly IGeoLocationCalculator _geoLocationCalculator;
+        private readonly IHubContext<SignableOccurrenceSocketConnection> _hubContext;
 
-        public ThreadSafeSocketConnectionManager(IGeoLocationCalculator geoLocationCalculator)
+        public ThreadSafeSocketConnectionManager(
+            IGeoLocationCalculator geoLocationCalculator,
+            IHubContext<SignableOccurrenceSocketConnection> hubContext
+            )
         {
             _geoLocationCalculator = geoLocationCalculator;
+            _hubContext = hubContext;
         }
 
         public void AddSocketConnection(string connectionId, Point location)
@@ -18,7 +24,7 @@ namespace NationalGeographicMessager.Infrastructure.SocketConnection
             _connections.TryAdd(connectionId, location);
         }
 
-        public IEnumerable<string> GetConnectionsInsideTheBoundary(Point boundary)
+        public IEnumerable<ISingleClientProxy> GetConnectionsInsideTheBoundary(Point boundary)
         {
             foreach (var connection in _connections)
             {
@@ -33,7 +39,7 @@ namespace NationalGeographicMessager.Infrastructure.SocketConnection
 
                 if (isInsideRadius)
                 {
-                    yield return connection.Key;
+                    yield return _hubContext.Clients.Client(connection.Key);
                 }
             }
         }

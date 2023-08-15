@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using NationalGeographicMessager.Domain.GeolocationAggregated;
+using NationalGeographicMessager.Domain.NotificationMessageAggregated;
 using NationalGeographicMessager.Domain.OcurrencesAggregated;
 using NationalGeographicWorker.Infrastructure.Persistence;
 using NetTopologySuite;
@@ -22,7 +23,7 @@ namespace NationalGeographicMessager.Infrastructure.Repositories
             _geoLocationCalculator = geoLocationCalculator;
         }
 
-        public async Task<IEnumerable<OccurrenceEventMessage>> GetAsync(Point occurrenceLocation)
+        public async Task<IEnumerable<IncidentMessage>> GetAsync(Point occurrenceLocation)
         {
             var geometryFactory = NtsGeometryServices.Instance.CreateGeometryFactory(srid: 4326);
             var radiusInDegrees = _geoLocationCalculator.KilometerRadiusToDegreesRadius(occurrenceLocation.Radius);
@@ -31,8 +32,10 @@ namespace NationalGeographicMessager.Infrastructure.Repositories
             
             return await _dbCcontext.Occurrences
                               .Where(occurrence => occurrence.Geolocation.Distance(targetPoint) <= radiusInDegrees)
-                              .Select(occurrence => new OccurrenceEventMessage {
-                                  OccurrenceId =  occurrence.OccurrenceId,
+                              .Select(occurrence =>
+                              new IncidentMessage(occurrence.Geolocation, new OccurrenceEventMessage
+                              {
+                                  OccurrenceId = occurrence.OccurrenceId,
                                   Location = occurrence.Location,
                                   OccurrenceName = occurrence.OccurrenceName,
                                   StatusName = occurrence.StatusName,
@@ -41,9 +44,8 @@ namespace NationalGeographicMessager.Infrastructure.Repositories
                                   UserId = occurrence.UserId,
                                   UserName = occurrence.UserName,
                                   Active = occurrence.Active,
-                                  Latitude = occurrence.Geolocation.Y,
-                                  Longitude = occurrence.Geolocation.X
                               })
+                              )
                               .ToListAsync();
         }
     }

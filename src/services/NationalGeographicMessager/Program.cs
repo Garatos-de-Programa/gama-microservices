@@ -40,6 +40,7 @@ services.AddTransient<IOccurrenceRepository, EFCoreOccurrenceRepository>();
 services.AddSingleton<IGeoLocationCalculator, GeoLocationCalculator>();
 services.AddTransient<IMessageNotifier, RadiusBoundedSocketMessageNotifier>();
 services.AddSingleton<ISocketConnectionManager, ThreadSafeSocketConnectionManager>();
+services.AddTransient<ISocketConnection, SignableOccurrenceSocketConnection>();
 services.AddSignalR();
 
 var connectionString = builder.Configuration.GetConnectionString("NationalGeographicDbConnectionString");

@@ -7,6 +7,7 @@ namespace NationalGeographicMessager.Infrastructure.Notifier
     {
         private readonly ISocketConnection _sockerConnection;
         private readonly ISocketConnectionManager _socketConnectionManager;
+        
 
         public RadiusBoundedSocketMessageNotifier(
             ISocketConnection socketConnection,
@@ -18,9 +19,9 @@ namespace NationalGeographicMessager.Infrastructure.Notifier
         }
 
         public Task NotifyAsync(IMessage message)
-        {
-            var connectionToNotify = _socketConnectionManager.GetConnectionsInsideTheBoundary(message.Point);
-            return _sockerConnection.WriteAsync(connectionToNotify, message.GetBytes());
+        {   
+            var connectionsToNotify = _socketConnectionManager.GetConnectionsInsideTheBoundary(message.Point);
+            return _sockerConnection.WriteAsync(connectionsToNotify, message);
         }
     }
 }

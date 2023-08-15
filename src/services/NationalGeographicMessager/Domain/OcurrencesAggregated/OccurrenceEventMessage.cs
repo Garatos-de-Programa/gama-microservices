@@ -27,10 +27,10 @@ namespace NationalGeographicMessager.Domain.OcurrencesAggregated
 
         public bool Active { get; set; }
 
+
         public IncidentMessage ToIncidentMessage()
         {
-            var messageString = JsonSerializer.Serialize(this);
-            return new IncidentMessage(Latitude, Longitude, messageString);
+            return new IncidentMessage(Latitude, Longitude, this);
         }
     }
 }

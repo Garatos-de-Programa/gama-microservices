@@ -1,4 +1,5 @@
-﻿using NationalGeographicMessager.Domain.GeolocationAggregated;
+﻿using Microsoft.AspNetCore.SignalR;
+using NationalGeographicMessager.Domain.GeolocationAggregated;
 
 namespace NationalGeographicMessager.Infrastructure.SocketConnection
 {
@@ -6,6 +7,6 @@ namespace NationalGeographicMessager.Infrastructure.SocketConnection
     {
         void AddSocketConnection(string connectionId, Point location);
         void RemoveSocketConnection(string connectionId);
-        IEnumerable<string> GetConnectionsInsideTheBoundary(Point boundary);
+        IEnumerable<ISingleClientProxy> GetConnectionsInsideTheBoundary(Point boundary);
     }
 }

@@ -1,5 +1,7 @@
 ﻿using NationalGeographicMessager.Domain.GeolocationAggregated;
+using NationalGeographicMessager.Domain.OcurrencesAggregated;
 using System.Text;
+using System.Text.Json;
 
 namespace NationalGeographicMessager.Domain.NotificationMessageAggregated
 {
@@ -7,9 +9,9 @@ namespace NationalGeographicMessager.Domain.NotificationMessageAggregated
     {
         public Point Point { get; }
 
-        public string Message { get; }
+        public OccurrenceEventMessage Message { get; }
 
-        public IncidentMessage(double latitude, double longitude, string message)
+        public IncidentMessage(double latitude, double longitude, OccurrenceEventMessage message)
         {
             Point = new Point()
             {
@@ -19,9 +21,20 @@ namespace NationalGeographicMessager.Domain.NotificationMessageAggregated
             Message = message;
         }
 
+        public IncidentMessage(NetTopologySuite.Geometries.Point geolocation, OccurrenceEventMessage occurrenceEventMessage)
+        {
+            Point = new Point()
+            {
+                Latitude = geolocation.Y,
+                Longitude = geolocation.X
+            };
+            Message = occurrenceEventMessage;
+        }
+
         public byte[] GetBytes()
         {
-            return Encoding.UTF8.GetBytes(Message);
+            var messageString = JsonSerializer.Serialize(Message);
+            return Encoding.UTF8.GetBytes(messageString);
         }
     }
 }
