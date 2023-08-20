@@ -1,4 +1,4 @@
-CREATE IF NOT EXISTS TABLE occurrences (
+CREATE TABLE IF NOT EXISTS  occurrences (
     occurrence_id INT PRIMARY KEY,
     geolocation GEOGRAPHY(POINT),
     location VARCHAR(100) NOT NULL,

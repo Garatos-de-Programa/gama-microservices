@@ -1,4 +1,4 @@
-CREATE IF NOT EXISTS TABLE users (
+CREATE TABLE IF NOT EXISTS users (
 	id SERIAL PRIMARY KEY,
 	first_name VARCHAR(30) NOT NULL,
 	last_name VARCHAR(30) NOT NULL,
@@ -15,9 +15,9 @@ CREATE IF NOT EXISTS TABLE users (
 COMMIT;
 
 
-CREATE IF NOT EXISTS TABLE roles (
+CREATE TABLE IF NOT EXISTS roles (
 	id SERIAL PRIMARY KEY,
-	name VARCHAR(15) NOT NULL
+	name VARCHAR(15) NOT NULL UNIQUE
 );
 
 COMMIT;
@@ -32,7 +32,7 @@ ON CONFLICT (name) DO NOTHING;;
 
 COMMIT;
 
-CREATE IF NOT EXISTS TABLE user_roles (
+CREATE TABLE IF NOT EXISTS user_roles (
 	user_id INT NOT NULL,
 	role_id INT NOT NULL,
 	PRIMARY KEY(user_id, role_id),
@@ -46,7 +46,7 @@ CREATE IF NOT EXISTS TABLE user_roles (
 
 COMMIT;
 
-CREATE IF NOT EXISTS TABLE traffic_violations (
+CREATE TABLE IF NOT EXISTS traffic_violations (
 	id SERIAL PRIMARY KEY,
 	code VARCHAR(20) NOT NULL,
 	name VARCHAR(50) NOT NULL,
@@ -58,7 +58,7 @@ CREATE IF NOT EXISTS TABLE traffic_violations (
 
 COMMIT;
 
-CREATE IF NOT EXISTS TABLE traffic_fines (
+CREATE TABLE IF NOT EXISTS traffic_fines (
 	id SERIAL PRIMARY KEY,
 	license_plate CHAR(7) NOT NULL,
 	latitude numeric(10, 8) NOT NULL,
@@ -76,7 +76,7 @@ CREATE IF NOT EXISTS TABLE traffic_fines (
 
 COMMIT;
 
-CREATE IF NOT EXISTS TABLE traffic_fine_traffic_violations (
+CREATE TABLE IF NOT EXISTS traffic_fine_traffic_violations (
 	traffic_fine_id INT NOT NULL,
 	traffic_violation_id INT NOT NULL,
 	PRIMARY KEY(traffic_fine_id, traffic_violation_id),
@@ -90,21 +90,21 @@ CREATE IF NOT EXISTS TABLE traffic_fine_traffic_violations (
 
 COMMIT;
 
-CREATE IF NOT EXISTS TABLE occurrence_status (
+CREATE TABLE IF NOT EXISTS occurrence_status (
 	id SMALLSERIAL PRIMARY KEY,
 	name VARCHAR(20) NOT NULL
 );
 
 COMMIT;
 
-CREATE IF NOT EXISTS TABLE occurrence_types (
+CREATE TABLE IF NOT EXISTS occurrence_types (
 	id SMALLSERIAL PRIMARY KEY,
 	name VARCHAR(20) NOT NULL
 );
 
 COMMIT;
 
-CREATE IF NOT EXISTS TABLE occurrence_urgency_levels (
+CREATE TABLE IF NOT EXISTS occurrence_urgency_levels (
 	id SMALLSERIAL PRIMARY KEY,
 	name VARCHAR(20) NOT NULL
 );
@@ -112,7 +112,7 @@ CREATE IF NOT EXISTS TABLE occurrence_urgency_levels (
 COMMIT;
 
 
-CREATE IF NOT EXISTS TABLE occurrences (
+CREATE TABLE IF NOT EXISTS occurrences (
 	id SERIAL PRIMARY KEY,
 	latitude numeric(10, 8) NOT NULL,
   	longitude numeric(11, 8) NOT NULL,
