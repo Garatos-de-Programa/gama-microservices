@@ -20,7 +20,8 @@ resource "aws_instance" "gama_microservice_ec2" {
   instance_type                 = "t2.micro"
   key_name                      = aws_key_pair.default.key_name
   user_data_base64              = filebase64("${path.module}/user-data.sh")
-
+  vpc_security_group_ids        = [ aws_security_group.gama_microservice_security_group.id ]
+  subnet_id                     = aws_subnet.gama_subnet.id
   tags = {
     Name = "gama-microservice-01"
   }

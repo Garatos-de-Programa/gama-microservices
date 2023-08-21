@@ -31,7 +31,7 @@ resource "aws_subnet" "gama_subnet_b" {
 }
 
 resource "aws_security_group" "gama_microservice_security_group" {
-  name        = "gama-microservice-security-group"
+  name        = "gama_microservice_security_group"
   description = "Allow SSH and HTTP on EC2 instances"
   vpc_id      = aws_vpc.gama_vpc.id
   
@@ -40,7 +40,7 @@ resource "aws_security_group" "gama_microservice_security_group" {
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
-    cidr_blocks      = [aws_vpc.gama_vpc.cidr_block]
+    cidr_blocks = ["0.0.0.0/0"]
   }
 
   ingress {
@@ -48,7 +48,7 @@ resource "aws_security_group" "gama_microservice_security_group" {
     from_port   = 80
     to_port     = 80
     protocol    = "tcp"
-    cidr_blocks      = [aws_vpc.gama_vpc.cidr_block]
+    cidr_blocks = ["0.0.0.0/0"]
   }
 
   egress {
