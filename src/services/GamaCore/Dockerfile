@@ -20,4 +20,7 @@ RUN dotnet publish "Gama.Api.csproj" -c Release -o /app/publish /p:UseAppHost=fa
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
+
+ENV ASPNETCORE_ENVIRONMENT=Production
+
 ENTRYPOINT ["dotnet", "Gama.Api.dll"]

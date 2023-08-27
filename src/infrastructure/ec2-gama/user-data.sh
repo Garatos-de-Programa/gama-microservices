@@ -1,16 +1,17 @@
-set -e
 
-exec > >(tee /var/log/user-data.log|logger -t user-data -s 2>/dev/console) 2>&1
+sudo yum  update -y && yum  upgrade -y
 
-yum update -y && yum upgrade -y
-
-yum install -y docker amazon-ecr-credential-helper
-
+sudo yum  install -y docker
+sudo yum  install -y amazon-ecr-credential-helper
 mkdir -p ~/.docker && chmod 0700 ~/.docker
 echo '{"credsStore": "ecr-login"}' > ~/.docker/config.json
 
-service docker start && chkconfig docker on
+sudo service docker start
 
-usermod -a -G docker ec2-user
+sudo usermod -a -G docker ec2-user
 
-docker run --restart=always -d -p 80:80 737687692117.dkr.ecr.us-east-2.amazonaws.com/gama-microservices-repo:latest
+sudo service docker restart
+
+sudo $(aws ecr get-login --no-include-email --region us-east-2)
+
+sudo docker run --restart=always -d -p 80:80 737687692117.dkr.ecr.us-east-2.amazonaws.com/gama-microservices-repo:latest

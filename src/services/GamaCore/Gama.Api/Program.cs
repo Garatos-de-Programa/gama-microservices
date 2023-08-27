@@ -5,6 +5,10 @@ using Gama.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder
+    .Configuration.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+    .AddEnvironmentVariables("gama_core_");
+
 builder.Services.AddControllers(o =>
 {
     o.Filters.Add<RequestValidationFilter>();

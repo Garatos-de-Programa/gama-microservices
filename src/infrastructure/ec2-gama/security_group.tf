@@ -64,6 +64,23 @@ resource "aws_security_group" "gama_microservice_security_group" {
   }
 }
 
+data "aws_security_group" "gama_rds_sg" {
+  filter {
+    name = "tag:Name"
+    values = ["gama-rds-security-group"]
+  }
+}
+
+resource "aws_security_group_rule" "gama_rds_rule" {
+  description                       = "Rule to allow access to gama db"
+  type                              = "ingress"
+  from_port                         = "5432"
+  to_port                           = "5432"
+  protocol                          = "tcp"
+  security_group_id                 = aws_security_group.gama_microservice_security_group.id
+  source_security_group_id          = data.aws_security_group.gama_rds_sg.id
+}
+
 resource "aws_internet_gateway" "igw" {
   vpc_id = aws_vpc.gama_vpc.id
 
@@ -87,7 +104,7 @@ resource "aws_route" "public_route" {
 }
 
 resource "aws_route_table_association" "public_rt_association" {
-  count          = 1
+  count          = 2
   route_table_id = aws_route_table.public_rt.id
-  subnet_id      = aws_subnet.gama_subnet.id
+  subnet_id      = count.index == 0 ? aws_subnet.gama_subnet.id : aws_subnet.gama_subnet_b.id
 }
