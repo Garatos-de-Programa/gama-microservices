@@ -18,6 +18,8 @@ public class GetTrafficFineResponse
 
     public IEnumerable<GetTrafficViolationResponse>? TrafficViolations { get; set; }
 
+    public string? ImageUrl { get; set; }
+
     public bool Deleted => DeletedAt.HasValue;
 
     public DateTime? CreatedAt { get; set; }
