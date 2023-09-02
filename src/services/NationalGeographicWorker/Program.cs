@@ -2,7 +2,6 @@ using MassTransit;
 using Microsoft.EntityFrameworkCore;
 using NationalGeographicWorker.Application.Consumers.OccurrenceEvents;
 using NationalGeographicWorker.Infrastructure.Persistence;
-using RabbitMQ.Client;
 
 IHost host = Host.CreateDefaultBuilder(args)
     .ConfigureServices((builderctx, services) =>
@@ -11,20 +10,20 @@ IHost host = Host.CreateDefaultBuilder(args)
         {
             c.AddConsumer<OccurrenceEventConsumer>();
 
-            c.UsingRabbitMq((ctx, cfg) =>
+            c.UsingAmazonSqs((context, cfg) =>
             {
-                cfg.Host(builderctx.Configuration.GetConnectionString("EventBusConnectionString"));
-                cfg.ReceiveEndpoint("national-geographic-worker", c =>
+                cfg.Host("us-east-2", h =>
                 {
-                    c.ConfigureConsumeTopology = false;
-                    c.ConfigureConsumer<OccurrenceEventConsumer>(ctx);
-                    c.Bind("gama.api:events-exchange", s =>
-                    {
-                        s.RoutingKey = "gama.api:event-occurrences";
-                        s.ExchangeType = ExchangeType.Topic;
-                    });
-                    c.ClearSerialization();
-                    c.UseRawJsonSerializer();
+                    h.AccessKey("");
+                    h.SecretKey("");
+                });
+
+                cfg.ReceiveEndpoint("gama-api-occurrences.fifo", e =>
+                {
+                    e.ConfigureConsumeTopology = false;
+                    e.ConfigureConsumer<OccurrenceEventConsumer>(context);
+                    e.ClearSerialization();
+                    e.UseRawJsonSerializer();
                 });
             });
         });

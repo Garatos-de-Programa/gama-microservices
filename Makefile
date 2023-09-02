@@ -2,8 +2,8 @@ export GAMA_CORE_NAME=gama-core-api
 export GAMA_CORE_PATH=src/services/GamaCore
 export GAMA_CORE_REPO_NAME=gama-microservices-repo
 export NATIONAL_GMESSAGER_NAME=national-geo-messager-api
-export NATIONAL_GMESSAGER_PATH=../services/NationalGeographicMessager
-export NATIONAL_GMESSAGER_REPO_NAME=gama-microservices-repo
+export NATIONAL_GMESSAGER_PATH=src/services/NationalGeographicMessager
+export NATIONAL_GMESSAGER_REPO_NAME=gama-messager-repo
 export NATIONAL_GWORKER_NAME=national-geo-worker-api
 export NATIONAL_GWORKER_PATH=services/NationalGeographicWorker
 export NATIONAL_GWORKER_REPO_NAME=gama-microservices-repo
@@ -12,8 +12,11 @@ export AWS_DEFAULT_REGION=us-east-2
 export ECR_URL=${ACCOUNT_NUMBER}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com
 export ALB_URL=$$(terraform output -json | jq -r '.url.value')
 
-repo:
+core-repo:
 	aws ecr create-repository --repository-name ${GAMA_CORE_REPO_NAME}
+
+messager-repo:
+	aws ecr create-repository --repository-name ${NATIONAL_GMESSAGER_REPO_NAME}
 
 log-repo:
 	echo ${ECR_URL}
@@ -21,7 +24,12 @@ log-repo:
 login:
 	aws ecr get-login-password --region ${AWS_DEFAULT_REGION} | docker login --username AWS --password-stdin ${ECR_URL}
 
-image:
+image-gama-messager:
+	docker build --rm --pull -f ${NATIONAL_GMESSAGER_PATH}/Dockerfile -t ${NATIONAL_GMESSAGER_REPO_NAME} .
+	docker tag ${NATIONAL_GMESSAGER_REPO_NAME}:latest ${ECR_URL}/${NATIONAL_GMESSAGER_REPO_NAME}:latest
+	docker push ${ECR_URL}/${NATIONAL_GMESSAGER_REPO_NAME}:latest
+
+image-gama-core:
 	docker build --rm --pull -f ${GAMA_CORE_PATH}/Dockerfile -t ${GAMA_CORE_REPO_NAME} .
 	docker tag ${GAMA_CORE_REPO_NAME}:latest ${ECR_URL}/${GAMA_CORE_REPO_NAME}:latest
 	docker push ${ECR_URL}/${GAMA_CORE_REPO_NAME}:latest

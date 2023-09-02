@@ -8,7 +8,6 @@ using NationalGeographicMessager.Infrastructure.Notifier;
 using NationalGeographicMessager.Infrastructure.Repositories;
 using NationalGeographicMessager.Infrastructure.SocketConnection;
 using NationalGeographicWorker.Infrastructure.Persistence;
-using RabbitMQ.Client;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,22 +15,22 @@ var services = builder.Services;
 
 services.AddMassTransit(c =>
  {
-     c.AddConsumer<RabbitMqOccurrenceEventConsumer>();
+     c.AddConsumer<OccurrenceEventConsumer>();
 
-     c.UsingRabbitMq((ctx, cfg) =>
+     c.UsingAmazonSqs((context, cfg) =>
      {
-         cfg.Host(builder.Configuration.GetConnectionString("EventBusConnectionString"));
-         cfg.ReceiveEndpoint("national-geographic-worker", c =>
+         cfg.Host("us-east-2", h =>
          {
-             c.ConfigureConsumeTopology = false;
-             c.ConfigureConsumer<RabbitMqOccurrenceEventConsumer>(ctx);
-             c.Bind("gama.api:events-exchange", s =>
-             {
-                 s.RoutingKey = "gama.api:event-occurrences";
-                 s.ExchangeType = ExchangeType.Topic;
-             });
-             c.ClearSerialization();
-             c.UseRawJsonSerializer();
+             h.AccessKey("");
+             h.SecretKey("");
+         });
+
+         cfg.ReceiveEndpoint("gama-api-occurrences.fifo", e =>
+         {
+             e.ConfigureConsumeTopology = false;
+             e.ConfigureConsumer<OccurrenceEventConsumer>(context);
+             e.ClearSerialization();
+             e.UseRawJsonSerializer();
          });
      });
  });
