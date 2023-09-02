@@ -51,6 +51,26 @@ resource "aws_iam_policy" "ecr_access_policy" {
   })
 }
 
+resource "aws_iam_policy" "sqs_policy" {
+  name = "SQSPolicy"
+
+  policy = jsonencode({
+    Version = "2012-10-17",
+    Statement = [
+      {
+        Effect   = "Allow",
+        Action   = [
+          "sqs:SendMessage",
+          "sqs:ReceiveMessage",
+          "sqs:DeleteMessage",
+          "sqs:GetQueueAttributes"
+        ],
+        Resource = "*"
+      }
+    ]
+  })
+}
+
 resource "aws_iam_role_policy_attachment" "s3_access_attachment" {
   policy_arn = aws_iam_policy.s3_access_policy.arn
   role       = aws_iam_role.ecr_access_role.name
@@ -58,6 +78,11 @@ resource "aws_iam_role_policy_attachment" "s3_access_attachment" {
 
 resource "aws_iam_role_policy_attachment" "ecr_access_attachment" {
   policy_arn = aws_iam_policy.ecr_access_policy.arn
+  role       = aws_iam_role.ecr_access_role.name
+}
+
+resource "aws_iam_role_policy_attachment" "sqs_access_attachment" {
+  policy_arn = aws_iam_policy.sqs_policy.arn
   role       = aws_iam_role.ecr_access_role.name
 }
 
