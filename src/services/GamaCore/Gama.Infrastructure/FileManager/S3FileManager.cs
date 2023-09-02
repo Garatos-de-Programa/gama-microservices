@@ -3,6 +3,7 @@ using Amazon.S3.Transfer;
 using Gama.Application.Options;
 using Gama.Domain.Interfaces.FileManagement;
 using Gama.Domain.ValueTypes;
+using Microsoft.Extensions.Options;
 
 namespace Gama.Infrastructure.FileManager
 {
@@ -15,12 +16,12 @@ namespace Gama.Infrastructure.FileManager
         public S3FileManager(
             IAmazonS3 amazonS3,
             IHttpClientFactory httpClientFactory,
-            S3Options s3Options
+            IOptions<S3Options> s3Options
             )
         {
             _amazonS3 = amazonS3;
             _httpClientFactory = httpClientFactory;
-            _s3Options = s3Options;
+            _s3Options = s3Options.Value;
         }
 
         public async Task<FileObject> GetFileAsync(string path, CancellationToken cancellationToken)

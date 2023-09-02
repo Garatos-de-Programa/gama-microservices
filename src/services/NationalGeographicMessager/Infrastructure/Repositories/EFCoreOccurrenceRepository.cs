@@ -31,7 +31,7 @@ namespace NationalGeographicMessager.Infrastructure.Repositories
             var targetPoint = geometryFactory.CreatePoint(new Coordinate(occurrenceLocation.Longitude, occurrenceLocation.Latitude));
             
             return await _dbCcontext.Occurrences
-                              .Where(occurrence => occurrence.Geolocation.Distance(targetPoint) <= radiusInDegrees)
+                              .Where(occurrence => occurrence.Geolocation.Distance(targetPoint) <= radiusInDegrees && occurrence.Active == true)
                               .Select(occurrence =>
                               new IncidentMessage(occurrence.Geolocation, new OccurrenceEventMessage
                               {

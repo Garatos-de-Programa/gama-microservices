@@ -2,6 +2,7 @@ using Gama.Api.OptionsSetup;
 using Gama.Application;
 using Gama.Application.Seedworks.ValidationContracts;
 using Gama.Infrastructure;
+using Gama.Infrastructure.OptionsSetup;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,6 +20,10 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddAuthorization();
 builder.Services.AddAuthentication()
     .AddJwtBearer();
+
+builder.Services.ConfigureOptions<JwtOptionsSetup>();
+builder.Services.ConfigureOptions<JwtBearerOptionsSetup>();
+builder.Services.ConfigureOptions<S3OptionsSetup>();
 
 builder.Services.AddApplicationServices();
 builder.Services.AddInfrastructureServices(builder.Configuration);

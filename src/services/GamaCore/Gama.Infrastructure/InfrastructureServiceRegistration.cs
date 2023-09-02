@@ -1,5 +1,4 @@
 using Amazon.S3;
-using Gama.Api.OptionsSetup;
 using Gama.Application.UseCases.UserAgg.Interfaces;
 using Gama.Domain.Entities.OccurrencesAgg;
 using Gama.Domain.Entities.TrafficFinesAgg;
@@ -9,7 +8,6 @@ using Gama.Domain.Interfaces.FileManagement;
 using Gama.Infrastructure.Authentication;
 using Gama.Infrastructure.EventBus;
 using Gama.Infrastructure.FileManager;
-using Gama.Infrastructure.OptionsSetup;
 using Gama.Infrastructure.Persistence;
 using Gama.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
@@ -24,10 +22,7 @@ public static class InfrastructureServiceRegistration
         IConfiguration configuration)
     {
         var connectionString = configuration.GetConnectionString("GamaCoreDbConnectionString");
-
-        services.ConfigureOptions<JwtOptionsSetup>();
-        services.ConfigureOptions<JwtBearerOptionsSetup>();
-        services.ConfigureOptions<S3OptionsSetup>();
+        services.AddHttpClient();
 
         services.AddScoped<ITokenService, JwtTokenProvider>();
 
