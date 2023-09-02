@@ -2,6 +2,6 @@
 {
     public interface IEventBusProducer
     {
-        void Publish<T>(T message, string routingKey) where T : class;
+        Task Publish<T>(T message, string routingKey) where T : class;
     }
 }

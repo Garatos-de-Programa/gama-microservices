@@ -10,6 +10,7 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+		<PackageReference Include="MassTransit.AmazonSQS" Version="8.1.0" />
 		<PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.18.1" />
 		<PackageReference Include="EFCore.NamingConventions" Version="7.0.2" />
 		<PackageReference Include="GeoAPI" Version="1.7.5" />

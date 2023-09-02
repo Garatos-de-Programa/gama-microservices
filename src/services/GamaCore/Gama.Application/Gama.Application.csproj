@@ -36,7 +36,6 @@
 
     <ItemGroup>
       <Folder Include="UseCases\OccurrenceAgg\Queries\" />
-      <Folder Include="UseCases\TrafficFineAgg\Queries\" />
     </ItemGroup>
 
 </Project>

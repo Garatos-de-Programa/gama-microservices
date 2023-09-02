@@ -1,4 +1,5 @@
 using Gama.Application.Options;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
 
 namespace Gama.Api.OptionsSetup;

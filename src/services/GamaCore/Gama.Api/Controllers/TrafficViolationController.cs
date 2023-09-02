@@ -37,7 +37,7 @@ public class TrafficViolationController : Controller
     [ProducesResponseType((int)HttpStatusCode.InternalServerError)]
     public async Task<IActionResult> Get(int id)
     {
-        var result = await _trafficViolationService.GetAsync(id).ConfigureAwait(false);
+        var result = await _trafficViolationService.GetAsync(id);
 
         return result.ToOk((trafficViolation) => _entityMapper.Map<GetTrafficViolationResponse, TrafficViolation>(trafficViolation));
     }
@@ -47,7 +47,7 @@ public class TrafficViolationController : Controller
     [ProducesResponseType(typeof(IEnumerable<GetTrafficViolationResponse>), (int)HttpStatusCode.OK)]
     public async Task<IActionResult> GetTrafficsViolations()
     {
-        var result = await _trafficViolationService.GetTrafficsViolationsAsync().ConfigureAwait(false);
+        var result = await _trafficViolationService.GetTrafficsViolationsAsync();
 
         return result.ToOk((trafficViolation) => _entityMapper.Map<IEnumerable<GetTrafficViolationResponse>, IEnumerable<TrafficViolation>>(trafficViolation));
     }
@@ -66,7 +66,7 @@ public class TrafficViolationController : Controller
         
         var trafficViolation = _entityMapper.Map<TrafficViolation, CreateTrafficViolationCommand>(createTrafficViolationCommand);
 
-        var result = await _trafficViolationService.CreateAsync(trafficViolation).ConfigureAwait(false);
+        var result = await _trafficViolationService.CreateAsync(trafficViolation);
 
         return result.ToOk((trafficViolation) => _entityMapper.Map<GetTrafficViolationResponse, TrafficViolation>(trafficViolation));
     }
@@ -88,7 +88,7 @@ public class TrafficViolationController : Controller
 
         trafficViolation.Id = id;
 
-        var result = await _trafficViolationService.UpdateAsync(trafficViolation).ConfigureAwait(false);
+        var result = await _trafficViolationService.UpdateAsync(trafficViolation);
 
         return result.ToOk((result) => _entityMapper.Map<GetTrafficViolationResponse, TrafficViolation>(result));
     }
@@ -101,7 +101,7 @@ public class TrafficViolationController : Controller
     [ProducesResponseType((int)HttpStatusCode.InternalServerError)]
     public async Task<IActionResult> Delete(int id)
     {
-        var result = await _trafficViolationService.DeleteAsync(id).ConfigureAwait(false);
+        var result = await _trafficViolationService.DeleteAsync(id);
         return result.ToNoContent();
     }
 }

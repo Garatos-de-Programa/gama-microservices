@@ -1,8 +1,10 @@
-﻿namespace Gama.Domain.Interfaces.FileManagement
+﻿using Gama.Domain.ValueTypes;
+
+namespace Gama.Domain.Interfaces.FileManagement
 {
     public interface IFileManager
     {
-        Task<FileStream> GetFileAsync(string path);
-        Task<string> UploadAsync(Stream fileStream);
+        Task<FileObject> GetFileAsync(string path, CancellationToken cancellationToken);
+        Task<string> UploadAsync(FileObject fileObject, CancellationToken cancellationToken);
     }
 }

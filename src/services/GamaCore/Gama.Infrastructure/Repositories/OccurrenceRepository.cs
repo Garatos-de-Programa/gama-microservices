@@ -1,9 +1,8 @@
-﻿using Gama.Application.Seedworks.Queries;
+﻿using Gama.Domain.Entities.OccurrencesAgg;
+using Gama.Domain.Interfaces.EventBus;
 using Gama.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
-using Gama.Domain.Entities.OccurrencesAgg;
-using Gama.Domain.Interfaces.EventBus;
 
 namespace Gama.Infrastructure.Repositories
 {
@@ -18,13 +17,13 @@ namespace Gama.Infrastructure.Repositories
         public override async Task InsertAsync(Occurrence tObject)
         {
             await base.InsertAsync(tObject);
-            await CommitAsync().ConfigureAwait(false);
-            PublishMessage(tObject);
+            await CommitAsync();
+            await PublishMessage(tObject);
         }
 
         public override async Task Patch(Occurrence tObject)
         {
-            PublishMessage(tObject);
+            await PublishMessage(tObject);
             await base.Patch(tObject);
         }
 
@@ -50,7 +49,7 @@ namespace Gama.Infrastructure.Repositories
                     .ToListAsync();
         }
 
-        internal void PublishMessage(Occurrence tObject)
+        internal async Task PublishMessage(Occurrence tObject)
         {
             var @event = tObject.Events.First();
 
@@ -60,7 +59,8 @@ namespace Gama.Infrastructure.Repositories
                 {
                     createdEvent.OccurrenceId = tObject.Id;
                 }
-                _eventBusProducer.Publish(@event, "gama.api:event-occurrences");
+
+                await _eventBusProducer.Publish(@event, "gama-api-occurrences.fifo");
             }
         }
     }

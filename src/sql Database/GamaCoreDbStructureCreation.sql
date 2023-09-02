@@ -59,16 +59,17 @@ CREATE TABLE IF NOT EXISTS traffic_violations (
 COMMIT;
 
 CREATE TABLE IF NOT EXISTS traffic_fines (
-	id SERIAL PRIMARY KEY,
-	license_plate CHAR(7) NOT NULL,
-	latitude numeric(10, 8) NOT NULL,
-  	longitude numeric(11, 8) NOT NULL,
-	active bool NOT NULL,
-	computed bool NOT NULL,
-	user_id INT NOT NULL,
-	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-	updated_at TIMESTAMP,	
-	deleted_at TIMESTAMP,
+	id 					SERIAL PRIMARY KEY,
+	license_plate 		CHAR(7) NOT NULL,
+	latitude 			numeric(10, 8) NOT NULL,
+  	longitude 			numeric(11, 8) NOT NULL,
+	active bool 		NOT NULL,
+	computed bool 		NOT NULL,
+	user_id 			INT NOT NULL,
+	image_url  			VARCHAR(120) NOT NULL,
+	created_at 			TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	updated_at 			TIMESTAMP,	
+	deleted_at 			TIMESTAMP,
 	CONSTRAINT fk_user
       FOREIGN KEY(user_id) 
 	  	REFERENCES users(id)
@@ -113,20 +114,21 @@ COMMIT;
 
 
 CREATE TABLE IF NOT EXISTS occurrences (
-	id SERIAL PRIMARY KEY,
-	latitude numeric(10, 8) NOT NULL,
-  	longitude numeric(11, 8) NOT NULL,
-	location VARCHAR(100) NOT NULL,
-	name VARCHAR(50) NOT NULL,
-	occurrence_status_id SMALLINT NOT NULL,
-	occurrence_type_id SMALLINT NOT NULL,
+	id 							SERIAL PRIMARY KEY,
+	latitude					numeric(10, 8) NOT NULL,
+  	longitude 					numeric(11, 8) NOT NULL,
+	location 					VARCHAR(100) NOT NULL,
+	name						VARCHAR(50) NOT NULL,
+	occurrence_status_id 		SMALLINT NOT NULL,
+	occurrence_type_id 			SMALLINT NOT NULL,
 	occurrence_urgency_level_id SMALLINT NOT NULL,
-	description VARCHAR(200) NOT NULL,
-	user_id INT NOT NULL,
-	active bool NOT NULL,
-	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-	updated_at TIMESTAMP,	
-	deleted_at TIMESTAMP,
+	description 				VARCHAR(200) NOT NULL,
+	user_id 					INT NOT NULL,
+	active 						bool NOT NULL,
+	image_url  					VARCHAR(120) NOT NULL,
+	created_at 					TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	updated_at 					TIMESTAMP,	
+	deleted_at 					TIMESTAMP,
 	CONSTRAINT fk_occurrence_status
       FOREIGN KEY(occurrence_status_id) 
 	  	REFERENCES occurrence_status(id),

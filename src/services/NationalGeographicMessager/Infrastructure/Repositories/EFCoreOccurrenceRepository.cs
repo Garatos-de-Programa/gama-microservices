@@ -35,6 +35,7 @@ namespace NationalGeographicMessager.Infrastructure.Repositories
                               .Select(occurrence =>
                               new IncidentMessage(occurrence.Geolocation, new OccurrenceEventMessage
                               {
+                                  Name = occurrence.OccurrenceName,
                                   OccurrenceId = occurrence.OccurrenceId,
                                   Location = occurrence.Location,
                                   OccurrenceName = occurrence.OccurrenceName,

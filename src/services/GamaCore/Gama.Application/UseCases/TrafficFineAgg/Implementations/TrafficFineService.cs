@@ -1,10 +1,13 @@
 ﻿using Gama.Application.Seedworks.Queries;
 using Gama.Application.UseCases.TrafficFineAgg.Interfaces;
+using Gama.Application.UseCases.TrafficFineAgg.Queries;
 using Gama.Application.UseCases.UserAgg.Interfaces;
 using Gama.Domain.Entities.TrafficFinesAgg;
 using Gama.Domain.Entities.UsersAgg;
 using Gama.Domain.Exceptions;
+using Gama.Domain.Interfaces.FileManagement;
 using Gama.Domain.ValueTypes;
+using Microsoft.AspNetCore.Http;
 
 namespace Gama.Application.UseCases.TrafficFineAgg.Implementations
 {
@@ -12,19 +15,22 @@ namespace Gama.Application.UseCases.TrafficFineAgg.Implementations
     {
         private readonly ITrafficFineRepository _trafficFineRepository;
         private readonly ICurrentUserAccessor _currentUserAccessor;
+        private readonly IFileManager _fileManager;
 
         public TrafficFineService(
             ITrafficFineRepository trafficFineRepository,
-            ICurrentUserAccessor currentUserAccessor
+            ICurrentUserAccessor currentUserAccessor,
+            IFileManager fileManager
             )
         {
             _currentUserAccessor = currentUserAccessor;
             _trafficFineRepository = trafficFineRepository;
+            _fileManager = fileManager;
         }
 
         public async Task<Result<bool>> ComputeAsync(int id)
         {
-            var trafficFine = await _trafficFineRepository.FindOneAsync(id).ConfigureAwait(false);
+            var trafficFine = await _trafficFineRepository.FindOneAsync(id);
 
             if (trafficFine == null)
                 return new Result<bool>(new ValidationException(new ValidationError()
@@ -43,12 +49,16 @@ namespace Gama.Application.UseCases.TrafficFineAgg.Implementations
             }
 
             await _trafficFineRepository.Patch(trafficFine);
-            await _trafficFineRepository.CommitAsync().ConfigureAwait(false);
+            await _trafficFineRepository.CommitAsync();
 
             return true;
         }
 
-        public async Task<Result<TrafficFine>> CreateAsync(TrafficFine trafficFine)
+        public async Task<Result<TrafficFine>> CreateAsync(
+            TrafficFine trafficFine, 
+            IFormFile infractionImage, 
+            CancellationToken cancellationToken
+            )
         {
             if (trafficFine == null)
                 return new Result<TrafficFine>(new ValidationException(new ValidationError()
@@ -57,18 +67,19 @@ namespace Gama.Application.UseCases.TrafficFineAgg.Implementations
                     ErrorMessage = "Você deve informar uma multa valida"
                 }));
 
-            trafficFine.UserId = _currentUserAccessor.GetUserId();
-            trafficFine.PrepareToInsert();
+            var imageUrl = await _fileManager.UploadAsync(new FileObject(infractionImage), cancellationToken);
 
-            await _trafficFineRepository.InsertAsync(trafficFine).ConfigureAwait(false);
-            await _trafficFineRepository.CommitAsync().ConfigureAwait(false);
+            trafficFine.PrepareToInsert(imageUrl, _currentUserAccessor.GetUserId());
+
+            await _trafficFineRepository.InsertAsync(trafficFine);
+            await _trafficFineRepository.CommitAsync();
 
             return trafficFine;
         }
 
         public async Task<Result<bool>> DeleteAsync(int id)
         {
-            var trafficFine = await _trafficFineRepository.FindOneAsync(id).ConfigureAwait(false);
+            var trafficFine = await _trafficFineRepository.FindOneAsync(id);
 
             if (trafficFine == null)
                 return new Result<bool>(new ValidationException(new ValidationError()
@@ -87,7 +98,7 @@ namespace Gama.Application.UseCases.TrafficFineAgg.Implementations
             }
 
             await _trafficFineRepository.Patch(trafficFine);
-            await _trafficFineRepository.CommitAsync().ConfigureAwait(false);
+            await _trafficFineRepository.CommitAsync();
 
             return true;
         }
@@ -129,13 +140,13 @@ namespace Gama.Application.UseCases.TrafficFineAgg.Implementations
             };
 
             var user = _currentUserAccessor.GetUser();
-
             var isCop = user.IsRole(RolesName.Cop);
-
-            var trafficFine = await _trafficFineRepository.GetAsync(t =>
-                t.CreatedAt >= dateSearchQuery.CreatedSince.ToUniversalTime() &&
-                t.CreatedAt <= dateSearchQuery.CreatedUntil.ToUniversalTime()
-            , search.Offset, search.Size);
+            var query = new DatesearchTrafficFineQuery(isCop, dateSearchQuery, user.Id);
+            var trafficFine = await _trafficFineRepository.GetAsync(
+                t => query.Filter(t), 
+                search.Offset, 
+                search.Size
+            );
 
             search.Results = trafficFine;
 

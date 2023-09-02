@@ -29,6 +29,8 @@ namespace Gama.Domain.Entities.OccurrencesAgg
 
         public bool Active { get; set; }
 
+        public string? ImageUrl { get; set; }
+
         public OccurrenceStatus? Status { get; set; }
 
         public OccurrenceType? OccurrenceType { get; set; }
@@ -52,11 +54,12 @@ namespace Gama.Domain.Entities.OccurrencesAgg
             return true;
         }
 
-        public void PrepareToInsert(User user)
+        public void PrepareToInsert(User user, string imageUrl)
         {
             Active = true;
             CreatedAt = DateTime.UtcNow;
             UserId = user.Id;
+            ImageUrl = imageUrl;
             AddEvent(new CreatedOccurrenceEvent(this, user.Username!));
         }
     }

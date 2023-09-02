@@ -20,9 +20,6 @@ builder.Services.AddAuthorization();
 builder.Services.AddAuthentication()
     .AddJwtBearer();
 
-builder.Services.ConfigureOptions<JwtOptionsSetup>();
-builder.Services.ConfigureOptions<JwtBearerOptionsSetup>();
-
 builder.Services.AddApplicationServices();
 builder.Services.AddInfrastructureServices(builder.Configuration);
 

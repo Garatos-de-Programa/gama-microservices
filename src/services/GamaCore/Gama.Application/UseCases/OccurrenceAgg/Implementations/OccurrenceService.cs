@@ -1,11 +1,13 @@
-﻿using Gama.Application.Seedworks.Pagination;
-using Gama.Application.Seedworks.Queries;
+﻿using Gama.Application.Seedworks.Queries;
 using Gama.Application.UseCases.OccurrenceAgg.Interfaces;
 using Gama.Application.UseCases.OccurrenceAgg.Responses;
 using Gama.Application.UseCases.UserAgg.Interfaces;
 using Gama.Domain.Entities.OccurrencesAgg;
+using Gama.Domain.Entities.TrafficFinesAgg;
 using Gama.Domain.Exceptions;
+using Gama.Domain.Interfaces.FileManagement;
 using Gama.Domain.ValueTypes;
+using Microsoft.AspNetCore.Http;
 
 namespace Gama.Application.UseCases.OccurrenceAgg.Implementations
 {
@@ -16,13 +18,15 @@ namespace Gama.Application.UseCases.OccurrenceAgg.Implementations
         private readonly IOccurrenceUrgencyLevelRepository _occurrenceUrgencyLevelRepository;
         private readonly IOccurrenceTypeRepository _occurrenceTypeRepository;
         private readonly IOccurrenceStatusRepository _occurrenceStatusRepository;
+        private readonly IFileManager _fileManager;
 
         public OccurrenceService(
             IOccurrenceRepository occurrenceRepository,
             ICurrentUserAccessor currentUserAccessor,
             IOccurrenceUrgencyLevelRepository occurrenceUrgencyLevelRepository,
             IOccurrenceTypeRepository occurrenceTypeRepository,
-            IOccurrenceStatusRepository occurrenceStatusRepository
+            IOccurrenceStatusRepository occurrenceStatusRepository,
+            IFileManager fileManager
             )
         {
             _occurrenceRepository = occurrenceRepository;
@@ -30,9 +34,14 @@ namespace Gama.Application.UseCases.OccurrenceAgg.Implementations
             _occurrenceTypeRepository = occurrenceTypeRepository;
             _occurrenceStatusRepository = occurrenceStatusRepository;
             _occurrenceUrgencyLevelRepository = occurrenceUrgencyLevelRepository;
+            _fileManager = fileManager;
         }
 
-        public async Task<Result<Occurrence>> CreateAsync(Occurrence occurrence)
+        public async Task<Result<Occurrence>> CreateAsync(
+            Occurrence occurrence,
+            IFormFile occurrenceImageFile,
+            CancellationToken cancellationToken
+            )
         {
             if (occurrence == null)
                 return new Result<Occurrence>(new ValidationException(new ValidationError()
@@ -41,18 +50,19 @@ namespace Gama.Application.UseCases.OccurrenceAgg.Implementations
                     ErrorMessage = "Você deve informar uma ocorrencia valida"
                 }));
 
+            var imageUrl = await _fileManager.UploadAsync(new FileObject(occurrenceImageFile), cancellationToken);
 
             var user = _currentUserAccessor.GetUser();
-            occurrence.PrepareToInsert(user);
+            occurrence.PrepareToInsert(user, imageUrl);
 
-            await _occurrenceRepository.InsertAsync(occurrence).ConfigureAwait(false);
+            await _occurrenceRepository.InsertAsync(occurrence);
 
             return occurrence;
         }
 
         public async Task<Result<bool>> DeleteAsync(int id)
         {
-            var occurrence = await _occurrenceRepository.FindOneAsync(id).ConfigureAwait(false);
+            var occurrence = await _occurrenceRepository.FindOneAsync(id);
 
             if (occurrence == null)
                 return new Result<bool>(new ValidationException(new ValidationError()
@@ -71,14 +81,14 @@ namespace Gama.Application.UseCases.OccurrenceAgg.Implementations
             }
 
             await _occurrenceRepository.Patch(occurrence);
-            await _occurrenceRepository.CommitAsync().ConfigureAwait(false);
+            await _occurrenceRepository.CommitAsync();
 
             return true;
         }
 
         public async Task<Result<Occurrence>> GetAsync(int id)
         {
-            var occurrence = await _occurrenceRepository.FindOneAsync(id).ConfigureAwait(false);
+            var occurrence = await _occurrenceRepository.FindOneAsync(id);
             if (occurrence is null)
             {
                 return new Result<Occurrence>(new ValidationException(new ValidationError()
@@ -104,7 +114,7 @@ namespace Gama.Application.UseCases.OccurrenceAgg.Implementations
                                 t.CreatedAt <= search.CreatedUntil.ToUniversalTime(), 
                                 offsetPage.Offset, 
                                 search.Size
-                                ).ConfigureAwait(false);
+                                );
 
             offsetPage.Results = occurrence;
 

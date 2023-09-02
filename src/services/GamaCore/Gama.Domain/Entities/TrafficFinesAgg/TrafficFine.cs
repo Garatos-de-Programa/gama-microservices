@@ -21,6 +21,8 @@ public class TrafficFine : AuditableEntity
 
     public int UserId { get; set; }
 
+    public string? ImageUrl { get; set; }
+
     public User? User { get; set; }
 
     public ICollection<TrafficFineTrafficViolation>? TrafficFineTrafficViolations { get; set; }
@@ -82,10 +84,12 @@ public class TrafficFine : AuditableEntity
         return true;
     }
 
-    public void PrepareToInsert()
+    public void PrepareToInsert(string imageUrl, int userId)
     {
         CreatedAt = DateTime.UtcNow;
         Active = true;
         Computed = false;
+        UserId = userId;
+        ImageUrl = imageUrl;
     }
 }

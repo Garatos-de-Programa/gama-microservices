@@ -38,7 +38,7 @@ namespace Gama.Api.Controllers
         [ProducesResponseType((int)HttpStatusCode.InternalServerError)]
         public async Task<IActionResult> GetAsync(int id)
         {
-            var occurrence = await _occurrenceService.GetAsync(id).ConfigureAwait(false);
+            var occurrence = await _occurrenceService.GetAsync(id);
 
             return occurrence.ToOk((result) => _entityMapper.Map<GetOccurrenceResponse, Occurrence>(result));
         }
@@ -56,7 +56,7 @@ namespace Gama.Api.Controllers
                 return BadRequest(ModelState);
             }
 
-            var trafficFines = await _occurrenceService.GetByDateSearchAsync(search).ConfigureAwait(false);
+            var trafficFines = await _occurrenceService.GetByDateSearchAsync(search);
 
             return trafficFines.ToOk((result) => _entityMapper.Map<OffsetPageResponse<SearchOcurrenceResponse>, OffsetPage<Occurrence>>(result));
         }
@@ -66,7 +66,11 @@ namespace Gama.Api.Controllers
         [ProducesResponseType(typeof(GetOccurrenceResponse), (int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
         [ProducesResponseType((int)HttpStatusCode.InternalServerError)]
-        public async Task<IActionResult> CreateAsync([FromBody] CreateOccurrenceCommand createOccurrenceCommand)
+        public async Task<IActionResult> CreateAsync(
+            [FromBody] CreateOccurrenceCommand createOccurrenceCommand,
+            IFormFile occurrenceImageFile,
+            CancellationToken cancellationToken
+            )
         {
             if (!ModelState.IsValid)
             {
@@ -75,7 +79,7 @@ namespace Gama.Api.Controllers
 
             var trafficFine = _entityMapper.Map<Occurrence, CreateOccurrenceCommand>(createOccurrenceCommand);
 
-            var result = await _occurrenceService.CreateAsync(trafficFine).ConfigureAwait(false);
+            var result = await _occurrenceService.CreateAsync(trafficFine, occurrenceImageFile, cancellationToken);
 
             return result.ToCreated();
         }
@@ -88,7 +92,7 @@ namespace Gama.Api.Controllers
         [ProducesResponseType((int)HttpStatusCode.InternalServerError)]
         public async Task<IActionResult> DeleteAsync([FromRoute] int id)
         {
-            var result = await _occurrenceService.DeleteAsync(id).ConfigureAwait(false);
+            var result = await _occurrenceService.DeleteAsync(id);
 
             return result.ToNoContent();
         }
@@ -98,7 +102,7 @@ namespace Gama.Api.Controllers
         [ProducesResponseType(typeof(void), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> GetOccurrencePropertiesAsync()
         {
-            var result = await _occurrenceService.GetOccurrencePropertiesAsync().ConfigureAwait(false);
+            var result = await _occurrenceService.GetOccurrencePropertiesAsync();
 
             return result.ToOk();
         }

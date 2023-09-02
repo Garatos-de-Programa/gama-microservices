@@ -4,13 +4,13 @@ using Gama.Application.Seedworks.Queries;
 using Gama.Application.UseCases.TrafficFineAgg.Commands;
 using Gama.Application.UseCases.TrafficFineAgg.Interfaces;
 using Gama.Application.UseCases.TrafficFineAgg.Responses;
+using Gama.Domain.Entities.TrafficFinesAgg;
 using Gama.Domain.Entities.UsersAgg;
 using Gama.Domain.ValueTypes;
 using Gama.Shared.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
-using Gama.Domain.Entities.TrafficFinesAgg;
 
 namespace Gama.Api.Controllers;
 
@@ -38,7 +38,7 @@ public class TrafficFineController : Controller
     [ProducesResponseType((int)HttpStatusCode.InternalServerError)]
     public async Task<IActionResult> GetAsync(int id)
     {
-        var trafficFine = await _trafficFineService.GetAsync(id).ConfigureAwait(false);
+        var trafficFine = await _trafficFineService.GetAsync(id);
 
         return trafficFine.ToOk((result) => _entityMapper.Map<GetTrafficFineResponse, TrafficFine>(result));
     }
@@ -56,7 +56,7 @@ public class TrafficFineController : Controller
             return BadRequest(ModelState);
         }
 
-        var trafficFines = await _trafficFineService.GetByDateSearchAsync(search).ConfigureAwait(false);
+        var trafficFines = await _trafficFineService.GetByDateSearchAsync(search);
 
         return trafficFines.ToOk((result) => _entityMapper.Map<OffsetPageResponse<GetTrafficFineResponse>, OffsetPage<TrafficFine>>(result));
     }
@@ -66,7 +66,11 @@ public class TrafficFineController : Controller
     [ProducesResponseType(typeof(GetTrafficFineResponse), (int)HttpStatusCode.OK)]
     [ProducesResponseType((int)HttpStatusCode.BadRequest)]
     [ProducesResponseType((int)HttpStatusCode.InternalServerError)]
-    public async Task<IActionResult> CreateAsync([FromBody] CreateTrafficFineCommand createTrafficFineCommand)
+    public async Task<IActionResult> CreateAsync(
+        [FromBody] CreateTrafficFineCommand createTrafficFineCommand,
+        IFormFile trafficFineFile, 
+        CancellationToken cancellationToken
+        )
     {
         if (!ModelState.IsValid)
         {
@@ -75,7 +79,7 @@ public class TrafficFineController : Controller
 
         var trafficFine = _entityMapper.Map<TrafficFine, CreateTrafficFineCommand>(createTrafficFineCommand);
 
-        var result = await _trafficFineService.CreateAsync(trafficFine).ConfigureAwait(false);
+        var result = await _trafficFineService.CreateAsync(trafficFine, trafficFineFile, cancellationToken);
 
         return result.ToCreated();
     }
@@ -91,7 +95,7 @@ public class TrafficFineController : Controller
             return BadRequest(ModelState);
         }
 
-        var result = await _trafficFineService.ComputeAsync(id).ConfigureAwait(false);
+        var result = await _trafficFineService.ComputeAsync(id);
 
         return result.ToNoContent();
     }
@@ -104,7 +108,7 @@ public class TrafficFineController : Controller
     [ProducesResponseType((int)HttpStatusCode.InternalServerError)]
     public async Task<IActionResult> DeleteAsync([FromRoute] int id)
     {
-        var result = await _trafficFineService.DeleteAsync(id).ConfigureAwait(false);
+        var result = await _trafficFineService.DeleteAsync(id);
 
         return result.ToNoContent();
     }

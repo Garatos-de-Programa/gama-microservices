@@ -19,5 +19,6 @@
     <PackageReference Include="NetTopologySuite.Core" Version="1.15.3" />
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="7.0.4" />
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL.NetTopologySuite" Version="7.0.4" />
+	<PackageReference Include="MassTransit.AmazonSQS" Version="8.1.0" />
   </ItemGroup>
 </Project>

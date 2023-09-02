@@ -24,7 +24,7 @@ namespace Gama.Application.UseCases.TrafficFineAgg.Implementations
                 }));
 
             var violation = await _trafficViolationRepository.GetByCode(trafficViolation?.Code ?? string.Empty)
-                    .ConfigureAwait(false);
+                    ;
 
             if (violation is not null)
             {
@@ -37,15 +37,15 @@ namespace Gama.Application.UseCases.TrafficFineAgg.Implementations
 
             trafficViolation!.PrepareToInsert();
 
-            await _trafficViolationRepository.InsertAsync(trafficViolation).ConfigureAwait(false);
-            await _trafficViolationRepository.CommitAsync().ConfigureAwait(false);
+            await _trafficViolationRepository.InsertAsync(trafficViolation);
+            await _trafficViolationRepository.CommitAsync();
 
             return trafficViolation;
         }
 
         public async Task<Result<bool>> DeleteAsync(int id)
         {
-            var trafficViolation = await _trafficViolationRepository.FindOneAsync(id).ConfigureAwait(false);
+            var trafficViolation = await _trafficViolationRepository.FindOneAsync(id);
 
             if (trafficViolation == null)
                 return new Result<bool>(new ValidationException(new ValidationError()
@@ -57,7 +57,7 @@ namespace Gama.Application.UseCases.TrafficFineAgg.Implementations
             trafficViolation.Delete();
 
             await _trafficViolationRepository.Patch(trafficViolation);
-            await _trafficViolationRepository.CommitAsync().ConfigureAwait(false);
+            await _trafficViolationRepository.CommitAsync();
 
             return true;
         }
@@ -92,7 +92,7 @@ namespace Gama.Application.UseCases.TrafficFineAgg.Implementations
                 }));
 
             var violation = await _trafficViolationRepository.FindOneAsync(trafficViolation.Id)
-                    .ConfigureAwait(false);
+                    ;
 
             if (violation is null)
             {
@@ -106,7 +106,7 @@ namespace Gama.Application.UseCases.TrafficFineAgg.Implementations
             violation?.Update(trafficViolation);
 
             await _trafficViolationRepository.Patch(violation!);
-            await _trafficViolationRepository.CommitAsync().ConfigureAwait(false);
+            await _trafficViolationRepository.CommitAsync();
 
             return trafficViolation;
         }

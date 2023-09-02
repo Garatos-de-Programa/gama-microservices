@@ -1,3 +1,5 @@
+using Amazon.S3;
+using Gama.Api.OptionsSetup;
 using Gama.Application.UseCases.UserAgg.Interfaces;
 using Gama.Domain.Entities.OccurrencesAgg;
 using Gama.Domain.Entities.TrafficFinesAgg;
@@ -7,6 +9,7 @@ using Gama.Domain.Interfaces.FileManagement;
 using Gama.Infrastructure.Authentication;
 using Gama.Infrastructure.EventBus;
 using Gama.Infrastructure.FileManager;
+using Gama.Infrastructure.OptionsSetup;
 using Gama.Infrastructure.Persistence;
 using Gama.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
@@ -22,12 +25,19 @@ public static class InfrastructureServiceRegistration
     {
         var connectionString = configuration.GetConnectionString("GamaCoreDbConnectionString");
 
+        services.ConfigureOptions<JwtOptionsSetup>();
+        services.ConfigureOptions<JwtBearerOptionsSetup>();
+        services.ConfigureOptions<S3OptionsSetup>();
+
         services.AddScoped<ITokenService, JwtTokenProvider>();
 
         services.AddDbContext<GamaCoreDbContext>(options =>
             options.UseNpgsql(connectionString)
             .UseSnakeCaseNamingConvention()
             );
+
+        services.AddDefaultAWSOptions(configuration.GetAWSOptions());
+        services.AddAWSService<IAmazonS3>();
 
         services.AddTransient<IUserRepository, UserRepository>();
         services.AddTransient<IRolesRepository, RolesRepository>();
@@ -38,9 +48,9 @@ public static class InfrastructureServiceRegistration
         services.AddTransient<IOccurrenceTypeRepository, OccurrenceTypeRepository>();
         services.AddTransient<IOccurrenceStatusRepository, OccurrenceStatusRepository>();
 
-        services.AddScoped<IFileManager, LocalFileManager>();
+        services.AddScoped<IFileManager, S3FileManager>();
 
-        services.AddSingleton<IEventBusProducer, RabbitMqEventBusProducer>();
+        services.AddSingleton<IEventBusProducer, SQSEventBusProducer>();
 
         return services;
     }

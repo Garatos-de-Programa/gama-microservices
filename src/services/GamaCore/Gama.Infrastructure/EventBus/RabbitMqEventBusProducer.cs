@@ -31,7 +31,7 @@ namespace Gama.Infrastructure.EventBus
                 );
         }
 
-        public void Publish<T>(T message, string routingKey) where T : class
+        public Task Publish<T>(T message, string routingKey) where T : class
         {
             lock (_lock)
             {
@@ -43,6 +43,8 @@ namespace Gama.Infrastructure.EventBus
                     body: body
                     );
             }
+
+            return Task.CompletedTask;
         }
     }
 }

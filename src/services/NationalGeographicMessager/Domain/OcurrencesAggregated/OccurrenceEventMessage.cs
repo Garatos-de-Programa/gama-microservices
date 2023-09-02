@@ -5,6 +5,10 @@ namespace NationalGeographicMessager.Domain.OcurrencesAggregated
 {
     public class OccurrenceEventMessage
     {
+        public DateTime CreatedAt { get; set; }
+
+        public string? Name { get; set; }
+
         public int OccurrenceId { get; set; }
 
         public double Latitude { get; set; }

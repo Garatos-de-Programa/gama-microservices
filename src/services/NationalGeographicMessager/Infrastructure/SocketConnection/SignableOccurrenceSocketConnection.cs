@@ -28,16 +28,16 @@ namespace NationalGeographicMessager.Infrastructure.SocketConnection
                 tasks.Add(connection.SendAsync("ReceiveMessage", message));
             }
 
-            await Task.WhenAll(tasks).ConfigureAwait(false);
+            await Task.WhenAll(tasks);
         }
 
         public async Task Subscribe(double latitude, double longitude, double radius)
         {
-            var occurrences = await _occurrenceRepository.GetAsync(new (latitude, longitude, radius)).ConfigureAwait(false);
+            var occurrences = await _occurrenceRepository.GetAsync(new (latitude, longitude, radius));
             await Task.WhenAll(
                 Clients.Caller.SendAsync("ReceiveMessage", occurrences),
                 Groups.AddToGroupAsync(Context.ConnectionId, "occurrenceGroup")
-                ).ConfigureAwait(false);
+                );
             _socketConnectionManager.AddSocketConnection(Context.ConnectionId, new(latitude, longitude, radius));
         }
 
