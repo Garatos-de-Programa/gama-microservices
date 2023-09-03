@@ -133,8 +133,7 @@ namespace Gama.Application.UseCases.TrafficFineAgg.Implementations
             var user = _currentUserAccessor.GetUser();
             var isCop = user.IsRole(RolesName.Cop);
             var query = new DatesearchTrafficFineQuery(isCop, dateSearchQuery, user.Id);
-            var trafficFine = await _trafficFineRepository.GetAsync(
-                t => query.Filter(t), 
+            var trafficFine = await _trafficFineRepository.GetAsync(query.Query, 
                 search.Offset, 
                 search.Size
             );

@@ -4,6 +4,10 @@ namespace Gama.Domain.ValueTypes
 {
     public readonly struct MercosulLicensePlate
     {
+        private const int NormalLicensePlateLength = 7;
+        
+        private const int MercosulLicensePlateLength = 8;
+
         private static readonly Regex NormalRegexValidator = new(@"[a-zA-Z]{3}-[0-9]{4}",
         RegexOptions.Compiled, TimeSpan.FromSeconds(2));
 
@@ -35,7 +39,7 @@ namespace Gama.Domain.ValueTypes
                 return false;
             }
 
-            if (value.Length > 8 || value.Length < 7)
+            if (value.Length > MercosulLicensePlateLength || value.Length < NormalLicensePlateLength)
             {
                 licensePlate = new MercosulLicensePlate();
                 return false;
@@ -60,8 +64,27 @@ namespace Gama.Domain.ValueTypes
                 return false;
             }
 
-            licensePlate = new MercosulLicensePlate(value);
+            var letterSide = value[..3];
+            var numberSide = value[4..];
+            licensePlate = new MercosulLicensePlate(letterSide + numberSide);
             return true;
+        }
+
+        public static string Format(string? value)
+        {
+            if (string.IsNullOrEmpty(value))
+            {
+                return string.Empty;
+            }
+
+            if (value.Length != NormalLicensePlateLength)
+            {
+                return value;
+            }
+
+            var letterSide = value[..3];
+            var numberSide = value[3..];
+            return letterSide + '-' + numberSide;
         }
 
         public override string ToString()
@@ -69,5 +92,7 @@ namespace Gama.Domain.ValueTypes
 
         public static implicit operator MercosulLicensePlate(string value)
             => new(value);
+
+        public static implicit operator string(MercosulLicensePlate value) => value.ToString();
     }
 }

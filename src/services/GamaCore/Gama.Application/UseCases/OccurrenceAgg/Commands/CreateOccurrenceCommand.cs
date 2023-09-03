@@ -21,6 +21,8 @@ namespace Gama.Application.UseCases.OccurrenceAgg.Commands
 
         public byte OccurrenceUrgencyLevelId { get; set; }
 
+        public string? ImageUrl { get; set; }
+
         public void Validate()
         {
             AddNotifications(new CreateOccurrenceCommandContract(this));

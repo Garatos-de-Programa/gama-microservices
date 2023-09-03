@@ -2,7 +2,8 @@
 {
     public class S3File
     {
-        protected const int KeyLenth = 40;
+        protected const int KeyLength = 40;
+        protected const int UrlLength = 84;
 
         public string FilePath { get; }
 
@@ -38,8 +39,16 @@
             return $"https://{bucketName}.s3.amazonaws.com/{filePath}";
         }
 
-        public static bool IsValidUrl(string path, string bucketName)
+        public static bool IsValidUrl(string path, string bucketName = "gama.bucket.com.br")
         {
+            if (string.IsNullOrEmpty(path))
+            {
+                return false;
+            }
+
+            if (path.Length < UrlLength)
+                return false;
+
             var amazonUrlStart = bucketName.Length + 8;
             var amazonUrlEnd = amazonUrlStart + 17;
             var bucket = path[8..amazonUrlStart];
@@ -54,7 +63,7 @@
 
         public static string GetKey(string path)
         {
-            var keyStart = path.Length - KeyLenth;
+            var keyStart = path.Length - KeyLength;
             var key = path[keyStart..];
             return key;
         }

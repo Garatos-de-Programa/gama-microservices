@@ -13,6 +13,8 @@ public class CreateTrafficFineCommand : Notifiable<Notification>, IRequest
 
     public IEnumerable<CreateTrafficFineTrafficViolationCommand>? TrafficViolations { get; set; }
 
+    public string? ImageUrl { get; set; }
+
     public void Validate()
     {
         AddNotifications(new CreateTrafficFineCommandContract(this));

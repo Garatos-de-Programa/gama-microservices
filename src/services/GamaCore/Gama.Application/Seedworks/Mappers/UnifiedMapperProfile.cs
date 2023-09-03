@@ -20,7 +20,10 @@ namespace Gama.Application.Seedworks.Mappers
             CreateMap<TrafficFine, GetTrafficFineResponse>()
                 .ForMember(dest => dest.TrafficViolations,
                     opt => opt.MapFrom(trafficFine =>
-                        trafficFine.TrafficFineTrafficViolations!.Select(tv => tv.TrafficViolation)));
+                        trafficFine.TrafficFineTrafficViolations!.Select(tv => tv.TrafficViolation)))
+                .ForMember(dest => dest.LicensePlate,
+                    opt => opt.MapFrom(trafficFine =>
+                        MercosulLicensePlate.Format(trafficFine.LicensePlate!)));
 
             CreateMap<CreateTrafficFineCommand, TrafficFine>()
                 .ForMember(dest => dest.TrafficFineTrafficViolations,

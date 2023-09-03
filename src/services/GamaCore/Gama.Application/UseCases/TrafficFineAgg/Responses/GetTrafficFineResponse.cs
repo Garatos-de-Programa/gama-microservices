@@ -10,8 +10,6 @@ public class GetTrafficFineResponse
 
     public decimal Longitude { get; set; }
 
-    public string Photo { get; set; }
-
     public bool Active { get; set; }
 
     public bool Computed { get; set; }
