@@ -54,12 +54,11 @@ namespace Gama.Domain.Entities.OccurrencesAgg
             return true;
         }
 
-        public void PrepareToInsert(User user, string imageUrl)
+        public void PrepareToInsert(User user)
         {
             Active = true;
             CreatedAt = DateTime.UtcNow;
             UserId = user.Id;
-            ImageUrl = imageUrl;
             AddEvent(new CreatedOccurrenceEvent(this, user.Username!));
         }
     }

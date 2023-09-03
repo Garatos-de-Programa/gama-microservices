@@ -3,11 +3,9 @@ using Gama.Application.UseCases.OccurrenceAgg.Interfaces;
 using Gama.Application.UseCases.OccurrenceAgg.Responses;
 using Gama.Application.UseCases.UserAgg.Interfaces;
 using Gama.Domain.Entities.OccurrencesAgg;
-using Gama.Domain.Entities.TrafficFinesAgg;
 using Gama.Domain.Exceptions;
 using Gama.Domain.Interfaces.FileManagement;
 using Gama.Domain.ValueTypes;
-using Microsoft.AspNetCore.Http;
 
 namespace Gama.Application.UseCases.OccurrenceAgg.Implementations
 {
@@ -18,15 +16,13 @@ namespace Gama.Application.UseCases.OccurrenceAgg.Implementations
         private readonly IOccurrenceUrgencyLevelRepository _occurrenceUrgencyLevelRepository;
         private readonly IOccurrenceTypeRepository _occurrenceTypeRepository;
         private readonly IOccurrenceStatusRepository _occurrenceStatusRepository;
-        private readonly IFileManager _fileManager;
 
         public OccurrenceService(
             IOccurrenceRepository occurrenceRepository,
             ICurrentUserAccessor currentUserAccessor,
             IOccurrenceUrgencyLevelRepository occurrenceUrgencyLevelRepository,
             IOccurrenceTypeRepository occurrenceTypeRepository,
-            IOccurrenceStatusRepository occurrenceStatusRepository,
-            IFileManager fileManager
+            IOccurrenceStatusRepository occurrenceStatusRepository
             )
         {
             _occurrenceRepository = occurrenceRepository;
@@ -34,13 +30,10 @@ namespace Gama.Application.UseCases.OccurrenceAgg.Implementations
             _occurrenceTypeRepository = occurrenceTypeRepository;
             _occurrenceStatusRepository = occurrenceStatusRepository;
             _occurrenceUrgencyLevelRepository = occurrenceUrgencyLevelRepository;
-            _fileManager = fileManager;
         }
 
         public async Task<Result<Occurrence>> CreateAsync(
-            Occurrence occurrence,
-            IFormFile occurrenceImageFile,
-            CancellationToken cancellationToken
+            Occurrence occurrence
             )
         {
             if (occurrence == null)
@@ -50,10 +43,8 @@ namespace Gama.Application.UseCases.OccurrenceAgg.Implementations
                     ErrorMessage = "Você deve informar uma ocorrencia valida"
                 }));
 
-            var imageUrl = await _fileManager.UploadAsync(new FileObject(occurrenceImageFile), cancellationToken);
-
             var user = _currentUserAccessor.GetUser();
-            occurrence.PrepareToInsert(user, imageUrl);
+            occurrence.PrepareToInsert(user);
 
             await _occurrenceRepository.InsertAsync(occurrence);
 

@@ -15,3 +15,4 @@ sudo service docker restart
 sudo $(aws ecr get-login --no-include-email --region us-east-2)
 
 sudo docker run --restart=always -d -p 80:80 737687692117.dkr.ecr.us-east-2.amazonaws.com/gama-microservices-repo:latest
+sudo docker run --restart=always -d -p 8080:80 737687692117.dkr.ecr.us-east-2.amazonaws.com/gama-messager-repo:latest

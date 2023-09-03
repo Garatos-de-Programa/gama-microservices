@@ -62,14 +62,12 @@ public class TrafficFineController : Controller
     }
 
     [HttpPost]
-    [Authorize(Roles = RolesName.Cop)]
+    //[Authorize(Roles = RolesName.Cop)]
     [ProducesResponseType(typeof(GetTrafficFineResponse), (int)HttpStatusCode.OK)]
     [ProducesResponseType((int)HttpStatusCode.BadRequest)]
     [ProducesResponseType((int)HttpStatusCode.InternalServerError)]
     public async Task<IActionResult> CreateAsync(
-        [FromBody] CreateTrafficFineCommand createTrafficFineCommand,
-        IFormFile trafficFineFile, 
-        CancellationToken cancellationToken
+        [FromBody] CreateTrafficFineCommand createTrafficFineCommand
         )
     {
         if (!ModelState.IsValid)
@@ -79,7 +77,7 @@ public class TrafficFineController : Controller
 
         var trafficFine = _entityMapper.Map<TrafficFine, CreateTrafficFineCommand>(createTrafficFineCommand);
 
-        var result = await _trafficFineService.CreateAsync(trafficFine, trafficFineFile, cancellationToken);
+        var result = await _trafficFineService.CreateAsync(trafficFine);
 
         return result.ToCreated();
     }

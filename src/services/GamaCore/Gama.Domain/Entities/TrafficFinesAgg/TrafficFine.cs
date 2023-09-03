@@ -84,12 +84,11 @@ public class TrafficFine : AuditableEntity
         return true;
     }
 
-    public void PrepareToInsert(string imageUrl, int userId)
+    public void PrepareToInsert(int userId)
     {
         CreatedAt = DateTime.UtcNow;
         Active = true;
         Computed = false;
         UserId = userId;
-        ImageUrl = imageUrl;
     }
 }

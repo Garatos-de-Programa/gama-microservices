@@ -5,9 +5,7 @@ using Gama.Application.UseCases.UserAgg.Interfaces;
 using Gama.Domain.Entities.TrafficFinesAgg;
 using Gama.Domain.Entities.UsersAgg;
 using Gama.Domain.Exceptions;
-using Gama.Domain.Interfaces.FileManagement;
 using Gama.Domain.ValueTypes;
-using Microsoft.AspNetCore.Http;
 
 namespace Gama.Application.UseCases.TrafficFineAgg.Implementations
 {
@@ -15,17 +13,14 @@ namespace Gama.Application.UseCases.TrafficFineAgg.Implementations
     {
         private readonly ITrafficFineRepository _trafficFineRepository;
         private readonly ICurrentUserAccessor _currentUserAccessor;
-        private readonly IFileManager _fileManager;
 
         public TrafficFineService(
             ITrafficFineRepository trafficFineRepository,
-            ICurrentUserAccessor currentUserAccessor,
-            IFileManager fileManager
+            ICurrentUserAccessor currentUserAccessor
             )
         {
             _currentUserAccessor = currentUserAccessor;
             _trafficFineRepository = trafficFineRepository;
-            _fileManager = fileManager;
         }
 
         public async Task<Result<bool>> ComputeAsync(int id)
@@ -55,9 +50,7 @@ namespace Gama.Application.UseCases.TrafficFineAgg.Implementations
         }
 
         public async Task<Result<TrafficFine>> CreateAsync(
-            TrafficFine trafficFine, 
-            IFormFile infractionImage, 
-            CancellationToken cancellationToken
+            TrafficFine trafficFine 
             )
         {
             if (trafficFine == null)
@@ -67,9 +60,7 @@ namespace Gama.Application.UseCases.TrafficFineAgg.Implementations
                     ErrorMessage = "Você deve informar uma multa valida"
                 }));
 
-            var imageUrl = await _fileManager.UploadAsync(new FileObject(infractionImage), cancellationToken);
-
-            trafficFine.PrepareToInsert(imageUrl, _currentUserAccessor.GetUserId());
+            trafficFine.PrepareToInsert(_currentUserAccessor.GetUserId());
 
             await _trafficFineRepository.InsertAsync(trafficFine);
             await _trafficFineRepository.CommitAsync();

@@ -67,9 +67,7 @@ namespace Gama.Api.Controllers
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
         [ProducesResponseType((int)HttpStatusCode.InternalServerError)]
         public async Task<IActionResult> CreateAsync(
-            [FromBody] CreateOccurrenceCommand createOccurrenceCommand,
-            IFormFile occurrenceImageFile,
-            CancellationToken cancellationToken
+            [FromBody] CreateOccurrenceCommand createOccurrenceCommand
             )
         {
             if (!ModelState.IsValid)
@@ -79,7 +77,7 @@ namespace Gama.Api.Controllers
 
             var trafficFine = _entityMapper.Map<Occurrence, CreateOccurrenceCommand>(createOccurrenceCommand);
 
-            var result = await _occurrenceService.CreateAsync(trafficFine, occurrenceImageFile, cancellationToken);
+            var result = await _occurrenceService.CreateAsync(trafficFine);
 
             return result.ToCreated();
         }
