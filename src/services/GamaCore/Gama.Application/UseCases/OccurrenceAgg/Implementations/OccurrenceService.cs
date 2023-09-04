@@ -2,10 +2,11 @@
 using Gama.Application.UseCases.OccurrenceAgg.Interfaces;
 using Gama.Application.UseCases.OccurrenceAgg.Responses;
 using Gama.Application.UseCases.UserAgg.Interfaces;
-using Gama.Domain.Entities.OccurrencesAgg;
+using Gama.Domain.Entities.OccurrencesAgg.Models;
+using Gama.Domain.Entities.OccurrencesAgg.Repositories;
 using Gama.Domain.Exceptions;
-using Gama.Domain.Interfaces.FileManagement;
 using Gama.Domain.ValueTypes;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Gama.Application.UseCases.OccurrenceAgg.Implementations
 {
@@ -120,6 +121,30 @@ namespace Gama.Application.UseCases.OccurrenceAgg.Implementations
                 Status = _occurrenceStatusRepository.FindAll().Select(s => new GetOccurrenceStatusResponse() { Id = s.Id, Name = s.Name }),
                 UrgencyLevels = _occurrenceUrgencyLevelRepository.FindAll().Select(u => new GetOccurrenceUrgencyLevelResponse() { Id = u.Id, Name = u.Name }),
             }));
+        }
+
+        public async Task<Result<bool>> UpdateStatus(OccurrenceStatus newStatus)
+        {
+            var occurrence = await _occurrenceRepository.FindOneAsync(newStatus.OccurrenceId);
+
+            if (occurrence == null)
+                return new Result<bool>(new ValidationException(new ValidationError()
+                {
+                    PropertyName = "Ocurrence",
+                    ErrorMessage = "Ocorrencia não encontrada"
+                }));
+
+            var result = occurrence.UpdateStatus(newStatus);
+
+            if (result.IsFaulted)
+            {
+                return result;
+            }
+
+            await _occurrenceRepository.Patch(occurrence);
+            await _occurrenceRepository.CommitAsync();
+
+            return true;
         }
     }
 }

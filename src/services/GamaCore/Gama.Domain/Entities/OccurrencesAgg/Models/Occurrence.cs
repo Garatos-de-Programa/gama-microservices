@@ -1,9 +1,10 @@
 ﻿using Gama.Domain.Common;
+using Gama.Domain.Entities.OccurrencesAgg.Events;
 using Gama.Domain.Entities.UsersAgg;
 using Gama.Domain.Exceptions;
 using Gama.Domain.ValueTypes;
 
-namespace Gama.Domain.Entities.OccurrencesAgg
+namespace Gama.Domain.Entities.OccurrencesAgg.Models
 {
     public class Occurrence : AuditableEntity
     {
@@ -60,6 +61,19 @@ namespace Gama.Domain.Entities.OccurrencesAgg
             CreatedAt = DateTime.UtcNow;
             UserId = user.Id;
             AddEvent(new CreatedOccurrenceEvent(this, user.Username!));
+        }
+
+        public Result<bool> UpdateStatus(OccurrenceStatus newStatus)
+        {
+            var result = newStatus.UpdateStatus(this);
+
+            if (result.IsFaulted)
+            {
+                return result;
+            }
+
+            AddEvent(new UpdatedOccurrenceEvent(this));
+            return true;
         }
     }
 }

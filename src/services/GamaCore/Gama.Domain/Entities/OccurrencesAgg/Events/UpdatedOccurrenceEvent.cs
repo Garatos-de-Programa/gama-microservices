@@ -1,16 +1,15 @@
 ﻿using Gama.Domain.Common;
+using Gama.Domain.Entities.OccurrencesAgg.Models;
 
-namespace Gama.Domain.Entities.OccurrencesAgg
+namespace Gama.Domain.Entities.OccurrencesAgg.Events
 {
-    public class CreatedOccurrenceEvent : Event
+    public class UpdatedOccurrenceEvent : Event
     {
-        public override string Name => "created:occurrence";
+        public override string Name => "updated:occurrence";
 
-        public int OccurrenceId { get; set; }
+        public int OccurrenceId { get; }
 
         public int UserId { get; }
-
-        public string? UserName { get; }
 
         public decimal Latitude { get; }
 
@@ -28,7 +27,7 @@ namespace Gama.Domain.Entities.OccurrencesAgg
 
         public string? OccurrenceUrgencyLevelName { get; }
 
-        public CreatedOccurrenceEvent(Occurrence occurrence, string userName)
+        public UpdatedOccurrenceEvent(Occurrence occurrence)
         {
             OccurrenceId = occurrence.Id;
             UserId = occurrence.UserId;
@@ -40,7 +39,6 @@ namespace Gama.Domain.Entities.OccurrencesAgg
             StatusName = ((OccurrenceUrgencyLevelType)occurrence?.OccurrenceStatusId!).ToString();
             OccurrenceTypeName = ((OccurrenceUrgencyLevelType)occurrence?.OccurrenceTypeId!).ToString();
             OccurrenceUrgencyLevelName = ((OccurrenceUrgencyLevelType)occurrence?.OccurrenceUrgencyLevelId!).ToString();
-            UserName = userName;
         }
     }
 }

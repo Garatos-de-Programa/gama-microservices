@@ -1,6 +1,6 @@
 using Amazon.S3;
 using Gama.Application.UseCases.UserAgg.Interfaces;
-using Gama.Domain.Entities.OccurrencesAgg;
+using Gama.Domain.Entities.OccurrencesAgg.Repositories;
 using Gama.Domain.Entities.TrafficFinesAgg;
 using Gama.Domain.Entities.UsersAgg;
 using Gama.Domain.Interfaces.EventBus;

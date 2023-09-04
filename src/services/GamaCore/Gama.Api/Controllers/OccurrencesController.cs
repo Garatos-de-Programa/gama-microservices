@@ -10,7 +10,7 @@ using Gama.Shared.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
-using Gama.Domain.Entities.OccurrencesAgg;
+using Gama.Domain.Entities.OccurrencesAgg.Models;
 
 namespace Gama.Api.Controllers
 {
@@ -91,6 +91,33 @@ namespace Gama.Api.Controllers
         public async Task<IActionResult> DeleteAsync([FromRoute] int id)
         {
             var result = await _occurrenceService.DeleteAsync(id);
+
+            return result.ToNoContent();
+        }
+
+        [Authorize(Roles = RolesName.Cop)]
+        [HttpPut("{id:int}/close", Name = "CloseOccurrence")]
+        [ProducesResponseType(typeof(void), (int)HttpStatusCode.NoContent)]
+        [ProducesResponseType((int)HttpStatusCode.NotFound)]
+        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
+        [ProducesResponseType((int)HttpStatusCode.InternalServerError)]
+        public async Task<IActionResult> Close([FromRoute] int id)
+        {
+            var result = await _occurrenceService.UpdateStatus(new ClosedOcurrenceStatus(id));
+
+            return result.ToNoContent();
+        }
+
+
+        [Authorize(Roles = RolesName.Cop)]
+        [HttpPut("{id:int}/start", Name = "CloseOccurrence")]
+        [ProducesResponseType(typeof(void), (int)HttpStatusCode.NoContent)]
+        [ProducesResponseType((int)HttpStatusCode.NotFound)]
+        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
+        [ProducesResponseType((int)HttpStatusCode.InternalServerError)]
+        public async Task<IActionResult> Start([FromRoute] int id)
+        {
+            var result = await _occurrenceService.UpdateStatus(new StartedOccurrenceStatus(id));
 
             return result.ToNoContent();
         }

@@ -1,4 +1,4 @@
-using Gama.Domain.Entities.OccurrencesAgg;
+using Gama.Domain.Entities.OccurrencesAgg.Models;
 using Gama.Domain.Entities.TrafficFinesAgg;
 using Gama.Domain.Entities.UsersAgg;
 using Microsoft.EntityFrameworkCore;

@@ -6,7 +6,7 @@ using Gama.Application.UseCases.TrafficFineAgg.Commands;
 using Gama.Application.UseCases.TrafficFineAgg.Responses;
 using Gama.Application.UseCases.UserAgg.Commands;
 using Gama.Application.UseCases.UserAgg.Responses;
-using Gama.Domain.Entities.OccurrencesAgg;
+using Gama.Domain.Entities.OccurrencesAgg.Models;
 using Gama.Domain.Entities.TrafficFinesAgg;
 using Gama.Domain.Entities.UsersAgg;
 using Gama.Domain.ValueTypes;

@@ -1,4 +1,6 @@
-﻿using Gama.Domain.Entities.OccurrencesAgg;
+﻿using Gama.Domain.Entities.OccurrencesAgg.Events;
+using Gama.Domain.Entities.OccurrencesAgg.Models;
+using Gama.Domain.Entities.OccurrencesAgg.Repositories;
 using Gama.Domain.Interfaces.EventBus;
 using Gama.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
