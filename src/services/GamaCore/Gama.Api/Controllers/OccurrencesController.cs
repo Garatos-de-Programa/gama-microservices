@@ -96,7 +96,7 @@ namespace Gama.Api.Controllers
         }
 
         [Authorize(Roles = RolesName.Cop)]
-        [HttpPut("{id:int}/close", Name = "CloseOccurrence")]
+        [HttpPost("{id:int}/close", Name = "CloseOccurrence")]
         [ProducesResponseType(typeof(void), (int)HttpStatusCode.NoContent)]
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
@@ -110,7 +110,7 @@ namespace Gama.Api.Controllers
 
 
         [Authorize(Roles = RolesName.Cop)]
-        [HttpPut("{id:int}/start", Name = "CloseOccurrence")]
+        [HttpPost("{id:int}/start", Name = "StartOccurrence")]
         [ProducesResponseType(typeof(void), (int)HttpStatusCode.NoContent)]
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
