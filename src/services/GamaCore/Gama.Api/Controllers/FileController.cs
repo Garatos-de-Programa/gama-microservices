@@ -1,12 +1,9 @@
 ﻿using Amazon.S3;
-using Gama.Domain.Entities.UsersAgg;
 using Gama.Domain.Interfaces.FileManagement;
 using Gama.Domain.ValueTypes;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
 using System.Net;
-using System.Security.Cryptography.Xml;
 
 namespace Gama.Api.Controllers
 {
@@ -24,6 +21,7 @@ namespace Gama.Api.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         [ProducesResponseType((int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
         [ProducesResponseType((int)HttpStatusCode.InternalServerError)]
