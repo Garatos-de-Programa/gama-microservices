@@ -4,13 +4,13 @@ using Gama.Application.Seedworks.Queries;
 using Gama.Application.UseCases.OccurrenceAgg.Commands;
 using Gama.Application.UseCases.OccurrenceAgg.Interfaces;
 using Gama.Application.UseCases.OccurrenceAgg.Responses;
+using Gama.Domain.Entities.OccurrencesAgg.Models;
 using Gama.Domain.Entities.UsersAgg;
 using Gama.Domain.ValueTypes;
 using Gama.Shared.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
-using Gama.Domain.Entities.OccurrencesAgg.Models;
 
 namespace Gama.Api.Controllers
 {

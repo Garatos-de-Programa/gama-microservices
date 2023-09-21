@@ -1,5 +1,4 @@
-﻿using Gama.Application.Seedworks.Queries;
-using Gama.Application.UseCases.TrafficFineAgg.Interfaces;
+﻿using Gama.Application.UseCases.TrafficFineAgg.Interfaces;
 using Gama.Application.UseCases.TrafficFineAgg.Queries;
 using Gama.Application.UseCases.UserAgg.Interfaces;
 using Gama.Domain.Entities.TrafficFinesAgg;
@@ -122,7 +121,7 @@ namespace Gama.Application.UseCases.TrafficFineAgg.Implementations
             return trafficFine;
         }
 
-        public async Task<Result<OffsetPage<TrafficFine>>> GetByDateSearchAsync(DateSearchQuery dateSearchQuery)
+        public async Task<Result<OffsetPage<TrafficFine>>> GetByDateSearchAsync(TrafficFineListingQuery dateSearchQuery)
         {
             var search = new OffsetPage<TrafficFine>()
             {
@@ -132,13 +131,16 @@ namespace Gama.Application.UseCases.TrafficFineAgg.Implementations
 
             var user = _currentUserAccessor.GetUser();
             var isCop = user.IsRole(RolesName.Cop);
-            var query = new DatesearchTrafficFineQuery(isCop, dateSearchQuery, user.Id);
-            var trafficFine = await _trafficFineRepository.GetAsync(query.Query, 
+            var query = dateSearchQuery.ToExpression(user.Id, isCop);
+
+            var trafficFines = await _trafficFineRepository.GetAsync(query, 
                 search.Offset, 
                 search.Size
             );
+            var trafficFineCount = await _trafficFineRepository.Count(query);
 
-            search.Results = trafficFine;
+            search.Results = trafficFines;
+            search.Count = trafficFineCount;
 
             return search;
         }

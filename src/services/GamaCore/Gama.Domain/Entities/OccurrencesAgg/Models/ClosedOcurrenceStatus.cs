@@ -13,7 +13,7 @@ namespace Gama.Domain.Entities.OccurrencesAgg.Models
 
         public override Result<bool> UpdateStatus(Occurrence occurrence)
         {
-            if (occurrence.Status is not StartedOccurrenceStatus)
+            if (occurrence.Status!.Name!.Equals(StartedOccurrenceStatus.Status))
             {
                 return new Result<bool>(new ValidationException(new ValidationError()
                 {
@@ -24,6 +24,7 @@ namespace Gama.Domain.Entities.OccurrencesAgg.Models
 
             occurrence.OccurrenceStatusId = Id;
             occurrence.Status = this;
+            occurrence.Active = false;
             return true;
         }
     }

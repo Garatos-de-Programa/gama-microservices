@@ -45,5 +45,11 @@ namespace Gama.Infrastructure.Repositories
                     .Take(size)
                     .ToListAsync();
         }
+
+        public async Task<int> Count(Expression<Func<TrafficFine, bool>> dateSearchQuery)
+        {
+            return await FindAll()
+                    .CountAsync(dateSearchQuery);
+        }
     }
 }

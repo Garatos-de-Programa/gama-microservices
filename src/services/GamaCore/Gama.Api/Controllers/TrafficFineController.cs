@@ -3,6 +3,7 @@ using Gama.Application.Seedworks.Pagination;
 using Gama.Application.Seedworks.Queries;
 using Gama.Application.UseCases.TrafficFineAgg.Commands;
 using Gama.Application.UseCases.TrafficFineAgg.Interfaces;
+using Gama.Application.UseCases.TrafficFineAgg.Queries;
 using Gama.Application.UseCases.TrafficFineAgg.Responses;
 using Gama.Domain.Entities.TrafficFinesAgg;
 using Gama.Domain.Entities.UsersAgg;
@@ -49,7 +50,7 @@ public class TrafficFineController : Controller
     [ProducesResponseType((int)HttpStatusCode.NotFound)]
     [ProducesResponseType((int)HttpStatusCode.BadRequest)]
     [ProducesResponseType((int)HttpStatusCode.InternalServerError)]
-    public async Task<IActionResult> SearchAsync([FromQuery] DateSearchQuery search)
+    public async Task<IActionResult> SearchAsync([FromQuery] TrafficFineListingQuery search)
     {
         if (!ModelState.IsValid)
         {
