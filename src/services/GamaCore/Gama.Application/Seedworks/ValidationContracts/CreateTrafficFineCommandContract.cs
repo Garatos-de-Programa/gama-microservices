@@ -10,7 +10,6 @@ namespace Gama.Application.Seedworks.ValidationContracts
         {
             IsTrue(MercosulLicensePlate.TryParse(createTrafficFineCommand.LicensePlate, out var _), nameof(createTrafficFineCommand.LicensePlate), "Você deve informar uma placa válida.");
             IsNotEmpty(createTrafficFineCommand.TrafficViolations, nameof(createTrafficFineCommand.TrafficViolations), "Você deve informar as infrações.");
-            IsNotNullOrWhiteSpace(createTrafficFineCommand.ImageUrl, nameof(createTrafficFineCommand.ImageUrl), "Você deve informar uma imagem.");
 
             if (!string.IsNullOrWhiteSpace(createTrafficFineCommand.ImageUrl))
             {

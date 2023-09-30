@@ -91,5 +91,6 @@ public class TrafficFine : AuditableEntity
         Computed = false;
         UserId = userId;
         LicensePlate = MercosulLicensePlate.Parse(LicensePlate!);
+        ImageUrl ??= string.Empty;
     }
 }
