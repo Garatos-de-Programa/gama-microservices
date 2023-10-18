@@ -18,7 +18,7 @@ namespace Gama.Domain.ValueTypes
 
         public MercosulLicensePlate(string value)
         {
-            _value = value;
+            _value = value.ToUpper();
         }
 
         public static MercosulLicensePlate Parse(string value)
@@ -77,7 +77,7 @@ namespace Gama.Domain.ValueTypes
                 return string.Empty;
             }
 
-            if (value.Length != NormalLicensePlateLength)
+            if (char.IsLetter(value, 4))
             {
                 return value;
             }
