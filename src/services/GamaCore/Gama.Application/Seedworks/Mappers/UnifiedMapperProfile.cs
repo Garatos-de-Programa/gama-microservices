@@ -10,6 +10,7 @@ using Gama.Domain.Entities.OccurrencesAgg.Models;
 using Gama.Domain.Entities.TrafficFinesAgg;
 using Gama.Domain.Entities.UsersAgg;
 using Gama.Domain.ValueTypes;
+using Gama.Shared.Extensions;
 
 namespace Gama.Application.Seedworks.Mappers
 {
@@ -23,7 +24,10 @@ namespace Gama.Application.Seedworks.Mappers
                         trafficFine.TrafficFineTrafficViolations!.Select(tv => tv.TrafficViolation)))
                 .ForMember(dest => dest.LicensePlate,
                     opt => opt.MapFrom(trafficFine =>
-                        MercosulLicensePlate.Format(trafficFine.LicensePlate!)));
+                        MercosulLicensePlate.Format(trafficFine.LicensePlate!)))
+                .ForMember(dest => dest.CreatedAt,
+                    opt => opt.MapFrom(trafficFine => trafficFine.CreatedAt.ToTimeZone(DatetimeExtensions.BrazilianTimeZoneId))
+                );
 
             CreateMap<CreateTrafficFineCommand, TrafficFine>()
                 .ForMember(dest => dest.TrafficFineTrafficViolations,
