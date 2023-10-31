@@ -26,7 +26,7 @@ public static class InfrastructureServiceRegistration
 
         services.AddScoped<ITokenService, JwtTokenProvider>();
 
-        services.AddDbContext<GamaCoreDbContext>(options =>
+        services.AddDbContextPool<GamaCoreDbContext>(options =>
             options.UseNpgsql(connectionString)
             .UseSnakeCaseNamingConvention()
             );
