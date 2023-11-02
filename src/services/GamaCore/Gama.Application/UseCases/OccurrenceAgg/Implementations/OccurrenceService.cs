@@ -6,7 +6,7 @@ using Gama.Domain.Entities.OccurrencesAgg.Models;
 using Gama.Domain.Entities.OccurrencesAgg.Repositories;
 using Gama.Domain.Exceptions;
 using Gama.Domain.ValueTypes;
-using Microsoft.AspNetCore.Mvc;
+using Gama.Shared.Extensions;
 
 namespace Gama.Application.UseCases.OccurrenceAgg.Implementations
 {
@@ -101,14 +101,23 @@ namespace Gama.Application.UseCases.OccurrenceAgg.Implementations
                 Size = search.Size
             };
 
+            var utcCreatedSince = search.CreatedSince.ToUtc(DatetimeExtensions.BrazilianTimeZoneId);
+            var utcCreatedUntil = search.CreatedUntil.ToUtc(DatetimeExtensions.BrazilianTimeZoneId);
+
             var occurrence = await _occurrenceRepository.GetAsync(t => 
-                                t.CreatedAt >= search.CreatedSince.ToUniversalTime() &&
-                                t.CreatedAt <= search.CreatedUntil.ToUniversalTime(), 
+                                t.CreatedAt >= utcCreatedSince &&
+                                t.CreatedAt <= utcCreatedUntil, 
                                 offsetPage.Offset, 
                                 search.Size
+            );
+
+            var occurrencesCount = await _occurrenceRepository.Count(t =>
+                                t.CreatedAt >= utcCreatedSince &&
+                                t.CreatedAt <= utcCreatedUntil
                                 );
 
             offsetPage.Results = occurrence;
+            offsetPage.Count = occurrencesCount;
 
             return offsetPage;
         }

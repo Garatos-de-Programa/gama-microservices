@@ -7,5 +7,6 @@ namespace Gama.Domain.Entities.OccurrencesAgg.Repositories
     public interface IOccurrenceRepository : IRepository<Occurrence>
     {
         Task<IEnumerable<Occurrence>> GetAsync(Expression<Func<Occurrence, bool>> search, int offset, int size);
+        Task<int> Count(Expression<Func<Occurrence, bool>> dateSearchQuery);
     }
 }

@@ -51,6 +51,12 @@ namespace Gama.Infrastructure.Repositories
                     .ToListAsync();
         }
 
+        public async Task<int> Count(Expression<Func<Occurrence, bool>> dateSearchQuery)
+        {
+            return await FindAll()
+                    .CountAsync(dateSearchQuery);
+        }
+
         internal async Task PublishMessage(Occurrence tObject)
         {
             var @event = tObject.Events.First();

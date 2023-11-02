@@ -14,5 +14,22 @@
             var timezone = TimeZoneInfo.FindSystemTimeZoneById(timeZoneId);
             return TimeZoneInfo.ConvertTimeFromUtc(dateTime.Value, timezone);
         }
+
+        public static DateTime? ToUtc(this DateTime? dateTime, string fromTimeZoneId)
+        {
+            if (dateTime is null)
+            {
+                return null;
+            }
+
+            var timezone = TimeZoneInfo.FindSystemTimeZoneById(fromTimeZoneId);
+            return TimeZoneInfo.ConvertTimeToUtc(dateTime.Value, timezone);
+        }
+
+        public static DateTime? ToUtc(this DateTime dateTime, string fromTimeZoneId)
+        {
+            var timezone = TimeZoneInfo.FindSystemTimeZoneById(fromTimeZoneId);
+            return TimeZoneInfo.ConvertTimeToUtc(dateTime, timezone);
+        }
     }
 }
