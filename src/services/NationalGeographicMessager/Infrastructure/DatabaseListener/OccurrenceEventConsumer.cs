@@ -40,7 +40,7 @@ namespace NationalGeographicMessager.Infrastructure.DatabaseListener
                 OccurrenceId = occurrenceEventMessage.OccurrenceId,
                 OccurrenceName = occurrenceEventMessage.OccurrenceName,
                 Active = occurrenceEventMessage.Active,
-                Geolocation = new NetTopologySuite.Geometries.Point((double)occurrenceEventMessage.Latitude, (double)occurrenceEventMessage.Longitude)
+                Geolocation = new NetTopologySuite.Geometries.Point((double)occurrenceEventMessage.Longitude, (double)occurrenceEventMessage.Latitude)
                 {
                     SRID = 4326
                 },
