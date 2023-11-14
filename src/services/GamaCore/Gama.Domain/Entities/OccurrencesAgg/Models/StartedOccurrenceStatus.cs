@@ -14,7 +14,7 @@ namespace Gama.Domain.Entities.OccurrencesAgg.Models
 
         public override Result<bool> UpdateStatus(Occurrence occurrence)
         {
-            if (occurrence.Status is ClosedOcurrenceStatus)
+            if (occurrence.Status?.Name?.Equals(ClosedOcurrenceStatus.Status) ?? false)
             {
                 return new Result<bool>(new ValidationException(new ValidationError()
                 {

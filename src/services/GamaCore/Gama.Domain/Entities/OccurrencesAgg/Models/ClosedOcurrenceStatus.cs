@@ -5,15 +5,16 @@ namespace Gama.Domain.Entities.OccurrencesAgg.Models
 {
     public class ClosedOcurrenceStatus : OccurrenceStatus
     {
+        public const string Status = "Closed";
         public ClosedOcurrenceStatus(int id) : base(id)
         {
-            Name = "Closed";
+            Name = Status;
             Id = 2;
         }
 
         public override Result<bool> UpdateStatus(Occurrence occurrence)
         {
-            if (occurrence.Status!.Name!.Equals(StartedOccurrenceStatus.Status))
+            if (!occurrence.Status!.Name!.Equals(StartedOccurrenceStatus.Status))
             {
                 return new Result<bool>(new ValidationException(new ValidationError()
                 {

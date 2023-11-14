@@ -84,6 +84,7 @@ public class TrafficFineController : Controller
     }
 
     [HttpPost("{id:int}/compute")]
+    [Authorize(Roles = RolesName.Admin)]
     [ProducesResponseType((int)HttpStatusCode.NoContent)]
     [ProducesResponseType((int)HttpStatusCode.BadRequest)]
     [ProducesResponseType((int)HttpStatusCode.InternalServerError)]
