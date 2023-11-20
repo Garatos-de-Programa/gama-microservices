@@ -9,6 +9,8 @@
 
     public enum OccurrenceUrgencyLevelType
     {
-        None = 1,
+        Baixa = 1,
+        Média,
+        Alta
     }
 }

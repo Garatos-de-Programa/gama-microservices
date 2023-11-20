@@ -5,7 +5,7 @@ namespace Gama.Domain.Entities.OccurrencesAgg.Models
 {
     public class ClosedOcurrenceStatus : OccurrenceStatus
     {
-        public const string Status = "Closed";
+        public const string Status = "Atendimento concluído";
         public ClosedOcurrenceStatus(int id) : base(id)
         {
             Name = Status;

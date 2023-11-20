@@ -23,4 +23,11 @@ namespace Gama.Domain.Entities.OccurrencesAgg.Models
 
         public virtual Result<bool> UpdateStatus(Occurrence occurrence) { return true; }
     }
+
+    public enum OccurrenceStatusTypes
+    {
+        AguardandoAtendimento = 1,
+        AtendimentoIniciado,
+        AtendimentoConcluído
+    }
 }

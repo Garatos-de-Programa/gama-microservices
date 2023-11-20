@@ -38,8 +38,8 @@ namespace Gama.Domain.Entities.OccurrencesAgg.Events
             Location = occurrence.Location;
             OccurrenceName = occurrence.Name;
             Active = occurrence.Active;
-            StatusName = ((OccurrenceUrgencyLevelType)occurrence?.OccurrenceStatusId!).ToString();
-            OccurrenceTypeName = ((OccurrenceUrgencyLevelType)occurrence?.OccurrenceTypeId!).ToString();
+            StatusName = ((OccurrenceStatusTypes)occurrence?.OccurrenceStatusId!).ToString();
+            OccurrenceTypeName = ((OccurrenceTypes)occurrence?.OccurrenceTypeId!).ToString();
             OccurrenceUrgencyLevelName = ((OccurrenceUrgencyLevelType)occurrence?.OccurrenceUrgencyLevelId!).ToString();
             UserName = userName;
         }

@@ -6,4 +6,13 @@
 
         public string? Name { get; set; }
     }
+
+    public enum OccurrenceTypes
+    {
+        Roubo = 1,
+        Incêndio,
+        BuracoNaVia,
+        Barulho,
+        MausTratos
+    }
 }

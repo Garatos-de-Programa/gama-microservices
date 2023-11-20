@@ -5,7 +5,7 @@ namespace Gama.Domain.Entities.OccurrencesAgg.Models
 {
     public class StartedOccurrenceStatus : OccurrenceStatus
     {
-        public const string Status = "Started";
+        public const string Status = "Atendimento iniciado";
         public StartedOccurrenceStatus(int id) : base(id)
         {
             Name = Status;
