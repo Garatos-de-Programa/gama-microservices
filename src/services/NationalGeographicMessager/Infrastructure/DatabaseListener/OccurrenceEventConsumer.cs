@@ -25,12 +25,19 @@ namespace NationalGeographicMessager.Infrastructure.DatabaseListener
 
         public async Task Consume(ConsumeContext<OccurrenceEventMessage> context)
         {
-            _logger.LogInformation("Recivied occurrence: {Id}", context.Message.OccurrenceId);
+            try
+            {
+                _logger.LogInformation("Recivied occurrence: {Id}", context.Message.OccurrenceId);
 
-            await Task.WhenAll(
-                    _messageNotifier.NotifyAsync(context.Message.ToIncidentMessage()),
-                    UpdateDatabase(context.Message)
-                    );
+                await Task.WhenAll(
+                        _messageNotifier.NotifyAsync(context.Message.ToIncidentMessage()),
+                        UpdateDatabase(context.Message)
+                        );
+            }
+            catch (Exception exception)
+            {
+                _logger.LogError(exception, "Error while notifying");
+            }
         }
 
         internal async Task UpdateDatabase(OccurrenceEventMessage occurrenceEventMessage)
