@@ -26,12 +26,12 @@ namespace NationalGeographicMessager.Infrastructure.Repositories
         public async Task<IEnumerable<IncidentMessage>> GetAsync(Point occurrenceLocation)
         {
             var geometryFactory = NtsGeometryServices.Instance.CreateGeometryFactory(srid: 4326);
-            var radiusInDegrees = _geoLocationCalculator.KilometerRadiusToDegreesRadius(occurrenceLocation.Radius);
+            var radiusInMeters = occurrenceLocation.Radius * 1000;
 
             var targetPoint = geometryFactory.CreatePoint(new Coordinate(occurrenceLocation.Longitude, occurrenceLocation.Latitude));
             
             return await _dbCcontext.Occurrences
-                              .Where(occurrence => occurrence.Geolocation.Distance(targetPoint) <= radiusInDegrees && occurrence.Active == true)
+                              .Where(occurrence => occurrence.Geolocation.Distance(targetPoint) <= radiusInMeters && occurrence.Active == true)
                               .Select(occurrence =>
                               new IncidentMessage(occurrence.Geolocation, new OccurrenceEventMessage
                               {
