@@ -4,9 +4,11 @@ using Gama.Application.UseCases.OccurrenceAgg.Responses;
 using Gama.Application.UseCases.UserAgg.Interfaces;
 using Gama.Domain.Entities.OccurrencesAgg.Models;
 using Gama.Domain.Entities.OccurrencesAgg.Repositories;
+using Gama.Domain.Entities.UsersAgg;
 using Gama.Domain.Exceptions;
 using Gama.Domain.ValueTypes;
 using Gama.Shared.Extensions;
+using System.Linq.Expressions;
 
 namespace Gama.Application.UseCases.OccurrenceAgg.Implementations
 {
@@ -101,20 +103,25 @@ namespace Gama.Application.UseCases.OccurrenceAgg.Implementations
                 Size = search.Size
             };
 
+            var user = _currentUserAccessor.GetUser();
+            var isCitizen = user.IsRole(RolesName.Citizen);
             var utcCreatedSince = search.CreatedSince.ToUtc(DatetimeExtensions.BrazilianTimeZoneId);
             var utcCreatedUntil = search.CreatedUntil.ToUtc(DatetimeExtensions.BrazilianTimeZoneId);
 
-            var occurrence = await _occurrenceRepository.GetAsync(t => 
+            Expression<Func<Occurrence, bool>> query = t =>
                                 t.CreatedAt >= utcCreatedSince &&
-                                t.CreatedAt <= utcCreatedUntil, 
-                                offsetPage.Offset, 
-                                search.Size
-            );
+                                t.CreatedAt <= utcCreatedUntil;
 
-            var occurrencesCount = await _occurrenceRepository.Count(t =>
-                                t.CreatedAt >= utcCreatedSince &&
-                                t.CreatedAt <= utcCreatedUntil
-                                );
+            if (isCitizen)
+            {
+                query = t =>
+                    t.CreatedAt >= utcCreatedSince &&
+                    t.CreatedAt <= utcCreatedUntil &&
+                    t.UserId == user.Id;
+            }
+
+            var occurrence = await _occurrenceRepository.GetAsync(query, offsetPage.Offset, search.Size);
+            var occurrencesCount = await _occurrenceRepository.Count(query);
 
             offsetPage.Results = occurrence;
             offsetPage.Count = occurrencesCount;

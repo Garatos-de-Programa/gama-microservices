@@ -15,6 +15,7 @@ public class UserSecurityTokenDescriptor : SecurityTokenDescriptor
             new Claim("Id", user.Id.ToString()),
             new Claim(JwtRegisteredClaimNames.Sub, user.Username!),
             new Claim(JwtRegisteredClaimNames.Email, user.Email!),
+            new Claim(JwtRegisteredClaimNames.Name, user.FullName!),
             new Claim(JwtRegisteredClaimNames.Jti,
                 Guid.NewGuid().ToString()),
         };

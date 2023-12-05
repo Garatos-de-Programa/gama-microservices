@@ -26,6 +26,8 @@ public class User : AuditableEntity
 
     public IEnumerable<TrafficFine>? TrafficFines { get; set; }
 
+    public string FullName => FirstName + ' ' + LastName;
+
     public bool IsValidPassword(string password)
     {
         return BCryptPassword.IsValid(password, Password!);
