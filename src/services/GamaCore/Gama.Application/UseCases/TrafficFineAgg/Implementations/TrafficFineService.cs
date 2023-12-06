@@ -33,9 +33,7 @@ namespace Gama.Application.UseCases.TrafficFineAgg.Implementations
                     ErrorMessage = "Multa não encontrada"
                 }));
 
-            var user = _currentUserAccessor.GetUser();
-
-            var result = trafficFine.Compute(user);
+            var result = trafficFine.Compute();
 
             if (result.IsFaulted)
             {

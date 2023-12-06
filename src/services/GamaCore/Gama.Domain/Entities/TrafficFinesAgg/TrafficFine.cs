@@ -27,17 +27,8 @@ public class TrafficFine : AuditableEntity
 
     public ICollection<TrafficFineTrafficViolation>? TrafficFineTrafficViolations { get; set; }
 
-    public Result<bool> Compute(User user)
+    public Result<bool> Compute()
     {
-        if (user.IsDiferentUser(UserId))
-        {
-            return new Result<bool>(new ValidationException(new ValidationError()
-            {
-                PropertyName = "TrafficFine",
-                ErrorMessage = "Operação invalida"
-            }));
-        }
-
         Computed = true;
         UpdatedAt = DateTime.UtcNow;
 
